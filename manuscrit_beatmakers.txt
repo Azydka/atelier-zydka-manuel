@@ -1,0 +1,2976 @@
+﻿# FICHIER MAÎTRE COMPLET
+
+
+# BEATMAKER INDÉPENDANT 2027
+
+
+## Organiser, vendre et protéger ses beats à l’ère de l’IA
+
+
+---
+
+
+# IMPORTANT — STRUCTURE DU LIVRABLE
+
+
+Ce fichier maître contient deux blocs :
+
+
+1. **Le livre principal** à copier dans Google Docs, mettre en page, puis exporter en PDF sous le nom :
+   **Beatmaker_independant_2027.pdf**
+
+
+2. **Le contenu complet du toolkit bonus** à copier dans des fichiers séparés, puis à compresser sous le nom :
+   **Beatmaker_Toolkit.zip**
+
+
+Pour une version commerciale propre, le PDF du livre principal doit contenir uniquement le livre et ses annexes A à E. Le contenu complet des fichiers bonus doit être livré séparément dans le ZIP.
+
+
+---
+
+
+# LIVRE PRINCIPAL
+
+
+# BEATMAKER INDÉPENDANT 2027
+
+
+## Organiser, vendre et protéger ses beats à l’ère de l’IA
+
+
+---
+
+
+# Avertissement légal
+
+
+Ce guide est un outil pratique et pédagogique. Il ne remplace pas un avis juridique, fiscal ou comptable personnalisé.
+
+
+Les informations sur les licences, les droits d’auteur, la fiscalité, les plateformes, les outils numériques et l’intelligence artificielle sont données à titre indicatif et doivent être vérifiées avant toute décision importante.
+
+
+Avant tout engagement professionnel significatif, toute signature de contrat, toute exploitation commerciale importante ou toute situation impliquant des samples, des droits partagés, une synchronisation, un label, un éditeur, un artiste tiers ou une exploitation internationale, consultez un avocat spécialisé en droit de la musique et/ou un expert-comptable.
+
+
+Les fichiers bonus mentionnés dans ce guide sont fournis comme modèles pédagogiques. Ils doivent être adaptés à votre situation et relus par un professionnel avant utilisation commerciale importante.
+
+
+---
+
+
+# Table des matières
+
+
+* Introduction — Pourquoi ce livre ?
+* Partie 1 — Le métier en 2026
+* Partie 2 — S’équiper sans se disperser
+* Partie 3 — Créer des beats vendables
+* Partie 4 — Organiser son catalogue comme un pro
+* Partie 5 — Vendre ses beats proprement
+* Partie 6 — Protéger ses droits sans devenir juriste
+* Partie 7 — Se rendre visible et trouver des clients
+* Partie 8 — S’ouvrir aux marchés globaux
+* Partie 9 — Plan d’action 90 jours
+* Annexes
+* Conclusion
+
+
+---
+
+
+# Introduction — Pourquoi ce livre ?
+
+
+Vous avez 200 beats sur votre disque dur, mais vous galérez à en vendre un.
+
+
+Vous ouvrez un vieux projet : `final_prod_artist_v3.wav`.
+
+
+Quel est le BPM ? Quelle est la tonalité ? Est-ce une version mixée, masterisée, envoyée, vendue ou juste une démo ? Avez-vous les stems ? Avez-vous une version MP3 taggée ? Avez-vous un contrat prêt si quelqu’un veut l’acheter ?
+
+
+Si vous devez chercher pendant quinze minutes avant de répondre, ce n’est pas seulement un problème d’organisation. C’est un problème business.
+
+
+Beaucoup de beatmakers produisent beaucoup. Ils ont des dossiers remplis de prods, des loops commencées, des sessions FL Studio, Ableton, Logic Pro ou autres DAW, des exports WAV dans tous les sens, des fichiers nommés “new beat”, “type beat final”, “drill dark v2”, “mix ok”, “master final final”.
+
+
+Mais quand vient le moment de vendre, tout devient flou.
+
+
+Le beat est-il prêt ? Quel prix annoncer ? Quels droits donner ? Que se passe-t-il si l’artiste sort le morceau sur Spotify ? Peut-il l’utiliser sur TikTok ? Peut-il monétiser sur YouTube ? Peut-il envoyer le beat à un autre producteur ? Peut-il l’utiliser pour entraîner une IA ? Faut-il signer un contrat ? Faut-il une split sheet ? Faut-il déclarer l’œuvre ?
+
+
+Ce livre part d’un constat simple : aujourd’hui, le problème de beaucoup de beatmakers n’est pas seulement de produire. C’est de transformer leur créativité en système.
+
+
+## Ce livre n’est pas un énième guide pour apprendre à faire un beat
+
+
+Il existe déjà des milliers de tutoriels pour apprendre à programmer une 808, mixer une snare, trouver un sample, faire un type beat ou reproduire le son d’un artiste connu.
+
+
+Ce livre part du principe que vous savez déjà produire des beats corrects.
+
+
+Vous n’avez pas besoin d’être ingénieur du son confirmé. Vous n’avez pas besoin d’avoir un studio professionnel. Vous n’avez pas besoin de maîtriser tous les plugins du marché.
+
+
+Mais vous devez apprendre à penser comme un indépendant organisé.
+
+
+Un beatmaker indépendant sérieux ne se contente pas de créer. Il sait :
+
+
+* classer ses beats ;
+* préparer des exports propres ;
+* fixer ses prix ;
+* expliquer ses licences ;
+* suivre ses clients ;
+* protéger ses droits ;
+* collaborer sans perdre ses splits ;
+* utiliser les plateformes sans dépendre entièrement d’elles ;
+* communiquer sans spammer ;
+* utiliser l’IA comme assistant, pas comme béquille.
+
+
+L’objectif de ce livre est de vous faire passer du statut de beatmaker créatif à celui de beatmaker organisé, visible et rentable.
+
+
+Rentable ne signifie pas devenir riche du jour au lendemain. Cela signifie : construire une activité capable de générer des revenus, suivre ses ventes, protéger son travail, éviter de travailler dans le flou et poser des bases professionnelles.
+
+
+## La promesse
+
+
+Ce guide vous donne un système pour organiser, vendre et protéger vos beats à l’ère de l’IA.
+
+
+Pas une méthode miracle. Pas une promesse de célébrité en trente jours. Pas une recette magique.
+
+
+Un système.
+
+
+Cela veut dire :
+
+
+* une méthode de nommage ;
+* un tableau de catalogue ;
+* une routine de production et de rangement ;
+* des formats d’export clairs ;
+* une grille de licences ;
+* des scripts de prospection ;
+* des checklists de livraison ;
+* des bases juridiques simples ;
+* un plan d’action sur 90 jours.
+
+
+Si vous appliquez seulement 50 % de ce guide, votre activité sera déjà plus claire que celle de la majorité des beatmakers qui produisent au hasard, vendent au feeling et découvrent les problèmes juridiques trop tard.
+
+
+## À qui s’adresse ce livre ?
+
+
+Ce livre s’adresse principalement aux beatmakers débutants à intermédiaires qui savent déjà créer des beats mais veulent passer un cap.
+
+
+Il est pour vous si :
+
+
+* vous avez entre 20 et 200 beats sur votre disque dur ;
+* vous vendez parfois, mais sans vraie structure ;
+* vous ne savez pas toujours quoi répondre quand un artiste demande un prix ;
+* vous envoyez parfois des fichiers sans contrat ;
+* vous avez peur de vous faire voler une prod ;
+* vous avez entendu parler d’IA, de droits, de splits, de plateformes, mais tout vous semble dispersé ;
+* vous voulez construire une activité plus sérieuse sans perdre votre identité artistique.
+
+
+Ce livre n’est pas pour vous si :
+
+
+* vous n’avez jamais ouvert un DAW ;
+* vous cherchez uniquement un tutoriel de production musicale ;
+* vous voulez une méthode miracle ;
+* vous refusez toute organisation ;
+* vous voulez un traité juridique complet.
+
+
+## Comment lire ce livre ?
+
+
+Chaque partie suit la même logique :
+
+
+1. Le problème réel.
+2. La méthode simple.
+3. Un exemple concret.
+4. Une checklist.
+5. Une action à faire aujourd’hui.
+
+
+Lisez tout une première fois pour comprendre l’ensemble. Puis revenez aux parties qui correspondent à votre niveau actuel.
+
+
+## Grille de maturité du beatmaker indépendant
+
+
+| Niveau   | Situation                                       | Priorité            |
+| -------- | ----------------------------------------------- | ------------------- |
+| Niveau 1 | Je fais des beats, mais rien n’est organisé     | Partie 3 + Partie 4 |
+| Niveau 2 | J’ai un catalogue, mais je ne vends presque pas | Partie 5 + Partie 7 |
+| Niveau 3 | Je vends parfois, mais sans contrat ni suivi    | Partie 5 + Partie 6 |
+| Niveau 4 | Je collabore, mais les splits sont flous        | Partie 6            |
+| Niveau 5 | Je veux développer une activité plus large      | Partie 8 + Partie 9 |
+
+
+Si vous êtes niveau 1, ne commencez pas par l’international. Commencez par vos fichiers. Un beat mal nommé, mal exporté et non protégé ne devient pas plus professionnel parce qu’il est envoyé à l’étranger.
+
+
+**À retenir :** avant de chercher plus de visibilité, rendez votre catalogue exploitable.
+
+
+---
+
+
+# Partie 1 — Le métier en 2026
+
+
+## 1.1 Beatmaker, producteur, compositeur : clarifier son rôle
+
+
+### Le problème
+
+
+Beaucoup de beatmakers perdent de l’argent parce que leur rôle n’est pas clair.
+
+
+Un artiste vous appelle “producteur”. Un autre vous appelle “compositeur”. Un manager vous parle de “prod”. Une plateforme parle de “licence”. Une société de droits parle d’auteur, de compositeur, d’éditeur ou de producteur phonographique.
+
+
+Si vous ne savez pas quel rôle vous occupez, vous ne savez pas quels droits défendre.
+
+
+### Les définitions simples
+
+
+| Rôle                                        | Ce qu’il fait                                                         | Exemple concret                                                    | Risque si c’est flou                           |
+| ------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------- |
+| Beatmaker                                   | Crée l’instrumental, le rythme, l’ambiance sonore                     | Vous créez un beat trap, afro, drill ou R&B                        | Être payé une seule fois sans garder de droits |
+| Compositeur                                 | Crée la musique : mélodie, harmonie, structure                        | Vous composez la progression d’accords et la topline instrumentale | Ne pas être crédité comme auteur-compositeur   |
+| Producteur musical / réalisateur artistique | Supervise la direction artistique, l’enregistrement, les choix finaux | Vous accompagnez l’artiste en studio et restructurez le morceau    | Être traité comme simple vendeur de fichier    |
+| Producteur phonographique                   | Finance ou exploite le master selon les contrats                      | Vous financez l’enregistrement final et exploitez le master        | Confusion avec le rôle de beatmaker            |
+| Topliner                                    | Crée la mélodie vocale et parfois les paroles                         | Une chanteuse pose une mélodie sur votre beat                      | Splits non définis                             |
+
+
+Dans la pratique, une même personne peut occuper plusieurs rôles. Vous pouvez être beatmaker et compositeur. Vous pouvez aussi devenir réalisateur artistique si vous accompagnez l’artiste dans la structure du morceau, les prises voix et la direction sonore.
+
+
+Mais il faut écrire ce rôle quelque part.
+
+
+### Pourquoi cette confusion coûte de l’argent
+
+
+Si vous envoyez un beat et que l’artiste sort le morceau sans accord écrit, plusieurs questions apparaissent :
+
+
+* êtes-vous crédité comme compositeur ?
+* avez-vous vendu seulement une licence ou cédé vos droits ?
+* gardez-vous une part d’édition ?
+* touchez-vous des royalties ?
+* l’artiste peut-il modifier le beat ?
+* peut-il utiliser le beat dans une publicité ?
+* peut-il l’envoyer à une IA ou à une équipe de remix ?
+
+
+Sans réponse écrite, tout devient négociation après coup. Et une négociation après succès est toujours plus compliquée qu’un accord avant sortie.
+
+
+**Erreur à éviter :** croire qu’un paiement PayPal suffit à définir les droits.
+
+
+### Action aujourd’hui
+
+
+Écrivez votre définition en deux lignes :
+
+
+> Je suis beatmaker spécialisé dans ________. Je fournis des instrumentales prêtes à être utilisées par ________, avec des licences claires et des fichiers professionnels.
+
+
+Exemple :
+
+
+> Je suis beatmaker spécialisé dans les prods trap mélodiques et afro urbaines. Je fournis aux artistes indépendants des instrumentales prêtes à sortir, avec exports propres, licences claires et suivi professionnel.
+
+
+## 1.2 Les cinq erreurs qui bloquent la plupart des beatmakers
+
+
+### Erreur 1 — Produire sans système de nommage
+
+
+Un beat non nommé correctement devient invisible dans votre propre disque dur.
+
+
+Mauvais exemple :
+
+
+`beat_final_v2.wav`
+
+
+Bon exemple :
+
+
+`2026-05-16_TRAP_DARK_140BPM_Fmin_AVAILABLE.wav`
+
+
+Un bon nom vous donne immédiatement la date, le style, l’ambiance, le BPM, la tonalité et le statut.
+
+
+### Erreur 2 — Vendre sans licence claire
+
+
+Un artiste ne doit pas seulement acheter “un beat”. Il doit acheter un droit d’utilisation défini.
+
+
+Une licence doit préciser :
+
+
+* ce que l’artiste peut faire ;
+* ce qu’il ne peut pas faire ;
+* la durée ;
+* le territoire ;
+* les limites éventuelles ;
+* les droits sur YouTube, TikTok, synchronisation, publicité ;
+* le crédit à afficher ;
+* les conditions d’exclusivité.
+
+
+### Erreur 3 — Fixer ses prix au hasard
+
+
+Beaucoup de beatmakers baissent leurs prix parce qu’ils ont peur de perdre la vente. Le problème, ce n’est pas seulement le montant. C’est l’absence de grille.
+
+
+Si vous n’avez pas trois offres claires, vous négociez dans le vide.
+
+
+### Erreur 4 — Ne pas suivre les clients
+
+
+Un artiste qui a acheté une fois peut acheter à nouveau. Mais si vous ne notez pas son nom, son style, la date d’achat, la licence et le lien du morceau sorti, vous perdez une relation.
+
+
+Un client non suivi est souvent une vente perdue dans le futur.
+
+
+### Erreur 5 — Ignorer les splits
+
+
+Quand plusieurs personnes participent à un morceau, il faut définir la répartition des droits. Une split sheet simple peut éviter des mois de tension.
+
+
+**À retenir :** les problèmes de droits viennent rarement d’une mauvaise intention au départ. Ils viennent souvent d’un manque de clarté.
+
+
+### Checklist diagnostic
+
+
+* [ ] Mes fichiers sont nommés clairement.
+* [ ] Je connais le BPM et la tonalité de mes beats prêts.
+* [ ] J’ai une grille de prix.
+* [ ] J’ai au moins un modèle de licence.
+* [ ] Je sais ce que j’autorise ou non.
+* [ ] Je garde une trace de mes clients.
+* [ ] Je prépare mes exports avant de vendre.
+* [ ] Je sais si mes beats contiennent des samples externes.
+* [ ] Je sais quand utiliser une split sheet.
+* [ ] Je sauvegarde mon catalogue.
+
+
+## 1.3 Pourquoi “juste produire” ne suffit plus
+
+
+L’IA générative a changé le volume de production. Il est devenu plus facile de créer des idées musicales rapidement. Mais produire plus vite ne veut pas dire construire une activité plus solide.
+
+
+L’IA peut aider à :
+
+
+* générer des idées ;
+* classer des fichiers ;
+* reformuler des descriptions ;
+* analyser des tendances ;
+* créer des variantes ;
+* préparer des messages de prospection.
+
+
+Mais elle ne remplace pas :
+
+
+* votre goût ;
+* votre culture musicale ;
+* votre relation avec les artistes ;
+* votre capacité à comprendre une direction ;
+* votre sens du timing ;
+* votre identité sonore ;
+* votre responsabilité juridique.
+
+
+| Ce que l’IA fait bien            | Ce que le beatmaker humain doit garder |
+| -------------------------------- | -------------------------------------- |
+| Générer beaucoup d’idées         | Choisir ce qui mérite d’exister        |
+| Proposer des variantes           | Construire une signature               |
+| Accélérer des tâches répétitives | Comprendre un artiste                  |
+| Aider à organiser                | Décider d’une stratégie                |
+| Suggérer des textes ou tags      | Assumer les droits et les contrats     |
+
+
+**À retenir :** l’IA augmente les beatmakers organisés et noie les beatmakers dispersés.
+
+
+### Action aujourd’hui
+
+
+Listez trois choses que vous apportez qu’un générateur automatique ne peut pas livrer de manière fiable :
+
+
+1. ---
+2. ---
+3. ---
+
+
+---
+
+
+# Partie 2 — S’équiper sans se disperser
+
+
+## 2.1 Quel DAW pour quel usage ?
+
+
+### Le problème
+
+
+Beaucoup de beatmakers passent plus de temps à comparer les logiciels qu’à finir des beats.
+
+
+FL Studio, Ableton Live, Logic Pro, Pro Tools, Reaper : tous permettent de produire de la musique sérieusement. Le meilleur DAW n’est pas celui qui a le plus de fonctions. C’est celui dans lequel vous terminez vos morceaux.
+
+
+Les fonctions d’assistance, d’IA, de séparation de stems, de mastering assisté ou de suggestion créative évoluent rapidement selon les versions. Vérifiez toujours les fonctionnalités actuelles sur les sites officiels avant achat.
+
+
+### Comparatif simple
+
+
+| DAW          | Profil adapté                                 | Points forts                                              | Limites                                                 |
+| ------------ | --------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| FL Studio    | Beatmaking rapide, trap, drill, hip-hop       | Séquenceur intuitif, piano roll puissant, workflow rapide | Peut encourager l’accumulation de loops si mal organisé |
+| Ableton Live | Live, électronique, expérimentation           | Session view, manipulation audio, performance             | Courbe d’apprentissage particulière                     |
+| Logic Pro    | Utilisateurs Mac, composition, enregistrement | Bon rapport fonctionnalités/prix, instruments intégrés    | Mac uniquement                                          |
+| Pro Tools    | Studio, édition audio, enregistrement pro     | Standard dans beaucoup de studios                         | Moins naturel pour débuter en beatmaking pur            |
+| Reaper       | Budget limité, personnalisation               | Léger, abordable, flexible                                | Interface moins “clé en main”                           |
+
+
+### La règle
+
+
+Choisissez un DAW principal et gardez-le au moins six mois. Pendant cette période, l’objectif n’est pas de trouver mieux. L’objectif est de finir plus.
+
+
+**Erreur à éviter :** changer de DAW chaque fois que vous voyez un producteur connu utiliser un autre logiciel.
+
+
+### Action aujourd’hui
+
+
+Ouvrez votre DAW principal et créez un template minimal avec :
+
+
+* drums ;
+* 808/basse ;
+* mélodie ;
+* FX ;
+* voix guide éventuelle ;
+* bus drums ;
+* bus mélodie ;
+* master léger.
+
+
+## 2.2 Matériel : le strict minimum, les bons investissements
+
+
+### Le problème
+
+
+Beaucoup de beatmakers achètent du matériel pour se sentir professionnels avant d’avoir un système professionnel.
+
+
+Un clavier MIDI ne compensera pas un mauvais catalogue. Une interface chère ne remplacera pas une bonne routine. Des enceintes coûteuses ne servent à rien si votre pièce n’est pas traitée et si vos fichiers sont mal exportés.
+
+
+### Configuration minimale
+
+
+Pour commencer sérieusement :
+
+
+* un ordinateur stable ;
+* un DAW maîtrisé ;
+* un bon casque ;
+* une sauvegarde externe ;
+* une bibliothèque de sons propre ;
+* éventuellement une petite interface audio si vous enregistrez voix ou instruments.
+
+
+### Trois configurations réalistes
+
+
+Les modèles et prix ci-dessous sont donnés à titre indicatif. Ils peuvent varier selon les pays, les revendeurs, les promotions, les disponibilités et l’évolution des gammes.
+
+
+| Budget | Objectif            | Priorités                                                                       |
+| ------ | ------------------- | ------------------------------------------------------------------------------- |
+| 200 €  | Démarrer proprement | Casque correct, disque externe, quelques sons fiables                           |
+| 800 €  | Home studio sérieux | Interface audio, casque, contrôleur MIDI simple, sauvegarde cloud               |
+| 2000 € | Setup avancé        | Moniteurs, traitement acoustique léger, interface supérieure, stockage sécurisé |
+
+
+Le meilleur investissement n’est pas toujours le plus visible. Un système de sauvegarde, un bon disque dur et un espace de travail organisé rapportent parfois plus qu’un nouveau synthé virtuel.
+
+
+**À retenir :** achetez ce qui réduit vos blocages, pas ce qui flatte votre image.
+
+
+## 2.3 Plugins et samples : éviter l’accumulation
+
+
+### Le problème
+
+
+Trop de plugins ralentissent la décision. Trop de samples rendent le choix plus difficile. Trop d’options tuent le workflow.
+
+
+### La règle “un besoin, un outil principal”
+
+
+Gardez une sélection courte :
+
+
+* un EQ principal ;
+* un compresseur principal ;
+* une reverb principale ;
+* un delay principal ;
+* un synthé principal ;
+* une banque de drums principale ;
+* une banque mélodique principale.
+
+
+Le reste peut rester installé, mais ne doit pas être votre premier réflexe.
+
+
+### Organisation des samples
+
+
+Créez un dossier maître :
+
+
+`SAMPLES_MASTER`
+
+
+Avec des sous-dossiers :
+
+
+* Drums_Kicks
+* Drums_Snares
+* Drums_Hats
+* 808_Bass
+* Melodic_Loops
+* Vocals
+* FX
+* Percussions
+* One_Shots
+* Favorites
+
+
+Dans chaque dossier, supprimez ou archivez ce que vous n’utilisez jamais.
+
+
+### Action aujourd’hui
+
+
+Supprimez ou archivez 20 % de vos sons inutilisés. Le but n’est pas d’avoir plus. Le but est d’aller plus vite.
+
+
+---
+
+
+# Partie 3 — Créer des beats vendables
+
+
+## 3.1 Workflow simple pour sortir un beat propre en deux heures
+
+
+### Le problème
+
+
+Beaucoup de beatmakers commencent vite, mais ne finissent pas. Ils ont des loops de huit mesures, des idées intéressantes, des brouillons, mais peu de beats vraiment prêts à être envoyés.
+
+
+Un beat vendable n’est pas forcément parfait. C’est un beat clair, structuré, exporté et exploitable par un artiste.
+
+
+### Workflow en deux heures
+
+
+| Temps       | Étape             | Objectif                                  |
+| ----------- | ----------------- | ----------------------------------------- |
+| 0-20 min    | Drums             | Créer le groove principal                 |
+| 20-40 min   | Basse / 808       | Installer l’énergie                       |
+| 40-70 min   | Mélodie / texture | Donner l’identité                         |
+| 70-100 min  | Arrangement       | Créer intro, couplet, refrain, variations |
+| 100-115 min | Mix léger         | Nettoyer volumes, EQ, dynamique           |
+| 115-120 min | Export brouillon  | Créer MP3 privé pour écoute               |
+
+
+Ce workflow n’est pas une prison. C’est une contrainte utile. Si vous êtes bloqué plus de vingt minutes sur un son, avancez. Vous pourrez améliorer plus tard.
+
+
+**Erreur à éviter :** passer trois heures sur un hi-hat avant d’avoir structuré le morceau.
+
+
+## 3.2 Structure, arrangement, variations
+
+
+### Le problème
+
+
+Un artiste n’achète pas une loop. Il achète une base de morceau.
+
+
+Même si un beat repose sur une boucle, il doit respirer. Il doit donner envie d’écrire. Il doit laisser de la place à la voix. Il doit créer des moments.
+
+
+### Structure simple
+
+
+* Intro : 4 à 8 mesures
+* Couplet : 16 mesures
+* Pré-refrain ou variation : 4 à 8 mesures
+* Refrain : 8 mesures
+* Couplet 2 : 16 mesures
+* Refrain 2 : 8 mesures
+* Outro : 4 à 8 mesures
+
+
+### Variations utiles
+
+
+Toutes les 8 mesures, modifiez quelque chose :
+
+
+* retirer la 808 ;
+* couper les hats ;
+* ajouter un riser ;
+* filtrer la mélodie ;
+* changer la snare ;
+* ajouter un silence ;
+* doubler une mélodie ;
+* créer une transition.
+
+
+### Checklist “mon beat est-il prêt ?”
+
+
+* [ ] Il a une intro claire.
+* [ ] Il laisse de la place à la voix.
+* [ ] Il contient au moins trois variations.
+* [ ] Il a une énergie identifiable.
+* [ ] Il peut être compris sans explication.
+* [ ] Il existe en version MP3 et WAV.
+* [ ] Le BPM et la tonalité sont notés.
+
+
+## 3.3 Les exports qui font la différence
+
+
+### Le problème
+
+
+Vous pouvez perdre une vente avec un mauvais export.
+
+
+Un artiste intéressé veut avancer vite. S’il doit vous redemander le WAV, les stems, le BPM, la tonalité ou une version sans tag, vous donnez une impression amateur.
+
+
+### Pack minimal d’export
+
+
+Pour chaque beat prêt à vendre, préparez :
+
+
+* MP3 320 kbps avec tag audio ou watermark ;
+* WAV 24 bit ;
+* stems séparés ;
+* version courte pour réseaux sociaux ;
+* fichier texte avec BPM, tonalité, crédits, conditions de licence ;
+* contrat ou lien vers licence.
+
+
+### Exemple de dossier
+
+
+`BEAT_NAME_140BPM_Fmin`
+
+
+* `01_MP3_PREVIEW`
+* `02_WAV_MASTER`
+* `03_STEMS`
+* `04_SHORT_VERSION`
+* `05_LICENSE_INFO`
+* `06_COVER_ART_OPTIONAL`
+
+
+**À retenir :** un beat prêt à vendre est un beat prêt à livrer.
+
+
+### Action aujourd’hui
+
+
+Choisissez un beat et préparez son pack complet. Ne commencez pas par tout votre catalogue. Commencez par un seul beat.
+
+
+---
+
+
+# Partie 4 — Organiser son catalogue comme un pro
+
+
+## Pourquoi cette partie est le cœur du livre
+
+
+Votre catalogue est votre actif principal.
+
+
+Pas votre dernier plugin. Pas votre logo. Pas votre nombre de followers. Votre catalogue.
+
+
+Un catalogue bien organisé vous permet de retrouver rapidement une prod, envoyer le bon fichier, suivre les ventes, relancer les artistes, déclarer les œuvres, sécuriser vos droits et gagner du temps.
+
+
+Un catalogue désorganisé transforme chaque opportunité en stress.
+
+
+## 4.1 Système de nommage
+
+
+### Le problème concret
+
+
+Vous cherchez un beat mélodique en 140 BPM. Vous savez qu’il existe. Vous l’avez fait il y a trois mois. Mais il s’appelle peut-être :
+
+
+* `newtrap.wav`
+* `dark_final.wav`
+* `artist_type_beat.wav`
+* `finalfinal2.wav`
+* `beat jeudi.wav`
+
+
+Vous perdez du temps, et parfois vous abandonnez.
+
+
+### La règle de nommage
+
+
+Utilisez une structure fixe :
+
+
+`DATE_STYLE_MOOD_BPM_KEY_STATUS`
+
+
+Exemple :
+
+
+`2026-05-16_TRAP_DARK_140BPM_Fmin_AVAILABLE.wav`
+
+
+Chaque champ a un rôle :
+
+
+* Date : retrouver la période de création.
+* Style : trap, drill, afro, R&B, pop urbaine.
+* Mood : dark, sad, energetic, smooth, cinematic.
+* BPM : tempo.
+* Key : tonalité.
+* Status : available, sent, sold, exclusive, draft.
+
+
+### Statuts recommandés
+
+
+| Statut    | Signification            |
+| --------- | ------------------------ |
+| DRAFT     | Idée non finalisée       |
+| READY     | Beat prêt à être exporté |
+| AVAILABLE | Disponible à la vente    |
+| SENT      | Envoyé à un artiste      |
+| LEASED    | Vendu en non-exclusif    |
+| EXCLUSIVE | Vendu en exclusif        |
+| LOCKED    | À ne plus envoyer        |
+
+
+**Erreur à éviter :** utiliser “final” comme statut. “Final” ne veut rien dire si vous ne savez pas final pour quoi.
+
+
+### Action aujourd’hui
+
+
+Renommez dix beats avec cette règle. Pas tout votre disque dur. Dix beats. L’objectif est de créer l’habitude.
+
+
+## 4.2 Tableau de bord catalogue
+
+
+### Le problème concret
+
+
+Même avec de bons noms de fichiers, vous avez besoin d’une vue globale. Votre disque dur ne suffit pas. Il vous faut un tableau de bord.
+
+
+### Colonnes recommandées
+
+
+| Colonne           | Exemple                        |
+| ----------------- | ------------------------------ |
+| Titre             | Midnight Pressure              |
+| Style             | Trap mélodique                 |
+| Mood              | Dark / émotionnel              |
+| BPM               | 140                            |
+| Tonalité          | F minor                        |
+| Statut            | Available                      |
+| Prix standard     | 49 €                           |
+| Prix premium      | 149 €                          |
+| Prix exclusif     | 700 €                          |
+| Lien MP3 privé    | URL                            |
+| Lien WAV          | URL interne                    |
+| Stems prêts ?     | Oui / Non                      |
+| Envoyé à          | Nom artiste                    |
+| Date d’envoi      | 2026-05-16                     |
+| Réponse           | Intéressé / non / relance      |
+| Licence vendue    | Standard / Premium / Exclusive |
+| Contrat signé ?   | Oui / Non                      |
+| Facture envoyée ? | Oui / Non                      |
+
+
+Vous pouvez créer ce tableau dans Notion, Airtable, Google Sheets ou Excel. Le meilleur outil est celui que vous ouvrez vraiment.
+
+
+**À retenir :** votre catalogue doit devenir consultable en moins de deux minutes.
+
+
+## 4.3 Exports et pack de livraison
+
+
+### Le problème concret
+
+
+Un artiste paie. Vous commencez à chercher les fichiers. Vous devez refaire un export. Vous ne trouvez pas les stems. Vous hésitez sur la version. Vous envoyez un dossier incomplet.
+
+
+Ce moment doit être fluide.
+
+
+### Pack de livraison professionnel
+
+
+Créez un dossier modèle :
+
+
+`TEMPLATE_LIVRAISON_BEAT`
+
+
+À l’intérieur :
+
+
+* `01_MP3_PREVIEW`
+* `02_WAV_MASTER`
+* `03_STEMS`
+* `04_LICENSE_CONTRACT`
+* `05_INFO_BPM_KEY_CREDITS`
+* `06_INVOICE`
+
+
+Chaque beat vendu doit être livré avec :
+
+
+* fichier audio correspondant à la licence ;
+* contrat ou licence ;
+* informations BPM / tonalité ;
+* crédits à afficher ;
+* limites d’usage ;
+* facture ou reçu si nécessaire.
+
+
+### Checklist livraison client
+
+
+* [ ] Paiement reçu.
+* [ ] Type de licence confirmé.
+* [ ] Contrat envoyé ou accepté.
+* [ ] MP3 livré.
+* [ ] WAV livré si inclus.
+* [ ] Stems livrés si inclus.
+* [ ] BPM et tonalité indiqués.
+* [ ] Conditions d’usage rappelées.
+* [ ] Client ajouté au tableau CRM.
+* [ ] Relance programmée dans 30 jours.
+
+
+## 4.4 Sauvegarde 3-2-1
+
+
+### Le problème concret
+
+
+Un disque dur peut lâcher. Un ordinateur peut être volé. Un ransomware peut bloquer vos fichiers. Une mauvaise manipulation peut supprimer des années de travail.
+
+
+Si votre catalogue est votre actif, il doit être sauvegardé comme un actif.
+
+
+### La règle 3-2-1
+
+
+* 3 copies de vos fichiers ;
+* 2 supports différents ;
+* 1 copie hors site ou cloud.
+
+
+Exemple :
+
+
+1. ordinateur principal ;
+2. disque dur externe ;
+3. cloud sécurisé.
+
+
+### Routine minimale
+
+
+Chaque vendredi :
+
+
+* sauvegarder les nouveaux projets ;
+* exporter les beats prêts ;
+* vérifier que le cloud est synchronisé ;
+* tester l’ouverture d’un vieux projet ;
+* noter les beats finalisés dans le tableau.
+
+
+**Erreur à éviter :** croire qu’un fichier dans votre ordinateur est “sauvegardé”. Il ne l’est pas.
+
+
+## 4.5 Routine hebdomadaire
+
+
+### La méthode 40 minutes
+
+
+| Jour     | Action                             | Durée  |
+| -------- | ---------------------------------- | ------ |
+| Lundi    | Renommer les nouveaux projets      | 10 min |
+| Mercredi | Mettre à jour le tableau catalogue | 10 min |
+| Vendredi | Sauvegarder et exporter            | 15 min |
+| Dimanche | Préparer les beats à envoyer       | 5 min  |
+
+
+Quarante minutes par semaine peuvent transformer votre activité. Le but n’est pas d’être maniaque. Le but est d’éviter que votre créativité devienne impossible à exploiter.
+
+
+### Résumé de la partie 4
+
+
+Après cette partie, vous devez avoir :
+
+
+* [ ] une règle de nommage ;
+* [ ] dix beats renommés ;
+* [ ] un tableau catalogue ;
+* [ ] un dossier de livraison ;
+* [ ] une sauvegarde externe ;
+* [ ] une routine hebdomadaire.
+
+
+---
+
+
+# Partie 5 — Vendre ses beats proprement
+
+
+## Pourquoi ce chapitre est le levier de revenus principal
+
+
+Vous pouvez avoir le meilleur catalogue du monde. Si vous ne savez pas vendre, vous ne gagnerez rien.
+
+
+Mais vendre ne veut pas dire harceler des artistes en DM. Vendre proprement, c’est proposer un cadre clair : prix, licence, fichiers, contrat, paiement, suivi.
+
+
+Un artiste sérieux ne cherche pas seulement un son. Il cherche quelqu’un de fiable.
+
+
+## 5.1 Licences : non-exclusive, unlimited, exclusive
+
+
+### Le problème concret
+
+
+Un artiste vous écrit : “Je te prends le beat. C’est combien ?”
+
+
+Si vous improvisez, vous risquez de vendre trop bas, de donner trop de droits, ou de créer un malentendu.
+
+
+### Trois offres simples
+
+
+Les prix ci-dessous sont indicatifs. Ils peuvent varier selon votre niveau, votre audience, l’artiste, le style, la demande, la qualité du beat, les droits inclus et les usages autorisés.
+
+
+| Licence                | Usage autorisé                                                           | Limites                                            | Prix indicatif       |
+| ---------------------- | ------------------------------------------------------------------------ | -------------------------------------------------- | -------------------- |
+| Non-exclusive standard | Un morceau, streaming selon conditions, MP3/WAV selon offre              | Le beat reste revendable                           | 30 à 80 €            |
+| Premium / Unlimited    | Usage plus large, plateformes vidéo selon conditions, live, stems inclus | Pas d’exclusivité                                  | 100 à 250 €          |
+| Exclusive              | Droits exclusifs d’exploitation selon contrat                            | Vous ne proposez plus le beat à d’autres acheteurs | 300 à 1500 € ou plus |
+
+
+**Erreur à éviter :** vendre une exclusivité au prix d’une licence standard.
+
+
+### Ce qu’une licence doit préciser
+
+
+* nom du beat ;
+* nom du beatmaker ;
+* nom de l’acheteur ;
+* type de licence ;
+* prix ;
+* fichiers inclus ;
+* usages autorisés ;
+* usages interdits ;
+* durée ;
+* territoire ;
+* crédit obligatoire ;
+* gestion des samples ;
+* clause IA éventuelle ;
+* signature ou acceptation.
+
+
+### Action aujourd’hui
+
+
+Créez une fiche de prix simple avec trois offres. Même si vous la modifiez plus tard, vous aurez une base.
+
+
+## 5.2 Plateformes de vente
+
+
+### Le problème concret
+
+
+Vous ne savez pas où vendre. BeatStars ? Airbit ? SoundClick ? Site personnel ? DM ? YouTube ?
+
+
+La mauvaise réponse consiste à vouloir être partout dès le départ.
+
+
+### La méthode
+
+
+Commencez avec une plateforme principale. Puis ajoutez votre site personnel quand votre catalogue est propre.
+
+
+| Option               | Avantage                                        | Limite                                        |
+| -------------------- | ----------------------------------------------- | --------------------------------------------- |
+| Marketplace de beats | Audience existante, outils de vente             | Concurrence forte, dépendance à la plateforme |
+| Site personnel       | Contrôle de la marque, meilleure perception pro | Besoin de trafic                              |
+| Vente par DM         | Relation directe                                | Risque de désorganisation                     |
+| YouTube type beats   | Découverte organique                            | Demande régularité et SEO                     |
+
+
+### Ce qu’il faut comparer
+
+
+* abonnement ;
+* commission ;
+* personnalisation ;
+* gestion des licences ;
+* livraison automatique ;
+* intégration paiement ;
+* analytics ;
+* intégration YouTube ou réseaux ;
+* possibilité de créer des coupons ;
+* gestion des exclusivités.
+
+
+**À retenir :** la plateforme ne vend pas à votre place. Elle facilite la transaction.
+
+
+## 5.3 Vendre directement via son site
+
+
+### Pourquoi créer son propre espace ?
+
+
+Une plateforme est utile, mais elle ne vous appartient pas. Votre site donne une impression plus professionnelle, centralise votre univers et réduit votre dépendance.
+
+
+Votre site peut rester simple :
+
+
+* page d’accueil ;
+* beat store ;
+* page licences ;
+* page contact ;
+* page à propos ;
+* liens réseaux ;
+* formulaire de demande sur mesure.
+
+
+### Page beat store minimale
+
+
+Chaque beat doit afficher :
+
+
+* titre ;
+* lecteur audio ;
+* BPM ;
+* tonalité ;
+* style ;
+* mood ;
+* prix ;
+* licences disponibles ;
+* bouton achat ;
+* contact pour exclusivité.
+
+
+### Protection des fichiers
+
+
+* utilisez des previews taggées ;
+* évitez d’envoyer les stems avant paiement ;
+* utilisez des liens privés ;
+* archivez chaque transaction ;
+* conservez la preuve du paiement et de la licence.
+
+
+## 5.4 Contrats de licence commentés
+
+
+### Avertissement juridique
+
+
+Les modèles de contrat fournis avec ce livre sont pédagogiques. Ils doivent être adaptés à votre situation et relus par un professionnel pour une exploitation importante.
+
+
+### Clause essentielle : identification
+
+
+Le contrat doit identifier clairement :
+
+
+* le beatmaker ;
+* l’acheteur ;
+* le beat ;
+* la date ;
+* le type de licence.
+
+
+### Clause essentielle : droits accordés
+
+
+Exemple pédagogique :
+
+
+> Le beatmaker accorde à l’acheteur une licence non exclusive d’utilisation de l’instrumental nommé ________, pour la création et l’exploitation d’un morceau musical, dans les limites prévues par le présent accord.
+
+
+### Clause essentielle : interdictions
+
+
+Précisez ce que l’acheteur ne peut pas faire :
+
+
+* revendre le beat seul ;
+* prétendre être le créateur de l’instrumental ;
+* céder la licence sans accord ;
+* utiliser le beat dans une publicité sans accord ;
+* utiliser le beat pour entraîner un système d’IA sans autorisation écrite.
+
+
+### Clause IA
+
+
+Exemple pédagogique :
+
+
+> Sauf autorisation écrite du beatmaker, l’acheteur n’est pas autorisé à utiliser l’instrumental, les stems ou tout fichier fourni dans le cadre de cette licence pour entraîner, affiner, alimenter ou développer un modèle d’intelligence artificielle générative.
+
+
+Cette clause doit être relue juridiquement avant usage commercial important.
+
+
+## 5.5 Scripts de prospection
+
+
+### Le problème concret
+
+
+Beaucoup de beatmakers envoient :
+
+
+> Yo j’ai des prods, va écouter.
+
+
+Ce message est trop vague, trop centré sur vous, et ressemble à du spam.
+
+
+### Script soft
+
+
+> Salut [Prénom], j’ai écouté ton morceau [Titre]. J’aime bien [élément précis : ton flow, l’ambiance, la topline]. Je produis des prods dans une vibe proche de [style], et j’ai un beat qui pourrait coller à ton univers. Je peux t’envoyer un lien privé si tu veux écouter.
+
+
+### Script direct
+
+
+> Salut [Prénom], je suis beatmaker spécialisé en [style]. J’ai préparé une sélection de 3 prods qui peuvent correspondre à ton univers, surtout si tu cherches une ambiance [mood]. Je te mets un lien privé ici : [lien]. Si une prod te parle, je peux t’envoyer les infos de licence simplement.
+
+
+### Script collaboration
+
+
+> Salut [Prénom], j’aime beaucoup la direction de ton dernier morceau. Je pense qu’on pourrait construire quelque chose d’intéressant ensemble. Je peux te proposer un beat en collaboration, avec une split sheet claire dès le départ pour éviter tout flou. Si tu es ouvert, je t’envoie deux idées.
+
+
+**Erreur à éviter :** envoyer des liens sans personnalisation.
+
+
+## 5.6 Après la vente
+
+
+Une vente n’est pas terminée quand l’argent arrive.
+
+
+### Checklist après vente
+
+
+* [ ] Paiement confirmé.
+* [ ] Licence confirmée.
+* [ ] Contrat envoyé ou accepté.
+* [ ] Fichiers livrés.
+* [ ] Facture ou reçu envoyé.
+* [ ] Client ajouté au CRM.
+* [ ] Beat mis à jour dans le catalogue.
+* [ ] Exclusivité bloquée si nécessaire.
+* [ ] Relance programmée.
+* [ ] Lien du morceau demandé après sortie.
+
+
+### Relance simple à 30 jours
+
+
+> Salut [Prénom], j’espère que tu vas bien. Je voulais savoir si tu avais avancé sur le morceau avec le beat [Titre]. Si tu as besoin d’une version alternative, des stems ou d’un autre beat dans la même vibe, dis-moi.
+
+
+---
+
+
+# Partie 6 — Protéger ses droits sans devenir juriste
+
+
+## 6.1 Droits d’auteur et droits voisins
+
+
+### Le problème
+
+
+Les beatmakers mélangent souvent droit d’auteur, master, royalties, licence, exclusivité, droits voisins et édition. Cette confusion peut coûter cher.
+
+
+### Base simple
+
+
+Le droit d’auteur protège une création originale. Dans le cadre d’un beat, cela peut concerner la composition, la mélodie, l’harmonie, l’arrangement et certains choix créatifs.
+
+
+Les droits voisins concernent notamment certains acteurs liés à l’enregistrement, à l’interprétation ou à la production phonographique. Selon votre rôle exact, vous ne touchez pas les mêmes revenus.
+
+
+### Ce que vous devez retenir
+
+
+* vendre une licence ne veut pas forcément dire céder tous vos droits ;
+* être payé une fois ne signifie pas toujours renoncer aux royalties ;
+* une exclusivité doit être écrite précisément ;
+* les splits doivent être définis avant la sortie ;
+* les samples doivent être traités avec prudence.
+
+
+**Avertissement :** cette partie simplifie des notions juridiques. Pour un contrat important, consultez un professionnel.
+
+
+## 6.2 Sampling : ce qui est risqué
+
+
+### Le problème
+
+
+Le sampling fait partie de la culture hip-hop et beatmaking. Mais culturellement accepté ne veut pas dire juridiquement sans risque.
+
+
+Un sample reconnaissable, protégé et non autorisé peut poser problème, même s’il est court.
+
+
+### Risque plus faible, mais pas nul
+
+
+* sample très transformé ;
+* extrait non reconnaissable ;
+* source libre de droits claire ;
+* licence explicite ;
+* banque sonore autorisant l’usage commercial.
+
+
+### Risque élevé
+
+
+* mélodie reconnaissable ;
+* voix identifiable ;
+* boucle célèbre ;
+* sample long non transformé ;
+* utilisation dans un morceau commercial ;
+* synchronisation publicitaire ou audiovisuelle.
+
+
+### Alternatives
+
+
+* banques de sons avec licences claires ;
+* samples royalty-free sérieux ;
+* services de clearance selon conditions ;
+* rejouer une inspiration sans copier l’original ;
+* collaborer avec des musiciens.
+
+
+**Erreur à éviter :** croire qu’un sample trouvé sur YouTube est libre parce qu’il est accessible.
+
+
+## 6.3 Split sheets et collaborations
+
+
+### Le problème
+
+
+Vous créez un beat. Un topliner ajoute une mélodie. Un artiste écrit les paroles. Un autre producteur ajoute une basse. Le morceau sort. Personne n’a fixé les parts.
+
+
+Après la sortie, chacun se souvient différemment de sa contribution.
+
+
+### Le split sheet
+
+
+Un split sheet est un document simple qui indique la répartition des droits entre les contributeurs.
+
+
+Il doit contenir :
+
+
+* titre provisoire du morceau ;
+* date ;
+* noms des contributeurs ;
+* rôles ;
+* pourcentages ;
+* coordonnées ;
+* signatures ;
+* notes sur samples ou licences.
+
+
+### Exemple pédagogique
+
+
+| Personne  | Rôle                     | Part |
+| --------- | ------------------------ | ---- |
+| Beatmaker | Composition instrumental | 50 % |
+| Artiste   | Paroles + interprétation | 30 % |
+| Topliner  | Mélodie vocale           | 20 % |
+
+
+Ce n’est pas une règle universelle. C’est un exemple. Les splits dépendent de la contribution réelle et de l’accord entre les parties.
+
+
+### Action aujourd’hui
+
+
+Préparez un modèle de split sheet vide. Vous devez pouvoir l’envoyer en moins de cinq minutes.
+
+
+## 6.4 SACEM, sociétés de gestion et preuves de création
+
+
+### Le problème
+
+
+Beaucoup de beatmakers pensent qu’ils sont protégés uniquement parce qu’ils ont un fichier sur leur ordinateur. C’est insuffisant en cas de conflit sérieux.
+
+
+### Deux besoins différents
+
+
+1. Prouver que vous avez créé une œuvre à une date donnée.
+2. Déclarer une œuvre pour organiser la collecte de droits selon les exploitations.
+
+
+Ces deux besoins ne sont pas exactement les mêmes.
+
+
+Les conditions d’adhésion, procédures, frais, outils de protection et modalités de déclaration peuvent évoluer. Vérifiez toujours les informations directement auprès de la SACEM ou de la société de gestion concernée avant toute démarche.
+
+
+### Dossier “preuves”
+
+
+Créez un dossier :
+
+
+`PREUVES_CREATION`
+
+
+Pour chaque beat important, gardez :
+
+
+* projet DAW ;
+* export WAV ;
+* export MP3 ;
+* capture d’écran de la session ;
+* date de création ;
+* noms des collaborateurs ;
+* échanges importants ;
+* versions successives ;
+* contrats ou licences.
+
+
+**À retenir :** la protection commence par la traçabilité.
+
+
+## 6.5 IA et droit : ce qui reste flou
+
+
+L’IA introduit de nouvelles questions :
+
+
+* peut-on protéger une œuvre générée entièrement par IA ?
+* peut-on utiliser des œuvres existantes pour entraîner un modèle ?
+* que vaut une contribution humaine dans un processus assisté par IA ?
+* comment interdire l’entraînement IA dans une licence ?
+
+
+Une œuvre générée entièrement par IA, sans contribution créative humaine substantielle, risque de ne pas bénéficier d’une protection classique par le droit d’auteur.
+
+
+La règle pratique pour un beatmaker indépendant est simple : gardez une contribution humaine forte, documentez vos choix, conservez vos fichiers de travail et ajoutez des clauses claires dans vos licences.
+
+
+### Checklist IA
+
+
+* [ ] Ai-je utilisé un outil IA ?
+* [ ] Pour quelle tâche ? Idée, son, texte, mix, mastering, visuel ?
+* [ ] Ai-je modifié substantiellement le résultat ?
+* [ ] Puis-je documenter ma contribution ?
+* [ ] Ma licence interdit-elle l’entraînement IA non autorisé ?
+* [ ] Les samples ou prompts utilisés sont-ils propres ?
+
+
+---
+
+
+# Partie 7 — Se rendre visible et trouver des clients
+
+
+## 7.1 TikTok et YouTube Shorts
+
+
+### Le problème
+
+
+Beaucoup de beatmakers publient seulement des extraits audio avec une image fixe. Cela peut fonctionner, mais c’est rarement suffisant pour créer une relation.
+
+
+Les contenus courts doivent montrer une vibe, une personnalité, un processus ou une utilité.
+
+
+### Formats efficaces
+
+
+* création d’un beat en accéléré ;
+* avant / après mix ;
+* “j’ai fait un beat pour un artiste imaginaire” ;
+* décomposition d’un style ;
+* trois beats, choisissez le meilleur ;
+* challenge : créer un beat à partir d’un son du quotidien ;
+* extrait avec paroles suggérées ;
+* pack de beats par mood.
+
+
+### Routine réaliste
+
+
+| Niveau   | Fréquence                         |
+| -------- | --------------------------------- |
+| Minimal  | 2 contenus courts / semaine       |
+| Sérieux  | 3 à 5 contenus / semaine          |
+| Intensif | 1 contenu / jour pendant 30 jours |
+
+
+**Erreur à éviter :** publier tous les jours pendant une semaine puis disparaître deux mois.
+
+
+## 7.2 Instagram : reels, stories, carrousels
+
+
+Instagram peut servir à montrer votre univers, vos coulisses et vos preuves de sérieux.
+
+
+### Planning hebdomadaire simple
+
+
+* 1 reel beat process ;
+* 1 reel extrait de beat ;
+* 1 carrousel conseil ou analyse ;
+* 3 stories coulisses ;
+* 1 story sondage ;
+* 1 mise en avant client ou collaboration.
+
+
+### Exemple de carrousel
+
+
+Titre : “3 erreurs qui empêchent vos beats de se vendre”
+
+
+Slides :
+
+
+1. Hook.
+2. Erreur 1 : pas de structure.
+3. Erreur 2 : pas d’exports propres.
+4. Erreur 3 : pas de licence claire.
+5. Solution rapide.
+6. Appel à l’action : “DM ‘catalogue’ si tu veux écouter mes prods disponibles.”
+
+
+## 7.3 Prospection intelligente
+
+
+### Le problème
+
+
+Prospecter ne veut pas dire envoyer le même message à cent personnes.
+
+
+Une bonne prospection est ciblée, personnalisée et suivie.
+
+
+### Où trouver des artistes ?
+
+
+* SoundCloud ;
+* YouTube ;
+* Instagram ;
+* TikTok ;
+* scènes locales ;
+* open mics ;
+* studios ;
+* playlists indépendantes ;
+* commentaires sous clips récents.
+
+
+### CRM simple
+
+
+Créez un tableau :
+
+
+| Artiste | Style | Lien | Contacté | Réponse | Relance | Notes |
+| ------- | ----- | ---- | -------- | ------- | ------- | ----- |
+
+
+### Règle des 5 DM
+
+
+Chaque semaine, contactez cinq artistes avec un message personnalisé. Pas cinquante messages copiés-collés. Cinq vrais messages.
+
+
+## 7.4 Collaborations et placements
+
+
+Les collaborations permettent de construire des relations et des morceaux réels. Les placements peuvent venir plus tard, mais ils demandent un catalogue propre.
+
+
+### Pour préparer votre catalogue à la synchro
+
+
+* stems propres ;
+* versions instrumentales ;
+* versions sans drums ;
+* version 30 secondes ;
+* métadonnées ;
+* absence de samples risqués ;
+* droits clairs.
+
+
+**À retenir :** la synchro aime les fichiers propres et les droits simples.
+
+
+---
+
+
+# Partie 8 — S’ouvrir aux marchés globaux sans se perdre
+
+
+## 8.1 Pourquoi envisager l’international ?
+
+
+La musique circule mondialement. Un beatmaker peut collaborer avec un artiste d’un autre pays sans quitter sa chambre.
+
+
+Mais l’international ne doit pas devenir une fuite. Avant de viser l’étranger, assurez-vous que votre catalogue, vos licences, vos fichiers et vos droits sont propres.
+
+
+### Marchés à observer
+
+
+* États-Unis : culture forte du beat leasing, hip-hop, R&B, sync ;
+* Royaume-Uni : UK rap, drill, garage, afro fusion ;
+* Brésil : funk, trap, pop urbaine ;
+* Nigeria : afrobeat, amapiano, pop africaine ;
+* Corée : K-pop, R&B, rap, écriture collaborative ;
+* Chine : marché complexe, en forte croissance, opportunités mais barrières linguistiques et contractuelles.
+
+
+## 8.2 La Chine : opportunités réelles et prudence
+
+
+La Chine peut être attractive, mais ce n’est pas un raccourci magique. Les plateformes, usages, contrats, délais, paiements et barrières linguistiques exigent de la prudence.
+
+
+Plutôt que de retenir un classement figé, consultez les rapports récents de l’IFPI et les données officielles des plateformes pour suivre l’évolution réelle du marché.
+
+
+### Ce qu’il faut éviter
+
+
+* signer un contrat incompris ;
+* céder trop de droits ;
+* croire une promesse trop belle ;
+* envoyer des exclusivités sans acompte ;
+* négliger la traduction ;
+* ignorer les restrictions de plateforme.
+
+
+### Méthode prudente
+
+
+Commencez par :
+
+
+* licences non exclusives ;
+* intermédiaires fiables ;
+* contrats bilingues relus ;
+* paiements sécurisés ;
+* catalogue sans samples risqués ;
+* échanges archivés.
+
+
+## 8.3 Agrégateurs, sous-éditeurs, sync
+
+
+Selon votre objectif, vous pouvez travailler avec :
+
+
+* distributeurs numériques ;
+* bibliothèques de synchronisation ;
+* sous-éditeurs ;
+* agences de placement ;
+* managers d’artistes ;
+* studios locaux.
+
+
+Mais chaque intermédiaire doit être évalué : commission, durée, exclusivité, territoire, transparence, reporting, paiement.
+
+
+### Questions à poser avant de signer
+
+
+* Quelle durée ?
+* Quel territoire ?
+* Quelle commission ?
+* Exclusif ou non exclusif ?
+* Quels droits sont cédés ?
+* Comment les revenus sont-ils reportés ?
+* Puis-je sortir de l’accord ?
+* Qui collecte quoi ?
+
+
+## 8.4 Paiements, langue, arnaques
+
+
+### Paiements
+
+
+Utilisez des solutions traçables. Évitez les arrangements flous. Gardez preuves, factures, captures, contrats et historiques d’échange.
+
+
+### Langue
+
+
+Ne signez pas un contrat dans une langue que vous ne comprenez pas. Utilisez une traduction, puis faites relire si les enjeux sont importants.
+
+
+### Arnaques fréquentes
+
+
+* faux manager ;
+* fausse opportunité de placement ;
+* demande de frais avant paiement ;
+* promesse de célébrité ;
+* exclusivité demandée sans budget ;
+* compte Instagram douteux.
+
+
+**À retenir :** l’international peut multiplier les opportunités, mais aussi les malentendus.
+
+
+---
+
+
+# Partie 9 — Plan d’action 90 jours
+
+
+## Objectif
+
+
+En 90 jours, vous devez passer de beatmaker dispersé à beatmaker organisé, visible et capable de vendre proprement.
+
+
+Le but n’est pas de tout réussir. Le but est de mettre le système en place.
+
+
+## Semaines 1-2 : audit et réorganisation
+
+
+### Objectifs
+
+
+* identifier vos beats exploitables ;
+* renommer les fichiers prioritaires ;
+* créer votre tableau catalogue ;
+* préparer votre dossier de livraison.
+
+
+### Actions
+
+
+* [ ] lister 50 beats maximum ;
+* [ ] choisir les 10 meilleurs ;
+* [ ] noter BPM et tonalité ;
+* [ ] appliquer la règle de nommage ;
+* [ ] créer un tableau Notion, Airtable ou Sheets ;
+* [ ] préparer un dossier livraison ;
+* [ ] lancer une sauvegarde 3-2-1.
+
+
+## Semaines 3-4 : exports et premiers contenus
+
+
+### Objectifs
+
+
+* préparer les packs de 10 beats ;
+* publier les premiers contenus ;
+* tester les réactions.
+
+
+### Actions
+
+
+* [ ] exporter 10 MP3 previews ;
+* [ ] exporter 5 WAV prêts ;
+* [ ] préparer les stems de 3 beats ;
+* [ ] publier 4 contenus courts ;
+* [ ] créer une bio claire ;
+* [ ] préparer une page ou un lien privé.
+
+
+## Semaines 5-8 : mise en vente et prospection
+
+
+### Objectifs
+
+
+* mettre en ligne vos beats ;
+* contacter des artistes ciblés ;
+* créer une fiche de prix ;
+* obtenir une première discussion sérieuse.
+
+
+### Actions
+
+
+* [ ] publier 10 beats sur une plateforme ou page privée ;
+* [ ] créer trois offres de licence ;
+* [ ] écrire vos scripts DM ;
+* [ ] contacter 20 artistes en quatre semaines ;
+* [ ] relancer les réponses positives ;
+* [ ] suivre tout dans un CRM.
+
+
+## Semaines 9-12 : vente, ajustement, collaboration
+
+
+### Objectifs
+
+
+* améliorer ce qui fonctionne ;
+* finaliser une vente ou une collaboration ;
+* préparer vos documents ;
+* mesurer les résultats.
+
+
+### Actions
+
+
+* [ ] analyser les beats les plus écoutés ;
+* [ ] ajuster titres, tags, prix ;
+* [ ] préparer une split sheet ;
+* [ ] envoyer une proposition de collaboration ;
+* [ ] relancer les prospects chauds ;
+* [ ] archiver les échanges ;
+* [ ] faire le bilan des 90 jours.
+
+
+## Checklist finale 90 jours
+
+
+* [ ] 10 beats propres dans le catalogue.
+* [ ] 10 MP3 previews prêts.
+* [ ] 5 WAV prêts.
+* [ ] 3 packs stems prêts.
+* [ ] 1 tableau catalogue actif.
+* [ ] 1 dossier sauvegardé.
+* [ ] 1 fiche de prix.
+* [ ] 1 modèle de licence.
+* [ ] 1 split sheet.
+* [ ] 1 CRM simple.
+* [ ] 20 artistes contactés.
+* [ ] 8 contenus publiés minimum.
+* [ ] 1 collaboration ou vente en cours.
+
+
+---
+
+
+# Annexes
+
+
+# Annexe A — Fichiers bonus inclus
+
+
+Le pack complet comprend un dossier bonus intitulé **Beatmaker_Toolkit.zip**.
+
+
+Il contient les fichiers suivants :
+
+
+1. **README_START_HERE.pdf**
+   Guide d’utilisation du toolkit et ordre conseillé pour exploiter les fichiers.
+
+
+2. **CONTRAT_LICENCE_NON_EXCLUSIVE.docx**
+   Modèle pédagogique de licence non exclusive, avec durée configurable, restrictions d’usage, clause IA et clause samples.
+
+
+3. **AVENANT_UNLIMITED.docx**
+   Avenant permettant d’ajouter une option unlimited à une licence non exclusive.
+
+
+4. **SPLIT_SHEET_TEMPLATE.xlsx**
+   Tableau simple pour répartir les droits entre beatmaker, artiste, topliner et autres contributeurs.
+
+
+5. **BEAT_CATALOGUE_TEMPLATE.xlsx**
+   Tableau de suivi pour organiser vos beats : style, mood, BPM, tonalité, statut, prix, client, date de vente et lien d’écoute.
+
+
+6. **CHECKLIST_LIVRAISON_CLIENT.txt**
+   Liste de vérification avant livraison d’un beat à un client.
+
+
+7. **FICHE_PRIX_BEATMAKER.docx**
+   Modèle de grille tarifaire avec licence standard, unlimited, exclusive et options supplémentaires.
+
+
+8. **SCRIPTS_PROSPECTION.txt**
+   Scripts de premier contact, relance et proposition de collaboration.
+
+
+9. **CHECKLIST_90_JOURS.pdf**
+   Plan d’action imprimable pour appliquer le guide sur 90 jours.
+
+
+Important : les modèles juridiques sont fournis à titre pédagogique. Ils doivent être adaptés à votre situation et relus par un professionnel avant usage commercial important.
+
+
+# Annexe B — Glossaire rapide
+
+
+| Français              | English                   | Définition courte                                                    |
+| --------------------- | ------------------------- | -------------------------------------------------------------------- |
+| Beatmaker             | Beatmaker / producer      | Créateur d’instrumentales, rythmes et ambiances musicales            |
+| Stem                  | Stem                      | Piste séparée d’un beat : drums, basse, mélodie, FX                  |
+| Split sheet           | Split sheet               | Document qui fixe la répartition des droits entre collaborateurs     |
+| Royalty               | Royalty                   | Revenu issu de l’exploitation d’une œuvre ou d’un enregistrement     |
+| Licence non exclusive | Non-exclusive license     | Droit d’utiliser un beat sans exclusivité                            |
+| Licence exclusive     | Exclusive license         | Droit exclusif d’exploitation selon les limites prévues au contrat   |
+| Sampling              | Sampling                  | Utilisation d’un extrait sonore existant                             |
+| Clearance             | Clearance                 | Autorisation nécessaire pour utiliser une œuvre ou un sample protégé |
+| DAW                   | Digital Audio Workstation | Logiciel de production musicale                                      |
+| Sync                  | Synchronization           | Utilisation d’une musique avec une image : film, pub, jeu vidéo      |
+| Master                | Master recording          | Enregistrement final exploité commercialement                        |
+| Publishing            | Publishing                | Droits liés à la composition et à l’édition musicale                 |
+| Watermark audio       | Audio watermark           | Tag sonore placé sur une preview pour limiter l’usage non autorisé   |
+| CRM                   | CRM                       | Outil de suivi des contacts, prospects et clients                    |
+
+
+# Annexe C — Ressources par pays
+
+
+## France
+
+
+* SACEM : droits d’auteur, déclaration d’œuvres, protection selon conditions.
+* SPPF : droits voisins des producteurs phonographiques indépendants.
+* ADAMI : droits des artistes-interprètes selon situations.
+
+
+## États-Unis
+
+
+* US Copyright Office : enregistrement des œuvres et ressources officielles sur le copyright.
+* ASCAP / BMI : sociétés de gestion de droits d’exécution publique.
+* SoundExchange : collecte de certains droits numériques liés aux enregistrements.
+
+
+## Royaume-Uni
+
+
+* PRS for Music : droits liés aux auteurs, compositeurs et éditeurs.
+* PPL : droits liés aux enregistrements et interprètes.
+
+
+## Chine
+
+
+* National Copyright Administration of China : ressources officielles sur le copyright.
+* China Music Copyright Society : gestion collective selon cas.
+
+
+## Plateformes et outils à surveiller
+
+
+* BeatStars ;
+* Airbit ;
+* SoundClick ;
+* Music Gateway ;
+* Songtradr ;
+* Audio Network ;
+* distributeurs numériques ;
+* plateformes de synchronisation.
+
+
+# Annexe D — Sources vérifiées
+
+
+| Source                | Sujet                                          | Date de consultation | URL                                                                                                |
+| --------------------- | ---------------------------------------------- | -------------------: | -------------------------------------------------------------------------------------------------- |
+| Service-Public        | Seuils TVA / micro-entreprise                  |             Mai 2026 | [https://entreprendre.service-public.fr/](https://entreprendre.service-public.fr/)                 |
+| SACEM                 | Adhésion / déclaration / protection            |             Mai 2026 | [https://www.sacem.fr/](https://www.sacem.fr/)                                                     |
+| BeatStars             | Tarifs et fonctionnalités                      |             Mai 2026 | [https://www.beatstars.com/](https://www.beatstars.com/)                                           |
+| TikTok                | Règles d’utilisation commerciale de la musique |             Mai 2026 | [https://www.tiktok.com/creators/creator-portal/](https://www.tiktok.com/creators/creator-portal/) |
+| US Copyright Office   | Œuvres générées par IA                         |             Mai 2026 | [https://www.copyright.gov/](https://www.copyright.gov/)                                           |
+| IFPI                  | Marchés musicaux mondiaux                      |             Mai 2026 | [https://www.ifpi.org/](https://www.ifpi.org/)                                                     |
+| Commission européenne | AI Act                                         |             Mai 2026 | [https://digital-strategy.ec.europa.eu/](https://digital-strategy.ec.europa.eu/)                   |
+
+
+Les sources ci-dessus doivent être vérifiées à nouveau avant publication commerciale, notamment si les règles de plateformes, les seuils fiscaux, les prix, les conditions d’adhésion ou les positions juridiques ont évolué.
+
+
+# Annexe E — Instructions d’utilisation du toolkit
+
+
+Le toolkit bonus est conçu pour être utilisé en parallèle du livre.
+
+
+Ordre recommandé :
+
+
+1. Lire la Partie 4, puis utiliser **BEAT_CATALOGUE_TEMPLATE.xlsx**.
+2. Lire la Partie 5, puis utiliser **FICHE_PRIX_BEATMAKER.docx** et **CONTRAT_LICENCE_NON_EXCLUSIVE.docx**.
+3. Pour toute collaboration, utiliser **SPLIT_SHEET_TEMPLATE.xlsx**.
+4. Pour chaque vente, utiliser **CHECKLIST_LIVRAISON_CLIENT.txt**.
+5. Pour la prospection, utiliser **SCRIPTS_PROSPECTION.txt**.
+6. Pour appliquer le livre, imprimer ou suivre **CHECKLIST_90_JOURS.pdf**.
+
+
+Les contrats, avenants et split sheets doivent toujours être adaptés à votre situation et relus par un professionnel en cas d’enjeu important.
+
+
+---
+
+
+# Conclusion
+
+
+Vous n’avez pas besoin d’attendre d’être connu pour agir comme un professionnel.
+
+
+Vous pouvez commencer maintenant : renommer vos fichiers, préparer vos exports, clarifier vos licences, créer votre fiche de prix, envoyer des messages propres, suivre vos prospects, protéger vos collaborations.
+
+
+Le beatmaker indépendant de 2027 n’est pas seulement celui qui produit le plus. C’est celui qui sait transformer ses idées en catalogue, son catalogue en offres, ses offres en relations, et ses relations en activité durable.
+
+
+Votre prochain objectif n’est pas de faire cent nouveaux beats.
+
+
+Votre prochain objectif est de rendre dix beats réellement exploitables.
+
+
+Commencez par là.
+
+
+---
+
+
+# TOOLKIT BONUS — CONTENU COMPLET DES FICHIERS À CRÉER
+
+
+Cette section sert à créer les fichiers séparés du dossier **Beatmaker_Toolkit.zip**. Elle ne doit pas forcément apparaître dans le PDF final du livre.
+
+
+---
+
+
+# 1. README_START_HERE.pdf
+
+
+## BIENVENUE DANS LE KIT BEATMAKER INDÉPENDANT
+
+
+Ce dossier contient les fichiers bonus du livre **Beatmaker indépendant 2027**.
+
+
+## Ordre d’utilisation recommandé
+
+
+1. Lisez la Partie 4 du livre — organisation du catalogue — puis ouvrez **BEAT_CATALOGUE_TEMPLATE.xlsx**.
+2. Lisez la Partie 5 — vente — puis ouvrez **FICHE_PRIX_BEATMAKER.docx** et **CONTRAT_LICENCE_NON_EXCLUSIVE.docx**.
+3. Pour chaque collaboration, ouvrez **SPLIT_SHEET_TEMPLATE.xlsx**.
+4. Pour chaque vente, utilisez **CHECKLIST_LIVRAISON_CLIENT.txt**.
+5. Pour prospecter, utilisez **SCRIPTS_PROSPECTION.txt**.
+6. Pour suivre votre progression, imprimez ou suivez **CHECKLIST_90_JOURS.pdf**.
+
+
+## Avertissements juridiques importants
+
+
+* Les contrats, avenants, split sheets et conseils sont des modèles pédagogiques.
+* Ils ne remplacent pas un avis juridique personnalisé.
+* Faites-les relire par un avocat spécialisé en droit de la musique avant toute utilisation professionnelle importante.
+* Si votre beat contient des samples externes, non autorisés ou dont le statut juridique est incertain, renseignez l’article 7 du contrat et ajoutez une annexe écrite avant toute exploitation publique ou commerciale.
+
+
+## Liens utiles
+
+
+* Sources vérifiées : reportez-vous à l’Annexe D du livre.
+* Accès aux mises à jour et fichiers bonus : [URL À COMPLÉTER]
+* Support : [EMAIL À COMPLÉTER]
+
+
+© Beatmaker indépendant 2027 — Tous droits réservés. Reproduction interdite.
+
+
+---
+
+
+# 2. CONTRAT_LICENCE_NON_EXCLUSIVE.docx
+
+
+# CONTRAT DE LICENCE NON EXCLUSIVE
+
+
+## Version pédagogique — à adapter et à faire relire par un avocat
+
+
+Entre les soussignés :
+
+
+## Le Concédant — beatmaker
+
+
+Nom / alias : ……………………………………………………
+
+
+Adresse : ……………………………………………………
+
+
+SIRET, numéro d’entreprise ou équivalent si professionnel : ……………………………………………………
+
+
+Courriel : ……………………………………………………
+
+
+## Le Licencié — artiste, label ou acheteur
+
+
+Nom / nom d’artiste : ……………………………………………………
+
+
+Adresse : ……………………………………………………
+
+
+Courriel : ……………………………………………………
+
+
+Il a été convenu ce qui suit :
+
+
+## Article 1 — Objet
+
+
+Le Concédant accorde au Licencié une licence non exclusive, non transférable, pour le beat intitulé :
+
+
+`……………………………………………………`
+
+
+Version : `……………………………………………………`
+
+
+Cette licence permet au Licencié d’utiliser le beat dans les conditions définies ci-dessous.
+
+
+## Article 2 — Droits accordés
+
+
+Le Licencié a le droit d’utiliser le beat pour :
+
+
+* un enregistrement sonore, c’est-à-dire un morceau ;
+* la diffusion sur des plateformes de streaming musical selon les limites prévues par la licence ;
+* une vidéo YouTube non monétisée ;
+* des performances live non commerciales ;
+* la promotion du morceau dans un cadre non publicitaire, sauf accord contraire écrit.
+
+
+## Article 3 — Restrictions
+
+
+Le Licencié n’a pas le droit de :
+
+
+* revendre le beat seul ;
+* intégrer le beat dans un pack de samples, loop kit ou beat pack ;
+* prétendre être le créateur original de l’instrumental ;
+* céder ou sous-licencier le beat à un tiers ;
+* utiliser le beat dans une publicité sans accord écrit ;
+* utiliser le beat dans une œuvre audiovisuelle commerciale sans accord écrit ;
+* utiliser le beat, les stems ou tout fichier fourni pour entraîner, affiner, alimenter ou développer un système d’intelligence artificielle générative ;
+* fournir le beat ou les stems à un tiers dans le but d’entraîner un système d’IA.
+
+
+## Article 4 — Prix et paiement
+
+
+Prix convenu : ………… €.
+
+
+Le paiement doit être reçu avant livraison des fichiers, sauf accord contraire écrit.
+
+
+Modalité choisie :
+
+
+* [ ] Paiement intégral avant livraison.
+* [ ] Acompte de 50 %, puis solde avant livraison finale.
+* [ ] Autre : ……………………………………………………
+
+
+## Article 5 — Durée de la licence
+
+
+Cochez la case choisie :
+
+
+* [ ] 1 an
+* [ ] 3 ans
+* [ ] 5 ans
+* [ ] Durée légale des droits d’auteur selon le droit applicable
+* [ ] Autre : ……………………………………………………
+
+
+La licence prend effet à la date de signature du présent contrat.
+
+
+## Article 6 — Crédits
+
+
+Mention obligatoire :
+
+
+`Prod. par [nom du beatmaker]`
+
+
+ou
+
+
+`Beatmaker : [nom du beatmaker]`
+
+
+Toute formulation différente doit être acceptée par écrit par le Concédant.
+
+
+## Article 7 — Échantillons, samples et responsabilité
+
+
+Le Concédant déclare être l’auteur original du beat ou détenir les droits nécessaires sur les éléments utilisés.
+
+
+Si le beat contient des samples externes non autorisés ou dont le statut juridique est incertain :
+
+
+* les parties reconnaissent que l’exploitation publique ou commerciale peut présenter un risque juridique, notamment en cas de réclamation d’un tiers ;
+* les conditions d’utilisation, de clearance, de prise en charge des frais éventuels et de répartition de responsabilité doivent être précisées par écrit en annexe avant toute sortie publique ou commerciale ;
+* à défaut d’annexe écrite, le Licencié s’engage à ne pas exploiter publiquement ou commercialement le beat contenant lesdits samples tant que leur statut juridique n’a pas été clarifié.
+
+
+## Article 8 — Droit applicable et litiges
+
+
+Le présent contrat est soumis au droit suivant : ……………………………………………………
+
+
+À défaut de précision, le droit français est proposé comme référence pédagogique dans ce modèle.
+
+
+En cas de litige, les parties s’engagent à rechercher une solution amiable avant toute procédure.
+
+
+Tribunaux compétents : ……………………………………………………
+
+
+## Note sur l’option Unlimited
+
+
+Cette licence ne couvre pas l’utilisation commerciale sur les plateformes vidéo générant des revenus publicitaires, ni les usages plus larges prévus dans l’option Unlimited.
+
+
+Pour ces usages, utilisez l’avenant **AVENANT_UNLIMITED.docx** ou un contrat spécifique.
+
+
+Fait à : ……………………………………………………
+
+
+Le : ……………………………………………………
+
+
+Signature du Concédant :
+
+
+……………………………………………………
+
+
+Signature du Licencié :
+
+
+……………………………………………………
+
+
+---
+
+
+# 3. AVENANT_UNLIMITED.docx
+
+
+# AVENANT À LA LICENCE NON EXCLUSIVE — OPTION UNLIMITED
+
+
+## Version pédagogique — à adapter et à faire relire par un avocat
+
+
+Cet avenant complète le contrat de licence non exclusive signé entre les mêmes parties pour le beat :
+
+
+Titre du beat : ……………………………………………………
+
+
+Date du contrat initial : ……………………………………………………
+
+
+## Parties
+
+
+Concédant : ……………………………………………………
+
+
+Licencié : ……………………………………………………
+
+
+## Droits supplémentaires accordés
+
+
+Le Licencié bénéficie, en supplément de la licence initiale, des droits suivants :
+
+
+* vidéos monétisées sur YouTube, sous réserve du respect des règles de monétisation et de droits d’auteur propres à la plateforme ;
+* vidéos monétisées sur TikTok ou autres plateformes sociales, sous réserve des règles, programmes et conditions d’éligibilité propres à chaque plateforme ;
+* performances live avec billetterie payante ;
+* utilisation sur les réseaux sociaux à des fins promotionnelles ;
+* exploitation en streaming musical selon les limites prévues dans la licence initiale ou dans le présent avenant.
+
+
+## Prix de l’option
+
+
+Le prix de cette option est de : ………… €.
+
+
+Ce montant est :
+
+
+* [ ] inclus dans le prix total de la licence ;
+* [ ] ajouté en supplément de la licence standard ;
+* [ ] autre : ……………………………………………………
+
+
+## Clauses inchangées
+
+
+Toutes les autres clauses du contrat initial restent inchangées, sauf mention contraire écrite.
+
+
+Fait à : ……………………………………………………
+
+
+Le : ……………………………………………………
+
+
+Signature du Concédant :
+
+
+……………………………………………………
+
+
+Signature du Licencié :
+
+
+……………………………………………………
+
+
+---
+
+
+# 4. SPLIT_SHEET_TEMPLATE.xlsx
+
+
+Créez un fichier Excel ou Google Sheets avec les colonnes suivantes :
+
+
+| Nom / alias | Rôle                      | Pourcentage droits d’auteur | Contact | Signature | Date |
+| ----------- | ------------------------- | --------------------------: | ------- | --------- | ---- |
+| Beatmaker   | Composition instrumentale |                        50 % |         |           |      |
+| Artiste     | Paroles / interprétation  |                        30 % |         |           |      |
+| Topliner    | Mélodie vocale            |                        20 % |         |           |      |
+| Autre       | …                         |                           … |         |           |      |
+| Total       |                           |                       100 % |         |           |      |
+
+
+## Informations sur l’œuvre
+
+
+Titre provisoire : ……………………………………………………
+
+
+Titre final : ……………………………………………………
+
+
+Date de création : ……………………………………………………
+
+
+Durée : ……………………………………………………
+
+
+BPM : ……………………………………………………
+
+
+Tonalité : ……………………………………………………
+
+
+Samples utilisés : oui / non / à préciser
+
+
+Commentaires :
+
+
+…………………………………………………………………………………………………………
+
+
+…………………………………………………………………………………………………………
+
+
+---
+
+
+# 5. BEAT_CATALOGUE_TEMPLATE.xlsx
+
+
+Créez un fichier Excel ou Google Sheets avec les colonnes suivantes :
+
+
+| Nom du fichier                               | Titre             | Style | Mood | BPM | Tonalité | Statut     | Prix standard | Prix unlimited | Prix exclusif | Client | Date vente | Lien écoute privé | Samples utilisés | Contrat signé | Facture envoyée |
+| -------------------------------------------- | ----------------- | ----- | ---- | --: | -------- | ---------- | ------------: | -------------: | ------------: | ------ | ---------- | ----------------- | ---------------- | ------------- | --------------- |
+| 2026-05-16_TRAP_DARK_140BPM_Bm_AVAILABLE.wav | Midnight Pressure | Trap  | Dark | 140 | Bm       | Disponible |          49 € |          149 € |         700 € | —      | —          | lien privé        | non              | non           | non             |
+
+
+## Statuts recommandés
+
+
+* DRAFT : idée non finalisée.
+* READY : prêt à exporter.
+* AVAILABLE : disponible à la vente.
+* SENT : envoyé à un artiste.
+* LEASED : vendu en non-exclusif.
+* EXCLUSIVE : vendu en exclusif.
+* LOCKED : à ne plus envoyer.
+
+
+---
+
+
+# 6. CHECKLIST_LIVRAISON_CLIENT.txt
+
+
+# CHECKLIST LIVRAISON CLIENT — Beatmaker indépendant
+
+
+Beat : ______________________________
+
+
+Client : ______________________________
+
+
+Date : ______________________________
+
+
+Type de licence : ______________________________
+
+
+## Avant envoi
+
+
+[ ] Paiement reçu.
+
+
+[ ] Type de licence confirmé.
+
+
+[ ] Contrat signé ou conditions acceptées.
+
+
+[ ] Samples vérifiés ou signalés.
+
+
+[ ] BPM indiqué.
+
+
+[ ] Tonalité indiquée.
+
+
+[ ] Crédit obligatoire indiqué.
+
+
+## Fichiers à envoyer
+
+
+[ ] Beat master WAV 24 bit / 44.1 kHz ou format convenu.
+
+
+[ ] MP3 320 kbps taggé.
+
+
+[ ] Beat sans 808 / sans basse si prévu dans la licence.
+
+
+[ ] Beat sans lead mélodique si prévu.
+
+
+[ ] Stems séparés si prévus : kick, snare, hats, basse, mélodie, FX.
+
+
+[ ] Contrat ou licence en PDF.
+
+
+[ ] Facture ou reçu.
+
+
+[ ] Lien de téléchargement sécurisé.
+
+
+## Après envoi
+
+
+[ ] Client ajouté au tableau de bord.
+
+
+[ ] Statut du beat mis à jour.
+
+
+[ ] Exclusivité bloquée si nécessaire.
+
+
+[ ] Relance programmée à J+30.
+
+
+[ ] Lien de sortie demandé après publication.
+
+
+---
+
+
+# 7. FICHE_PRIX_BEATMAKER.docx
+
+
+# FICHE DE PRIX — [VOTRE NOM D’ARTISTE]
+
+
+Mise à jour : ……………………………………………………
+
+
+Contact : ……………………………………………………
+
+
+Site / lien beat store : ……………………………………………………
+
+
+## Licence non exclusive standard
+
+
+Droits :
+
+
+* un morceau ;
+* streaming selon conditions ;
+* une vidéo non monétisée ;
+* live non commercial ;
+* beat toujours revendable à d’autres artistes.
+
+
+Cette licence ne permet pas la monétisation YouTube, TikTok ou autres plateformes vidéo générant des revenus publicitaires.
+
+
+Prix : ………… €
+
+
+## Licence Unlimited / Premium
+
+
+Droits :
+
+
+* streaming plus large selon conditions ;
+* vidéos monétisées sous réserve des règles des plateformes ;
+* live payant ;
+* réseaux sociaux ;
+* stems inclus si prévu.
+
+
+Prix : ………… €
+
+
+## Licence exclusive
+
+
+Droits exclusifs d’exploitation dans les limites définies par le contrat : territoire, durée, supports, usages autorisés.
+
+
+Le beat n’est plus proposé à d’autres acheteurs après signature et paiement selon les conditions prévues.
+
+
+Prix : ………… €
+
+
+## Options supplémentaires
+
+
+* Mixage du morceau final : ………… €
+* Stems supplémentaires : ………… €
+* Livraison urgente 48h : ………… €
+* Adaptation sur mesure : ………… €
+* Version alternative : ………… €
+
+
+## Informations importantes
+
+
+Samples utilisés dans ce beat : oui / non / à préciser.
+
+
+Clause IA : l’utilisation du beat ou des stems pour entraîner un système d’intelligence artificielle est interdite sauf accord écrit spécifique.
+
+
+Les prix peuvent varier selon le projet, l’artiste, la licence, les usages demandés et les droits inclus.
+
+
+---
+
+
+# 8. SCRIPTS_PROSPECTION.txt
+
+
+# SCRIPTS DE PROSPECTION — Beatmaker indépendant
+
+
+## Script 1 — Premier contact
+
+
+Salut [Prénom], j’ai écouté ton titre [Titre]. J’aime beaucoup [élément précis : énergie, flow, voix, univers, topline].
+
+
+Je suis beatmaker spécialisé en [style]. J’ai une prod qui pourrait coller à ton univers. Je peux t’envoyer un lien privé si tu veux écouter.
+
+
+## Script 2 — Envoi direct avec sélection courte
+
+
+Salut [Prénom], je t’envoie une sélection courte de 3 beats dans une vibe [style / mood].
+
+
+Lien privé : [lien]
+
+
+Les licences sont simples : standard, unlimited ou exclusive. Si une prod te parle, je peux t’envoyer les détails propres.
+
+
+## Script 3 — Relance douce
+
+
+Salut [Prénom], je voulais juste savoir si tu avais eu le temps d’écouter le beat que je t’ai envoyé.
+
+
+Aucun souci si ce n’est pas le bon moment. Si tu veux une vibe plus précise, je peux aussi t’envoyer une autre sélection.
+
+
+## Script 4 — Proposition de collaboration
+
+
+Salut [Prénom], j’aime beaucoup ton univers. Je pense qu’on pourrait construire un morceau intéressant ensemble.
+
+
+Je peux te proposer une prod en collaboration, avec une split sheet claire dès le départ. On définit les parts ensemble selon la contribution de chacun.
+
+
+Si tu es ouvert, je t’envoie deux idées.
+
+
+## Script 5 — Relance après achat
+
+
+Salut [Prénom], j’espère que tu vas bien. Je voulais savoir si tu avais avancé sur le morceau avec le beat [Titre].
+
+
+Si tu as besoin d’une version alternative, des stems ou d’un autre beat dans la même vibe, dis-moi.
+
+
+---
+
+
+# 9. CHECKLIST_90_JOURS.pdf
+
+
+# CHECKLIST 90 JOURS — Beatmaker indépendant
+
+
+## Semaines 1-2 — Audit et réorganisation
+
+
+[ ] Faire l’audit du disque dur.
+
+
+[ ] Identifier les 50 beats les plus exploitables.
+
+
+[ ] Choisir les 10 meilleurs beats.
+
+
+[ ] Appliquer la règle de nommage.
+
+
+[ ] Noter BPM et tonalité.
+
+
+[ ] Créer le tableau catalogue.
+
+
+[ ] Préparer le dossier de livraison.
+
+
+[ ] Mettre en place une sauvegarde 3-2-1.
+
+
+## Semaines 3-4 — Exports et contenu
+
+
+[ ] Exporter 10 MP3 previews.
+
+
+[ ] Exporter 5 WAV propres.
+
+
+[ ] Préparer les stems de 3 beats.
+
+
+[ ] Créer 4 contenus courts.
+
+
+[ ] Préparer une bio claire.
+
+
+[ ] Créer un lien privé vers une sélection.
+
+
+[ ] Publier régulièrement pendant deux semaines.
+
+
+## Semaines 5-8 — Vente et prospection
+
+
+[ ] Créer une fiche de prix.
+
+
+[ ] Publier 10 beats sur une plateforme ou page privée.
+
+
+[ ] Préparer un modèle de licence.
+
+
+[ ] Préparer les scripts DM.
+
+
+[ ] Contacter 20 artistes en quatre semaines.
+
+
+[ ] Relancer les réponses positives.
+
+
+[ ] Suivre les prospects dans un CRM.
+
+
+[ ] Objectif : obtenir au moins une discussion sérieuse ou une vente.
+
+
+## Semaines 9-12 — Ajustement et collaboration
+
+
+[ ] Analyser les beats les plus écoutés.
+
+
+[ ] Ajuster les titres, tags et prix.
+
+
+[ ] Préparer une split sheet.
+
+
+[ ] Proposer une collaboration à un artiste.
+
+
+[ ] Relancer les prospects chauds.
+
+
+[ ] Archiver les échanges importants.
+
+
+[ ] Faire le bilan des 90 jours.
+
+
+## Bilan final
+
+
+[ ] Nombre de beats organisés : ______
+
+
+[ ] Nombre de beats mis en ligne : ______
+
+
+[ ] Nombre d’artistes contactés : ______
+
+
+[ ] Nombre de réponses obtenues : ______
+
+
+[ ] Nombre de ventes : ______
+
+
+[ ] Nombre de collaborations lancées : ______
+
+
+[ ] Prochaine priorité pour les 90 jours suivants : ______________________
+
+
+---
+
+
+# INSTRUCTIONS DE PRODUCTION FINALES
+
+
+## 1. Créer le livre PDF
+
+
+Copiez le livre principal depuis le titre **BEATMAKER INDÉPENDANT 2027** jusqu’à la conclusion dans Google Docs ou Word.
+
+
+Ajoutez les Annexes A à E dans le PDF du livre.
+
+
+Ne mettez pas forcément le contenu complet brut des fichiers bonus dans le PDF final : le toolkit complet doit être livré séparément dans le ZIP.
+
+
+Mise en page recommandée :
+
+
+* police lisible ;
+* taille 11 ou 12 ;
+* marges confortables ;
+* sauts de page entre les parties ;
+* titres hiérarchisés ;
+* encadrés visuels pour “À retenir”, “Erreur à éviter” et “Action aujourd’hui” ;
+* couverture professionnelle.
+
+
+Exportez sous le nom :
+
+
+**Beatmaker_independant_2027.pdf**
+
+
+## 2. Créer les fichiers bonus
+
+
+À partir de la section **TOOLKIT BONUS — CONTENU COMPLET DES FICHIERS À CRÉER**, créez les 9 fichiers suivants :
+
+
+* README_START_HERE.pdf
+* CONTRAT_LICENCE_NON_EXCLUSIVE.docx
+* AVENANT_UNLIMITED.docx
+* SPLIT_SHEET_TEMPLATE.xlsx
+* BEAT_CATALOGUE_TEMPLATE.xlsx
+* CHECKLIST_LIVRAISON_CLIENT.txt
+* FICHE_PRIX_BEATMAKER.docx
+* SCRIPTS_PROSPECTION.txt
+* CHECKLIST_90_JOURS.pdf
+
+
+## 3. Compresser le toolkit
+
+
+Placez les 9 fichiers dans un dossier nommé :
+
+
+**Beatmaker_Toolkit**
+
+
+Puis compressez-le en :
+
+
+**Beatmaker_Toolkit.zip**
+
+
+## 4. Tester comme un acheteur
+
+
+Avant publication :
+
+
+* ouvrez le PDF ;
+* ouvrez le ZIP ;
+* vérifiez chaque fichier ;
+* testez les liens ;
+* vérifiez que les placeholders [URL], [EMAIL], [VOTRE NOM] sont remplacés ou volontairement laissés comme champs à compléter ;
+* vérifiez que les contrats s’ouvrent correctement ;
+* vérifiez que les tableaux sont modifiables.
+
+
+## 5. Relire juridiquement
+
+
+Avant commercialisation, faites relire au minimum :
+
+
+* le contrat non exclusif ;
+* l’avenant unlimited ;
+* la split sheet ;
+* la Partie 6 du livre.
+
+
+## 6. Publier
+
+
+Déposez le PDF + le ZIP sur :
+
+
+* Gumroad ;
+* Payhip ;
+* votre propre site ;
+* une autre plateforme de vente adaptée.
+
+
+Prix recommandé pour le pack complet :
+
+
+**39 à 49 €**.
+
+
+## 7. Après publication
+
+
+Après les premiers retours clients :
+
+
+* corrigez les éventuelles incompréhensions ;
+* améliorez les bonus ;
+* mettez à jour les sources ;
+* publiez une version 1.1.
+
+
+Le 10/10 viendra avec les retours réels du marché.
