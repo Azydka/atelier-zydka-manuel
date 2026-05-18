@@ -318,7 +318,8 @@ def z_block(c, page_num: int, force=False):
 
 
 def note(c, text: str, y_top=35 * mm, dark=False):
-    draw_micro(c, text, NOTE_X, y_top, NOTE_COL, dark=dark)
+    # Notes latérales désactivées volontairement.
+    return
 
 
 def finish(c):
@@ -1295,7 +1296,7 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
     folio(c, page)
     z_block(c, page)
     signature_line(c, M_LEFT, 27 * mm)
-    draw_mono(c, f"Chapitre {index:02d} / Texte courant", M_LEFT, 35 * mm, MAIN_COL)
+    draw_mono(c, f"Chapitre {index:02d} / Texte courant", M_LEFT, 26 * mm, MAIN_COL)
     y = draw_h2(c, title_clean, M_LEFT, 43 * mm, MAIN_COL, size=29)
     y += 7 * mm
 
@@ -1343,8 +1344,8 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
             folio(c, page)
             z_block(c, page)
             signature_line(c, M_LEFT, 27 * mm)
-            draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 35 * mm, MAIN_COL)
-            draw_micro(c, "SUITE DU CHAPITRE. GARDER LES PARAGRAPHES COURTS ET LES INTERTITRES VISIBLES.", NOTE_X, 35 * mm, NOTE_COL)
+            draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 26 * mm, MAIN_COL)
+            # note latérale désactivée
             y = 50 * mm
             continue
 
@@ -1358,8 +1359,8 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
                 folio(c, page)
                 z_block(c, page)
                 signature_line(c, M_LEFT, 27 * mm)
-                draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 35 * mm, MAIN_COL)
-                draw_micro(c, "SUITE DU CHAPITRE. GARDER LES PARAGRAPHES COURTS ET LES INTERTITRES VISIBLES.", NOTE_X, 35 * mm, NOTE_COL)
+                draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 26 * mm, MAIN_COL)
+                # note latérale désactivée
                 y = 50 * mm
             continue
 
@@ -1377,7 +1378,7 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
             folio(c, page)
             z_block(c, page)
             signature_line(c, M_LEFT, 27 * mm)
-            draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 35 * mm, MAIN_COL)
+            draw_mono(c, f"Chapitre {index:02d} / Suite", M_LEFT, 26 * mm, MAIN_COL)
             y = 50 * mm
             note(c, "Suite du chapitre. Garder les paragraphes courts et les intertitres visibles.", 35 * mm)
 
