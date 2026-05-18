@@ -1318,9 +1318,10 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
     page = start_page
     title_clean = re.sub(r"^Chapitre\s+\d+\s*[:\-]\s*", "", chapter.title, flags=re.I)
 
-    # Ouverture pour chaque grand chapitre.
-    page += 1
-    part_opener(c, page, title_clean[:80], "Lire, cadrer, construire : transformer une matière brute en système exploitable.")
+    # Ouverture de chapitre optionnelle.
+    if FEATURES.get("include_chapter_openers", False):
+        page += 1
+        part_opener(c, page, title_clean[:80], "Lire, cadrer, construire : transformer une matière brute en système exploitable.")
 
     page += 1
     draw_bg(c, PAPER)
