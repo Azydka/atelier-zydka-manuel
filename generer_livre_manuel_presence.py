@@ -1302,7 +1302,7 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
 
         if para.startswith("[OPENING_IMAGE:"):
             opening_image_name, opening_title = parse_opening_image_block(para)
-            if opening_image_name:
+            if opening_image_name and FEATURES.get("include_visual_opening_pages", False):
                 finish(c)
                 page += 1
                 page = draw_opening_image_page(c, opening_image_name, opening_title, page)
