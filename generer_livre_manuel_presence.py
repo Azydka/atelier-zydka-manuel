@@ -350,83 +350,33 @@ def parse_markdown_table_row(line: str) -> List[str]:
 
 
 def parse_chapters(raw: str) -> List[Chapter]:
-    raw = raw.replace("\r\n", "\n")
-    lines = [clean_text(x) for x in raw.split("\n")]
+    """
+    Parser intelligent externalisé.
 
-    chapters: List[Chapter] = []
-    current_title = "Introduction"
-    current_paras: List[str] = []
-    buffer: List[str] = []
-    table_buffer: List[str] = []
+    Accepte :
+    - # Chapitre
+    - ## Section
+    - 1. Introduction
+    - 1.1 Sous-section
+    - Chapitre 1 : Titre
+    - ANNEXE 1
+    - Conclusion
+    - tableaux Markdown
+    - [IMAGE: fichier | légende]
+    - [QUOTE: texte]
+    - [CALLOUT: titre | texte]
+    """
+    from parser_manuscrit import parse_manuscript, blocks_to_legacy_paragraphs
 
-    chapter_re = re.compile(r"^(Chapitre\s+\d+\s*[:\-].+|Conclusion.*|Ressources.*|Finalisation.*)$", re.I)
-    section_re = re.compile(r"^\d+(\.\d+)*\s+.+")
-    markdown_heading_re = re.compile(r"^#{1,6}\s+(.+)")
+    parsed = parse_manuscript(raw)
 
-    def flush_para():
-        nonlocal buffer, current_paras
-        if buffer:
-            current_paras.append(" ".join(buffer).strip())
-            buffer = []
-
-    def flush_table():
-        nonlocal table_buffer, current_paras
-        if table_buffer:
-            current_paras.append("[[TABLE_BLOCK]]\n" + "\n".join(table_buffer))
-            table_buffer = []
-
-    def flush_chapter():
-        nonlocal current_title, current_paras
-        flush_para()
-        flush_table()
-        if current_paras or current_title:
-            chapters.append(Chapter(current_title, current_paras))
-        current_paras = []
-
-    for line in lines:
-        if not line:
-            flush_para()
-            flush_table()
-            continue
-
-        if is_markdown_table_line(line):
-            flush_para()
-            table_buffer.append(line)
-            continue
-        else:
-            flush_table()
-
-        if chapter_re.match(line):
-            flush_chapter()
-            current_title = line
-            current_paras = []
-            buffer = []
-            continue
-
-        m = markdown_heading_re.match(line)
-        if m:
-            flush_para()
-            current_paras.append("## " + m.group(1).strip())
-            continue
-
-        if section_re.match(line):
-            flush_para()
-            current_paras.append("## " + line)
-            continue
-
-        if line.startswith("-") or line.startswith("•") or line.startswith("*"):
-            flush_para()
-            current_paras.append("• " + line.lstrip("-•* ").strip())
-            continue
-
-        buffer.append(line)
-
-    flush_chapter()
-
-    chapters = [ch for ch in chapters if ch.title.strip() or ch.paragraphs]
-    return chapters
-
-
+    return [
+        Chapter(
+            title=chapter.title,
+            paragraphs=blocks_to_legacy_paragraphs(chapter),
+        )
+        for chapter in parsed
+    ]
 
 def table_rows_from_block(block: str) -> List[List[str]]:
     """
