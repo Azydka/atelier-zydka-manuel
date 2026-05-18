@@ -86,13 +86,12 @@ def filter_manuscript_content(text: str) -> str:
 
     Objectif :
     - supprimer les consignes techniques du fichier maître ;
-    - démarrer directement au vrai contenu éditorial ;
+    - démarrer directement au vrai contenu publiable ;
     - exclure le toolkit complet et les instructions de production finales.
     """
     raw = text.replace("\r\n", "\n").replace("\r", "\n")
 
-    # Démarrage propre : on saute l'en-tête technique et on commence
-    # au premier vrai contenu publiable du livre.
+    # Démarrage propre : on ignore l'en-tête technique du fichier source.
     start_markers = [
         "# Avertissement légal",
         "## Avertissement légal",
@@ -113,7 +112,7 @@ def filter_manuscript_content(text: str) -> str:
     if start_positions:
         raw = raw[min(start_positions):]
 
-    # Coupure avant le toolkit complet ou les instructions finales.
+    # Coupure avant les blocs non publiables de fin.
     end_markers = [
         "TOOLKIT BONUS — CONTENU COMPLET DES FICHIERS À CRÉER",
         "TOOLKIT BONUS - CONTENU COMPLET DES FICHIERS À CRÉER",
@@ -133,19 +132,260 @@ def filter_manuscript_content(text: str) -> str:
 
     return raw.strip()
 
-def is_pagebreak(line: str) -> bool:
+
+def is_table_line(line: str) -> bool:
+    stripped = line.strip()
+    return stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 2
+
+
+def is_table_separator(line: str) -> bool:
+    if not is_table_line(line):
+        return False
+    cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    cells = [c for c in cells if c]
+    return bool(cells) and all(re.match(r"^:?-{3,}:?$", c) for c in cells)
+
+
+def parse_markdown_heading(line: str):
     """
-    Détecte les sauts de page explicites du manuscrit.
+    Détecte :
+    # Titre
+    ## Titre
+    ### Titre
     """
-    stripped = line.strip().upper()
-    return stripped in {
-        "[PAGE_BREAK]",
-        "[PAGEBREAK]",
-        "<PAGE_BREAK>",
-        "---PAGEBREAK---",
-        "PAGE_BREAK",
+    match = re.match(r"^(#{1,6})\s+(.+?)\s*$", line)
+    if not match:
+        return None
+
+    level = len(match.group(1))
+    title = match.group(2).strip()
+    return level, title
+
+
+def parse_numbered_title(line: str):
+    """
+    Détecte les titres numérotés sans transformer les listes courtes
+    ou les étapes d'exercice en faux chapitres.
+
+    Exemples acceptés :
+    - 1. Introduction
+    - 1. Les bases du beatmaking
+    - 1.1 Sous-section
+    - 2.3.1 Détail
+
+    Exemples rejetés comme chapitres :
+    - 1. ---
+    - 1. Hook.
+    - 2. Erreur 1 : pas de structure.
+    - 1. Ordinateur principal ;
+    """
+    stripped = line.strip()
+
+    match = re.match(r"^(\d+(?:\.\d+)*)(?:\.|\s)?\s+(.+)$", stripped)
+    if not match:
+        return None
+
+    number = match.group(1)
+    title = match.group(2).strip()
+    level = number.count(".") + 1
+
+    # Nettoyage Markdown léger pour l'analyse.
+    clean_title = re.sub(r"[*_`]", "", title).strip()
+    clean_title = clean_title.strip("-–—:;,. ")
+
+    if not clean_title:
+        return None
+
+    # Rejette les placeholders ou séparateurs.
+    if clean_title in {"---", "--", "…", "..."}:
+        return None
+
+    # Rejette les micro-étapes trop courtes au niveau chapitre.
+    # Exemple : 1. Hook. / 2. Cloud sécurisé.
+    words = clean_title.split()
+    if level == 1 and len(words) <= 3:
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Rejette les titres qui ressemblent à des items de liste terminés par ;
+    if level == 1 and title.rstrip().endswith(";"):
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Les sous-sections 1.1, 2.3, etc. sont toujours des intertitres.
+    if level > 1:
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Niveau 1 : vrai chapitre seulement si le titre ressemble vraiment
+    # à un chapitre structurant, pas à une étape ou une réponse d'exercice.
+    chapter_keywords = (
+        "partie",
+        "chapitre",
+        "introduction",
+        "conclusion",
+        "annexe",
+        "livre",
+        "avertissement",
+        "table des matières",
+    )
+
+    normalized = clean_title.lower()
+
+    if not normalized.startswith(chapter_keywords):
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    return {
+        "level": level,
+        "number": number,
+        "title": title,
+        "as_chapter": True,
     }
 
+
+def parse_chapter_title(line: str):
+    """
+    Détecte :
+    Chapitre 1 : Titre
+    CHAPITRE 1 - Titre
+    Partie 1 : Titre
+    ANNEXE 1
+    Conclusion
+    Introduction
+    Ressources
+    Finalisation
+    """
+    stripped = line.strip()
+
+    patterns = [
+        r"^(chapitre)\s+([0-9IVXLCDM]+)\s*[:\-–—]?\s*(.*)$",
+        r"^(partie)\s+([0-9IVXLCDM]+)\s*[:\-–—]?\s*(.*)$",
+        r"^(annexe)\s+([0-9A-ZIVXLCDM]+)\s*[:\-–—]?\s*(.*)$",
+    ]
+
+    for pattern in patterns:
+        match = re.match(pattern, stripped, flags=re.IGNORECASE)
+        if match:
+            kind = match.group(1).lower()
+            number = match.group(2)
+            title_rest = match.group(3).strip()
+            title = stripped if not title_rest else f"{match.group(1).capitalize()} {number} : {title_rest}"
+            return {
+                "title": title,
+                "number": number,
+                "kind": kind,
+            }
+
+    simple_titles = {
+        "introduction": "Introduction",
+        "conclusion": "Conclusion",
+        "ressources": "Ressources",
+        "bibliographie": "Bibliographie",
+        "glossaire": "Glossaire",
+        "finalisation": "Finalisation",
+        "annexes": "Annexes",
+    }
+
+    key = stripped.lower()
+    if key in simple_titles:
+        return {
+            "title": simple_titles[key],
+            "number": None,
+            "kind": key,
+        }
+
+    return None
+
+
+def parse_image(line: str):
+    """
+    [IMAGE: fichier.png | Légende]
+    """
+    match = re.match(r"^\[IMAGE:\s*(.+?)\s*\]$", line.strip(), flags=re.IGNORECASE)
+    if not match:
+        return None
+
+    content = match.group(1).strip()
+    if "|" in content:
+        filename, caption = content.split("|", 1)
+        return filename.strip(), caption.strip()
+
+    return content.strip(), ""
+
+
+def parse_callout(line: str):
+    """
+    [CALLOUT: Titre | Texte]
+    """
+    match = re.match(r"^\[CALLOUT:\s*(.+?)\s*\]$", line.strip(), flags=re.IGNORECASE)
+    if not match:
+        return None
+
+    content = match.group(1).strip()
+    if "|" in content:
+        title, body = content.split("|", 1)
+        return title.strip(), body.strip()
+
+    return "À retenir", content
+
+
+def parse_quote(line: str):
+    """
+    [QUOTE: Texte]
+    > Citation Markdown
+    """
+    match = re.match(r"^\[QUOTE:\s*(.+?)\s*\]$", line.strip(), flags=re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+
+    if line.strip().startswith(">"):
+        return line.strip().lstrip(">").strip()
+
+    return None
+
+
+def parse_list_item(line: str):
+    """
+    - Item
+    * Item
+    • Item
+    """
+    match = re.match(r"^\s*[-*•]\s+(.+)$", line)
+    if not match:
+        return None
+
+    return match.group(1).strip()
+
+
+def is_pagebreak(line: str) -> bool:
+    return line.strip().upper() in {
+        "[PAGEBREAK]",
+        "[PAGE BREAK]",
+        "---PAGE---",
+        "<PAGEBREAK>",
+    }
+
+
+# ============================================================
+# PARSER PRINCIPAL
+# ============================================================
 
 def parse_manuscript(raw: str) -> List[Chapter]:
     raw = filter_manuscript_content(raw)
