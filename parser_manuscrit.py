@@ -80,6 +80,55 @@ def clean_markdown_noise(text: str) -> str:
     return text.strip()
 
 
+def filter_manuscript_content(text: str) -> str:
+    """
+    Filtre éditorial avant parsing.
+
+    Objectif :
+    - supprimer l'en-tête technique du fichier maître ;
+    - garder le livre principal ;
+    - exclure le toolkit complet et les instructions de production finales ;
+    - éviter que le PDF livre contienne les fichiers bonus bruts.
+    """
+    raw = text.replace("\r\n", "\n").replace("\r", "\n")
+
+    # Démarrage propre : si le manuscrit contient un marqueur LIVRE PRINCIPAL,
+    # on commence là pour éviter les blocs techniques du fichier maître.
+    start_markers = [
+        "LIVRE PRINCIPAL",
+        "# LIVRE PRINCIPAL",
+        "## LIVRE PRINCIPAL",
+    ]
+
+    start_positions = []
+    for marker in start_markers:
+        pos = raw.upper().find(marker.upper())
+        if pos != -1:
+            start_positions.append(pos)
+
+    if start_positions:
+        raw = raw[min(start_positions):]
+
+    # Coupure avant le toolkit complet ou les instructions finales.
+    end_markers = [
+        "TOOLKIT BONUS — CONTENU COMPLET DES FICHIERS À CRÉER",
+        "TOOLKIT BONUS - CONTENU COMPLET DES FICHIERS À CRÉER",
+        "INSTRUCTIONS DE PRODUCTION FINALES",
+    ]
+
+    end_positions = []
+    upper = raw.upper()
+    for marker in end_markers:
+        pos = upper.find(marker.upper())
+        if pos != -1:
+            end_positions.append(pos)
+
+    if end_positions:
+        raw = raw[:min(end_positions)]
+
+    return raw.strip()
+
+
 # ============================================================
 # DÉTECTION DES BLOCS
 # ============================================================
@@ -115,20 +164,100 @@ def parse_markdown_heading(line: str):
 
 def parse_numbered_title(line: str):
     """
-    Détecte :
-    1. Introduction
-    1 Introduction
-    1.1 Sous-section
-    2.3.1 Détail
+    Détecte les titres numérotés sans transformer les listes courtes
+    ou les étapes d'exercice en faux chapitres.
+
+    Exemples acceptés :
+    - 1. Introduction
+    - 1. Les bases du beatmaking
+    - 1.1 Sous-section
+    - 2.3.1 Détail
+
+    Exemples rejetés comme chapitres :
+    - 1. ---
+    - 1. Hook.
+    - 2. Erreur 1 : pas de structure.
+    - 1. Ordinateur principal ;
     """
-    match = re.match(r"^(\d+(?:\.\d+)*)(?:\.|\s)?\s+(.+)$", line.strip())
+    stripped = line.strip()
+
+    match = re.match(r"^(\d+(?:\.\d+)*)(?:\.|\s)?\s+(.+)$", stripped)
     if not match:
         return None
 
     number = match.group(1)
     title = match.group(2).strip()
     level = number.count(".") + 1
-    return level, number, title
+
+    # Nettoyage Markdown léger pour l'analyse.
+    clean_title = re.sub(r"[*_`]", "", title).strip()
+    clean_title = clean_title.strip("-–—:;,. ")
+
+    if not clean_title:
+        return None
+
+    # Rejette les placeholders ou séparateurs.
+    if clean_title in {"---", "--", "…", "..."}:
+        return None
+
+    # Rejette les micro-étapes trop courtes au niveau chapitre.
+    # Exemple : 1. Hook. / 2. Cloud sécurisé.
+    words = clean_title.split()
+    if level == 1 and len(words) <= 3:
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Rejette les titres qui ressemblent à des items de liste terminés par ;
+    if level == 1 and title.rstrip().endswith(";"):
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Les sous-sections 1.1, 2.3, etc. sont toujours des intertitres.
+    if level > 1:
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    # Niveau 1 : vrai chapitre seulement si le titre ressemble vraiment
+    # à un chapitre structurant, pas à une étape ou une réponse d'exercice.
+    chapter_keywords = (
+        "partie",
+        "chapitre",
+        "introduction",
+        "conclusion",
+        "annexe",
+        "livre",
+        "avertissement",
+        "table des matières",
+    )
+
+    normalized = clean_title.lower()
+
+    if not normalized.startswith(chapter_keywords):
+        return {
+            "level": level,
+            "number": number,
+            "title": title,
+            "as_chapter": False,
+        }
+
+    return {
+        "level": level,
+        "number": number,
+        "title": title,
+        "as_chapter": True,
+    }
 
 
 def parse_chapter_title(line: str):
@@ -259,6 +388,7 @@ def is_pagebreak(line: str) -> bool:
 # ============================================================
 
 def parse_manuscript(raw: str) -> List[Chapter]:
+    raw = filter_manuscript_content(raw)
     raw = clean_markdown_noise(raw)
     lines = [clean_line(line) for line in raw.split("\n")]
 
@@ -382,11 +512,13 @@ def parse_manuscript(raw: str) -> List[Chapter]:
         numbered_title = parse_numbered_title(stripped)
         if numbered_title:
             flush_paragraph()
-            level, number, title = numbered_title
 
-            # 1. Titre = chapitre réel.
-            # 1.1 Titre = section interne.
-            if level == 1:
+            level = numbered_title["level"]
+            number = numbered_title["number"]
+            title = numbered_title["title"]
+            as_chapter = numbered_title["as_chapter"]
+
+            if as_chapter:
                 start_new_chapter(
                     title=f"{number}. {title}",
                     number=number,
@@ -397,7 +529,7 @@ def parse_manuscript(raw: str) -> List[Chapter]:
                     Block(
                         type="heading",
                         text=f"{number} {title}",
-                        level=min(level, 6),
+                        level=min(level + 1, 6),
                         meta={"number": number},
                     )
                 )
