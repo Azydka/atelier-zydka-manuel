@@ -3,6 +3,9 @@
 GÉNÉRATEUR PDF — LE MANUEL DE PRÉSENCE / ATELIER ZYDKA
 =======================================================
 
+
+
+
 Objectif
 --------
 Générer un PDF A5 portrait directement exploitable :
@@ -53,6 +56,7 @@ ce script est la source propre.
 from __future__ import annotations
 
 import os
+import json
 import re
 import textwrap
 from dataclasses import dataclass
@@ -65,6 +69,50 @@ from reportlab.lib.utils import simpleSplit
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+
+# ============================================================
+# CONFIGURATION JSON
+# ============================================================
+
+CONFIG_PATH = "config.json"
+
+
+def load_config(path: str = CONFIG_PATH) -> dict:
+    default = {
+        "features": {
+            "include_cover": True,
+            "include_back_cover": True,
+            "include_annex_page": False,
+            "include_demo_pages": False,
+            "include_fixed_intro_pages": False,
+            "include_visual_opening_pages": False,
+            "include_table_of_contents": True,
+            "strict_missing_images": False,
+        }
+    }
+
+    if not os.path.exists(path):
+        return default
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        data.setdefault("features", {})
+        for key, value in default["features"].items():
+            data["features"].setdefault(key, value)
+
+        return data
+
+    except Exception as exc:
+        print(f"[WARN] config.json illisible, configuration par défaut utilisée : {exc}")
+        return default
+
+
+CONFIG = load_config()
+FEATURES = CONFIG.get("features", {})
+
+
 
 
 # ============================================================
@@ -1363,33 +1411,53 @@ def generate():
     c.setCreator("ReportLab — Atelier Source Éditoriale")
 
     page = 1
-    cover(c, page)
 
-    page += 1
-    charte_page(c, page)
+    # Couverture.
+    if FEATURES.get("include_cover", True):
+        cover(c, page)
+        page += 1
 
-    page += 1
-    toc_page(c, page, chapters)
+    # Page charte graphique / page système.
+    if FEATURES.get("include_fixed_intro_pages", False):
+        charte_page(c, page)
+        page += 1
 
-    page += 1
-    visual_opener(c, page, "Fondations", "Studio nocturne. Matière urbaine. Présence construite.")
+    # Table des matières générée.
+    if FEATURES.get("include_table_of_contents", True):
+        toc_page(c, page, chapters)
+        page += 1
 
-    # Pages de démonstration des modules, conservées comme vraies pages utiles.
-    page += 1
-    callout_page(c, page)
+    # Page d'ouverture visuelle globale.
+    if FEATURES.get("include_visual_opening_pages", False):
+        visual_opener(
+            c,
+            page,
+            "Fondations",
+            "Studio nocturne. Matière urbaine. Présence construite.",
+        )
+        page += 1
 
-    page += 1
-    table_page(c, page)
+    # Pages de démonstration des modules.
+    if FEATURES.get("include_demo_pages", False):
+        callout_page(c, page)
+        page += 1
+
+        table_page(c, page)
+        page += 1
 
     # Flux du manuscrit.
     for idx, ch in enumerate(chapters, start=1):
         page = draw_chapter_pages(c, page, ch, idx)
 
-    page += 1
-    annex_page(c, page)
+    # Page d'annexe système.
+    if FEATURES.get("include_annex_page", False):
+        page += 1
+        annex_page(c, page)
 
-    page += 1
-    back_cover(c, page)
+    # Quatrième de couverture.
+    if FEATURES.get("include_back_cover", True):
+        page += 1
+        back_cover(c, page)
 
     c.save()
 

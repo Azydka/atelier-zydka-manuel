@@ -14,6 +14,9 @@
     "margin_bottom_mm": 16
   },
   "features": {
+    "include_cover": true,
+    "include_back_cover": true,
+    "include_annex_page": false,
     "include_demo_pages": false,
     "include_fixed_intro_pages": false,
     "include_visual_opening_pages": false,
