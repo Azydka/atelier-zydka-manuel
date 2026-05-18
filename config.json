@@ -21,6 +21,7 @@
     "include_fixed_intro_pages": false,
     "include_visual_opening_pages": false,
     "include_table_of_contents": true,
-    "strict_missing_images": false
+    "strict_missing_images": false,
+    "include_chapter_openers": false
   }
 }
