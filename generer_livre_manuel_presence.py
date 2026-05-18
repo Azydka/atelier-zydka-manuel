@@ -209,6 +209,9 @@ def ty(y_from_top: float) -> float:
 
 
 def clean_text(s: str) -> str:
+    s = s.replace("**", "")
+    s = s.replace("__", "")
+    s = s.replace("[[TABLE_BLOCK]]", "")
     return (
         s.replace("•", "-")
         .replace("●", "-")
@@ -1091,31 +1094,59 @@ def charte_page(c, page_num):
 
 
 def toc_page(c, page_num, chapters: List[Chapter]):
+    """
+    Page de navigation / table des matières.
+    Version plus lisible : titre moins massif, meilleur espace vertical,
+    entrées visibles dès la première page.
+    """
     draw_bg(c, PAPER)
     folio(c, page_num)
     z_block(c, page_num)
-    signature_line(c, M_LEFT, 27 * mm)
-    draw_mono(c, "02 / Navigation", M_LEFT, 35 * mm, MAIN_COL)
-    draw_h2(c, "Table des matières", M_LEFT, 43 * mm, 96 * mm)
 
-    y = 78 * mm
-    max_rows = 7
-    for i, ch in enumerate(chapters[:max_rows], start=1):
-        c.setStrokeColor(LINE)
-        c.setLineWidth(0.5)
-        c.line(M_LEFT, ty(y), M_LEFT + 106 * mm, ty(y))
-        draw_mono(c, f"{i:02d}", M_LEFT, y + 4 * mm, 14 * mm)
-        title = re.sub(r"^Chapitre\s+\d+\s*[:\-]\s*", "", ch.title, flags=re.I)
-        draw_text(c, title, M_LEFT + 21 * mm, y + 3.5 * mm, 58 * mm, FONTS.inter_bold, 10.5, 12, CARBON, uppercase=True, max_lines=1)
-        preview = " · ".join([p.replace("##", "").strip() for p in ch.paragraphs[:3]])[:90]
-        draw_body(c, preview, M_LEFT + 21 * mm, y + 10 * mm, 58 * mm, color=SOFT, size=7.5, leading=9)
-        draw_mono(c, "--", M_LEFT + 91 * mm, y + 4 * mm, 15 * mm)
-        y += 20 * mm
+    # Ligne haute
+    signature_line(c, M_LEFT, 22 * mm)
 
-    c.setStrokeColor(LINE)
-    c.line(M_LEFT, ty(y), M_LEFT + 106 * mm, ty(y))
+    # Micro-label mieux séparé du titre
+    c.setFillColor(CARBON)
+    c.setFont(FONTS.mono, 7)
+    c.drawString(M_LEFT, ty(34 * mm), f"{page_num:02d} / NAVIGATION")
+
+    # Titre plus maîtrisé
+    c.setFillColor(CARBON)
+    c.setFont(FONTS.inter_black, 34)
+    c.drawString(M_LEFT, ty(54 * mm), "TABLE DES")
+    c.drawString(M_LEFT, ty(72 * mm), "MATIÈRES")
+
+    # Sous-titre
+    c.setFillColor(SOFT)
+    c.setFont(FONTS.inter, 9)
+    c.drawString(M_LEFT, ty(88 * mm), "Repères rapides pour circuler dans le manuel.")
+
+    # Liste des chapitres
+    y = 108 * mm
+    max_items = 13
+
+    for idx, ch in enumerate(chapters[:max_items], start=1):
+        title = clean_text(ch.title).upper()
+
+        # On évite les titres trop longs sur la ligne
+        if len(title) > 42:
+            title = title[:39] + "…"
+
+        c.setFillColor(CARBON)
+        c.setFont(FONTS.mono, 7)
+        c.drawString(M_LEFT, ty(y), f"{idx:02d}")
+
+        c.setFillColor(CARBON)
+        c.setFont(FONTS.inter_bold, 8.5)
+        c.drawString(M_LEFT + 13 * mm, ty(y), title)
+
+        y += 8.8 * mm
+
+        if y > 188 * mm:
+            break
+
     finish(c)
-
 
 def visual_opener(c, page_num, title="Fondations", subtitle="Signal, texture, rythme. Une présence qui se construit comme un son."):
     draw_bg(c, CARBON)
@@ -1335,6 +1366,9 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
             quote_text = parse_quote_block(para)
             if quote_text:
                 y, page = draw_quote_block(c, quote_text, M_LEFT, y, page)
+            continue
+
+        if para.strip().startswith("[[TABLE_BLOCK]]"):
             continue
 
         if para.strip() == "[PAGE_BREAK]":
