@@ -1923,28 +1923,65 @@ Il contient les fichiers suivants :
 Important : les modèles juridiques sont fournis à titre pédagogique. Ils doivent être adaptés à votre situation et relus par un professionnel avant usage commercial important.
 
 
-# Annexe B — Glossaire rapide
+# ANNEXE B — GLOSSAIRE RAPIDE
 
+Beatmaker
+English : beatmaker / producer.
+Définition : créateur d’instrumentales, de rythmes, d’ambiances sonores et de bases musicales exploitables par des artistes.
 
-| Français              | English                   | Définition courte                                                    |
-| --------------------- | ------------------------- | -------------------------------------------------------------------- |
-| Beatmaker             | Beatmaker / producer      | Créateur d’instrumentales, rythmes et ambiances musicales            |
-| Stem                  | Stem                      | Piste séparée d’un beat : drums, basse, mélodie, FX                  |
-| Split sheet           | Split sheet               | Document qui fixe la répartition des droits entre collaborateurs     |
-| Royalty               | Royalty                   | Revenu issu de l’exploitation d’une œuvre ou d’un enregistrement     |
-| Licence non exclusive | Non-exclusive license     | Droit d’utiliser un beat sans exclusivité                            |
-| Licence exclusive     | Exclusive license         | Droit exclusif d’exploitation selon les limites prévues au contrat   |
-| Sampling              | Sampling                  | Utilisation d’un extrait sonore existant                             |
-| Clearance             | Clearance                 | Autorisation nécessaire pour utiliser une œuvre ou un sample protégé |
-| DAW                   | Digital Audio Workstation | Logiciel de production musicale                                      |
-| Sync                  | Synchronization           | Utilisation d’une musique avec une image : film, pub, jeu vidéo      |
-| Master                | Master recording          | Enregistrement final exploité commercialement                        |
-| Publishing            | Publishing                | Droits liés à la composition et à l’édition musicale                 |
-| Watermark audio       | Audio watermark           | Tag sonore placé sur une preview pour limiter l’usage non autorisé   |
-| CRM                   | CRM                       | Outil de suivi des contacts, prospects et clients                    |
+Producer
+English : producer.
+Définition : terme large pouvant désigner le beatmaker, le réalisateur artistique ou la personne qui supervise la production musicale.
 
+Topliner
+English : topliner.
+Définition : personne qui crée une mélodie vocale, une topline ou parfois une partie des paroles sur une base instrumentale.
 
-# Annexe C — Ressources par pays
+Split sheet
+English : split sheet.
+Définition : document qui fixe la répartition des droits entre les contributeurs d’un morceau.
+
+Licence non exclusive
+English : non-exclusive license.
+Définition : autorisation d’utiliser un beat tout en permettant au beatmaker de le proposer à d’autres artistes.
+
+Licence exclusive
+English : exclusive license.
+Définition : autorisation plus large qui réserve l’exploitation du beat à un seul acheteur selon les conditions prévues au contrat.
+
+Stems
+English : stems.
+Définition : fichiers audio séparés par groupes ou pistes, par exemple drums, basse, mélodie, voix ou effets.
+
+Master
+English : master.
+Définition : version finale exploitée commercialement d’un enregistrement.
+
+Publishing
+English : publishing.
+Définition : gestion éditoriale des droits liés à la composition, aux auteurs, aux compositeurs et aux revenus associés.
+
+Sync
+English : synchronization.
+Définition : utilisation d’une musique dans une publicité, un film, une série, une vidéo, un jeu ou un contenu audiovisuel.
+
+Clearance
+English : clearance.
+Définition : processus d’autorisation nécessaire pour utiliser légalement un sample, une œuvre ou un enregistrement protégé.
+
+Royalty-free
+English : royalty-free.
+Définition : ressource utilisable selon une licence définie, sans paiement de royalties supplémentaires dans les limites prévues.
+
+CRM
+English : customer relationship management.
+Définition : tableau ou outil permettant de suivre les artistes, clients, prospects, relances, ventes et collaborations.
+
+Watermark
+English : watermark.
+Définition : marque audio ou visuelle ajoutée à une preview pour limiter les usages non autorisés.
+
+Annexe C — Ressources par pays
 
 
 ## France
@@ -1990,24 +2027,55 @@ Important : les modèles juridiques sont fournis à titre pédagogique. Ils doiv
 * plateformes de synchronisation.
 
 
-# Annexe D — Sources vérifiées
+# ANNEXE D — SOURCES VÉRIFIÉES
 
+Les sources ci-dessous doivent être vérifiées à nouveau avant publication commerciale, notamment si les règles de plateformes, les seuils fiscaux, les prix, les conditions d’adhésion ou les positions juridiques ont évolué.
 
-| Source                | Sujet                                          | Date de consultation | URL                                                                                                |
-| --------------------- | ---------------------------------------------- | -------------------: | -------------------------------------------------------------------------------------------------- |
-| Service-Public        | Seuils TVA / micro-entreprise                  |             Mai 2026 | [https://entreprendre.service-public.fr/](https://entreprendre.service-public.fr/)                 |
-| SACEM                 | Adhésion / déclaration / protection            |             Mai 2026 | [https://www.sacem.fr/](https://www.sacem.fr/)                                                     |
-| BeatStars             | Tarifs et fonctionnalités                      |             Mai 2026 | [https://www.beatstars.com/](https://www.beatstars.com/)                                           |
-| TikTok                | Règles d’utilisation commerciale de la musique |             Mai 2026 | [https://www.tiktok.com/creators/creator-portal/](https://www.tiktok.com/creators/creator-portal/) |
-| US Copyright Office   | Œuvres générées par IA                         |             Mai 2026 | [https://www.copyright.gov/](https://www.copyright.gov/)                                           |
-| IFPI                  | Marchés musicaux mondiaux                      |             Mai 2026 | [https://www.ifpi.org/](https://www.ifpi.org/)                                                     |
-| Commission européenne | AI Act                                         |             Mai 2026 | [https://digital-strategy.ec.europa.eu/](https://digital-strategy.ec.europa.eu/)                   |
+SACEM
+Sujet : droits d’auteur, adhésion, déclaration d’œuvres, protection et gestion collective.
+À vérifier avant publication : conditions d’adhésion, procédures, tarifs éventuels, services disponibles.
 
+SPPF
+Sujet : droits voisins des producteurs phonographiques indépendants.
+À vérifier avant publication : conditions d’adhésion, périmètre exact, procédures de déclaration.
 
-Les sources ci-dessus doivent être vérifiées à nouveau avant publication commerciale, notamment si les règles de plateformes, les seuils fiscaux, les prix, les conditions d’adhésion ou les positions juridiques ont évolué.
+ADAMI
+Sujet : droits des artistes-interprètes.
+À vérifier avant publication : conditions d’éligibilité, modalités de collecte, cas particuliers.
 
+US Copyright Office
+Sujet : enregistrement des œuvres, copyright, dépôt et ressources officielles américaines.
+À vérifier avant publication : procédures, frais, délais, formulaires et règles actualisées.
 
-# Annexe E — Instructions d’utilisation du toolkit
+ASCAP / BMI
+Sujet : gestion des droits d’exécution publique aux États-Unis.
+À vérifier avant publication : conditions d’adhésion, collecte, répartition, limitations éventuelles.
+
+SoundExchange
+Sujet : collecte de certains droits numériques liés aux enregistrements.
+À vérifier avant publication : éligibilité, inscription, règles de collecte.
+
+PRS for Music / PPL
+Sujet : gestion des droits au Royaume-Uni pour auteurs, compositeurs, éditeurs, enregistrements et interprètes.
+À vérifier avant publication : conditions d’adhésion, territoires, modalités de collecte.
+
+IFPI
+Sujet : rapports mondiaux sur le marché de la musique enregistrée.
+À vérifier avant publication : données les plus récentes, tendances par territoire, évolutions de marché.
+
+Plateformes de vente de beats
+Sujet : BeatStars, Airbit, SoundClick et plateformes équivalentes.
+À vérifier avant publication : abonnements, commissions, licences, conditions d’utilisation, options de livraison.
+
+Plateformes de synchronisation
+Sujet : Songtradr, Music Gateway, Audio Network et services similaires.
+À vérifier avant publication : commissions, exclusivité, durée, territoires, validation des catalogues.
+
+Outils IA
+Sujet : génération musicale, assistance créative, séparation de stems, mastering assisté, organisation de catalogue.
+À vérifier avant publication : conditions d’utilisation, droits sur les résultats, restrictions commerciales, clauses d’entraînement IA.
+
+Annexe E — Instructions d’utilisation du toolkit
 
 
 Le toolkit bonus est conçu pour être utilisé en parallèle du livre.
