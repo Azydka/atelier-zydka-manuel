@@ -1593,22 +1593,8 @@ Une bonne prospection est ciblée, personnalisée et suivie.
 Créez un tableau :
 
 
-### Tableau de prospection artistes — version A5
-
-Pour suivre vos contacts sans créer un tableau illisible, utilisez une fiche simple par artiste.
-
-**Fiche artiste à renseigner :**
-
-- Artiste :
-- Style :
-- Lien :
-- Contacté : oui / non
-- Réponse :
-- Relance :
-- Notes :
-
-**Objectif :** garder une trace exploitable de chaque contact sans transformer le suivi en usine à gaz.
-
+| Artiste | Style | Lien | Contacté | Réponse | Relance | Notes |
+| ------- | ----- | ---- | -------- | ------- | ------- | ----- |
 
 
 ### Règle des 5 DM
@@ -2471,45 +2457,13 @@ Signature du Licencié :
 Créez un fichier Excel ou Google Sheets avec les colonnes suivantes :
 
 
-### Split sheet — version A5
-
-Utilisez cette structure pour clarifier la répartition entre les personnes impliquées.
-
-**Participant 1**
-
-- Nom / alias :
-- Rôle :
-- Pourcentage droits d’auteur :
-- Contact :
-- Signature :
-- Date :
-
-**Participant 2**
-
-- Nom / alias :
-- Rôle :
-- Pourcentage droits d’auteur :
-- Contact :
-- Signature :
-- Date :
-
-**Participant 3**
-
-- Nom / alias :
-- Rôle :
-- Pourcentage droits d’auteur :
-- Contact :
-- Signature :
-- Date :
-
-**Total à vérifier :** 100 %.
-
-**Exemple de répartition :**
-
-- Beatmaker : composition instrumentale — 50 %
-- Artiste : paroles / interprétation — 30 %
-- Topliner : mélodie vocale — 20 %
-
+| Nom / alias | Rôle                      | Pourcentage droits d’auteur | Contact | Signature | Date |
+| ----------- | ------------------------- | --------------------------: | ------- | --------- | ---- |
+| Beatmaker   | Composition instrumentale |                        50 % |         |           |      |
+| Artiste     | Paroles / interprétation  |                        30 % |         |           |      |
+| Topliner    | Mélodie vocale            |                        20 % |         |           |      |
+| Autre       | …                         |                           … |         |           |      |
+| Total       |                           |                       100 % |         |           |      |
 
 
 ## Informations sur l’œuvre
@@ -2554,38 +2508,9 @@ Commentaires :
 Créez un fichier Excel ou Google Sheets avec les colonnes suivantes :
 
 
-### Catalogue de beats — version A5
-
-Au lieu d’un tableau très large, utilisez une fiche par beat.
-
-**Fiche beat à renseigner :**
-
-- Nom du fichier :
-- Titre :
-- Style :
-- Mood :
-- BPM :
-- Tonalité :
-- Statut :
-- Prix standard :
-- Prix unlimited :
-- Prix exclusif :
-- Lien d’écoute :
-- Notes :
-
-**Exemple :**
-
-- Nom du fichier : 2026-05-16_TRAP_DARK_140BPM_Bm_AVAILABLE.wav
-- Titre : Midnight Pressure
-- Style : Trap
-- Mood : Dark
-- BPM : 140
-- Tonalité : Bm
-- Statut : Disponible
-- Prix standard : 49 €
-- Prix unlimited : 149 €
-- Prix exclusif : 700 €
-
+| Nom du fichier                               | Titre             | Style | Mood | BPM | Tonalité | Statut     | Prix standard | Prix unlimited | Prix exclusif | Client | Date vente | Lien écoute privé | Samples utilisés | Contrat signé | Facture envoyée |
+| -------------------------------------------- | ----------------- | ----- | ---- | --: | -------- | ---------- | ------------: | -------------: | ------------: | ------ | ---------- | ----------------- | ---------------- | ------------- | --------------- |
+| 2026-05-16_TRAP_DARK_140BPM_Bm_AVAILABLE.wav | Midnight Pressure | Trap  | Dark | 140 | Bm       | Disponible |          49 € |          149 € |         700 € | —      | —          | lien privé        | non              | non           | non             |
 
 
 ## Statuts recommandés
