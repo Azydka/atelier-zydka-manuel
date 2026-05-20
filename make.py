@@ -80,7 +80,15 @@ def all_steps() -> int:
     if code != 0:
         return code
 
-    return marketing()
+    code = marketing()
+    if code != 0:
+        return code
+
+    code = teaser()
+    if code != 0:
+        return code
+
+    return visuals()
 
 
 def main() -> int:
