@@ -45,6 +45,14 @@ def pdf() -> int:
     return run([sys.executable, "generer_livre_manuel_presence.py"])
 
 
+def marketing() -> int:
+    code = run([sys.executable, "-m", "py_compile", "generer_exports_marketing.py"])
+    if code != 0:
+        return code
+
+    return run([sys.executable, "generer_exports_marketing.py"])
+
+
 def all_steps() -> int:
     code = check()
     if code != 0:
@@ -52,7 +60,11 @@ def all_steps() -> int:
         print("Arrêt : le check a détecté une erreur bloquante.")
         return code
 
-    return pdf()
+    code = pdf()
+    if code != 0:
+        return code
+
+    return marketing()
 
 
 def main() -> int:
@@ -64,11 +76,14 @@ def main() -> int:
     if command == "pdf":
         return pdf()
 
+    if command == "marketing":
+        return marketing()
+
     if command == "all":
         return all_steps()
 
     print("Commande inconnue.")
-    print("Commandes disponibles : check, pdf, all")
+    print("Commandes disponibles : check, pdf, marketing, all")
     return 1
 
 
