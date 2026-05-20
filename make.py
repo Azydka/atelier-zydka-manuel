@@ -53,6 +53,14 @@ def marketing() -> int:
     return run([sys.executable, "generer_exports_marketing.py"])
 
 
+def teaser() -> int:
+    code = run([sys.executable, "-m", "py_compile", "generer_teaser_pdf.py"])
+    if code != 0:
+        return code
+
+    return run([sys.executable, "generer_teaser_pdf.py"])
+
+
 def all_steps() -> int:
     code = check()
     if code != 0:
@@ -79,11 +87,14 @@ def main() -> int:
     if command == "marketing":
         return marketing()
 
+    if command == "teaser":
+        return teaser()
+
     if command == "all":
         return all_steps()
 
     print("Commande inconnue.")
-    print("Commandes disponibles : check, pdf, marketing, all")
+    print("Commandes disponibles : check, pdf, marketing, teaser, all")
     return 1
 
 
