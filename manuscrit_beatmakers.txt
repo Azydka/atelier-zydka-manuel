@@ -2029,7 +2029,7 @@ Annexe C — Ressources par pays
 
 # ANNEXE D — SOURCES VÉRIFIÉES
 
-Les sources ci-dessous doivent être vérifiées à nouveau avant publication commerciale, notamment si les règles de plateformes, les seuils fiscaux, les prix, les conditions d’adhésion ou les positions juridiques ont évolué.
+Les sources ci-dessous doivent être vérifiées à nouveau avant publication commerciale, notamment si les règles de plateformes, les seuils fiscaux, les prix, les conditions d’adhésion ou les positions juridiques ont évoluééé.
 
 SACEM
 Sujet : droits d’auteur, adhésion, déclaration d’œuvres, protection et gestion collective.

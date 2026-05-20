@@ -209,18 +209,32 @@ def ty(y_from_top: float) -> float:
 
 
 def clean_text(s: str) -> str:
+    """
+    Nettoyage éditorial centralisé avant rendu PDF.
+    Supprime les artefacts Markdown et corrige les petites coquilles
+    qui ne doivent jamais apparaître dans le PDF final.
+    """
+    if s is None:
+        return ""
+
+    s = str(s)
+
+    # Nettoyage Markdown courant
     s = s.replace("**", "")
     s = s.replace("__", "")
     s = s.replace("[[TABLE_BLOCK]]", "")
-    return (
-        s.replace("•", "-")
-        .replace("●", "-")
-        .replace("○", "-")
-        .replace("’", "’")
-        .replace("\u00a0", " ")
-        .strip()
-    )
 
+    # Coquille Annexe D
+    s = s.replace("positions juridiques ont évolu", "positions juridiques ont évolué")
+
+    # Sécurité : lignes parasites composées uniquement de #
+    if re.fullmatch(r"[ \\t\\u00a0]*#+[ \\t\\u00a0]*", s):
+        return ""
+
+    # Sécurité : # collé après la phrase finale
+    s = re.sub(r"(Commencez par là\\.)\\s*#+\\s*", r"\\1", s)
+
+    return s.strip()
 
 def draw_bg(c: canvas.Canvas, color=PAPER):
     c.setFillColor(color)
