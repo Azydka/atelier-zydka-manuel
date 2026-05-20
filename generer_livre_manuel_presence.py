@@ -493,34 +493,27 @@ def draw_table_continuation_header(c, page_num: int) -> float:
 
 def draw_markdown_table(c, table_block: str, x: float, y_top: float, page_num: int):
     """
-    Dessine un tableau Markdown en tableau vectoriel.
-    Retourne : y_top, page_num.
+    Dessine un tableau Markdown en tableau vectoriel, optimisé pour A5.
+    Correction :
+    - marge basse plus généreuse ;
+    - en-tête plein sans trait parasite ;
+    - grille appliquée uniquement aux lignes de contenu.
     """
     rows = table_rows_from_block(table_block)
-
-    if not rows or len(rows) < 2:
+    if not rows:
         return y_top, page_num
 
-    col_count = max(len(r) for r in rows)
-    rows = [r + [""] * (col_count - len(r)) for r in rows]
+    col_count = max(len(row) for row in rows)
 
-    # Largeur : on prend 106 mm pour les tableaux, car le A5 est étroit.
+    # Normalise toutes les lignes
+    normalized_rows = []
+    for row in rows:
+        normalized_rows.append(row + [""] * (col_count - len(row)))
+    rows = normalized_rows
+
+    # Largeur adaptée au A5
     table_w = 106 * mm if col_count >= 3 else MAIN_COL
 
-    if col_count <= 2:
-        font_size = 8.0
-        leading = 9.3
-    elif col_count == 3:
-        font_size = 7.2
-        leading = 8.4
-    else:
-        font_size = 6.3
-        leading = 7.4
-
-    padding_x = 2.0 * mm
-    padding_y = 2.5 * mm
-
-    # Répartition des colonnes.
     if col_count == 2:
         col_w = [table_w * 0.38, table_w * 0.62]
     elif col_count == 3:
@@ -530,119 +523,100 @@ def draw_markdown_table(c, table_block: str, x: float, y_top: float, page_num: i
     else:
         col_w = [table_w / col_count for _ in range(col_count)]
 
-    y = y_top + 3 * mm
+    y = y_top
+    cell_pad_x = 2.6 * mm
+    font_size = 7.2
+    leading = 8.7
+    header_h = 9.5 * mm
+    min_row_h = 8.4 * mm
+
+    # Marge de sécurité : évite que les tableaux touchent le bloc Z / folio.
+    table_bottom_limit = CONTENT_BOTTOM - 18 * mm
 
     for row_idx, row in enumerate(rows):
-        row_heights = []
+        is_header = row_idx == 0
+
+        # Calcule la hauteur de ligne selon le contenu
+        max_lines = 1
+        wrapped_cells = []
 
         for i, cell in enumerate(row):
-            inner_w = max(8 * mm, col_w[i] - 2 * padding_x)
-            if row_idx == 0:
-                cell_font = FONTS.mono
-                cell_size = 6.0
-                cell_leading = 7.0
-            else:
-                cell_font = FONTS.inter_bold if i == 0 else FONTS.inter
-                cell_size = font_size
-                cell_leading = leading
+            font = FONTS.mono if is_header else FONTS.inter
+            size = 6.1 if is_header else font_size
+            available_w = max(col_w[i] - (cell_pad_x * 2), 8 * mm)
+            clean_cell = clean_text(cell).upper() if is_header else clean_text(cell)
+            lines = simpleSplit(clean_cell, font, size, available_w)
+            if not lines:
+                lines = [""]
+            wrapped_cells.append(lines)
+            max_lines = max(max_lines, len(lines))
 
-            row_heights.append(
-                estimate_wrapped_height(cell, inner_w, cell_font, cell_size, cell_leading, max_lines=5)
-            )
+        row_h = header_h if is_header else max(min_row_h, (max_lines * leading) + 5.2 * mm)
 
-        row_h = max(row_heights) + 2 * padding_y
-
-        if y + row_h > CONTENT_BOTTOM:
+        # Coupe plus tôt pour garder une vraie respiration basse
+        if y + row_h > table_bottom_limit:
             finish(c)
             page_num += 1
             y = draw_table_continuation_header(c, page_num)
 
-            # Réimpression de l’en-tête si on coupe le tableau.
-            header = rows[0]
-            header_h = 10 * mm
+            # Si on coupe au milieu d'un tableau, on reprend avec une marge confortable.
+            if y + row_h > table_bottom_limit:
+                y = 48 * mm
 
-            c.setFillColor(STEEL)
-            c.rect(x, ty(y) - header_h + 3 * mm, table_w, header_h, stroke=0, fill=1)
+        row_y = ty(y) - row_h
 
-            cx = x
-            for i, cell in enumerate(header):
-                draw_cell_text(
-                    c,
-                    cell.upper(),
-                    cx + padding_x,
-                    y + padding_y,
-                    col_w[i] - 2 * padding_x,
-                    FONTS.mono,
-                    6.0,
-                    7.0,
-                    PAPER,
-                    max_lines=3,
-                )
-                cx += col_w[i]
+        if is_header:
+            # Header plein : aucun stroke, donc aucun trait parasite dans la bande bleue.
+            c.setFillColor(CARBON)
+            c.rect(x, row_y, table_w, row_h, stroke=0, fill=1)
 
-            y += header_h
+            # Texte header
+            c.setFillColor(PAPER)
+            c.setFont(FONTS.mono, 6.1)
 
-        # Fond ligne.
-        if row_idx == 0:
-            c.setFillColor(STEEL)
+            current_x = x
+            for i, lines in enumerate(wrapped_cells):
+                text_y = ty(y + 5.6 * mm)
+                for line in lines[:2]:
+                    c.drawString(current_x + cell_pad_x, text_y, line)
+                    text_y -= leading
+                current_x += col_w[i]
+
         else:
-            c.setFillColor(TABLE_ALT if row_idx % 2 == 1 else PAPER)
+            # Fond alterné des lignes de contenu
+            c.setFillColor(PAPER if row_idx % 2 else Color(0.94, 0.94, 0.92))
+            c.rect(x, row_y, table_w, row_h, stroke=0, fill=1)
 
-        c.rect(x, ty(y) - row_h + 3 * mm, table_w, row_h, stroke=0, fill=1)
+            # Texte contenu
+            current_x = x
+            for i, lines in enumerate(wrapped_cells):
+                c.setFillColor(CARBON)
+                c.setFont(FONTS.inter_bold if i == 0 else FONTS.inter, font_size)
 
-        # Texte cellules.
-        cx = x
-        for i, cell in enumerate(row):
-            if row_idx == 0:
-                cell_font = FONTS.mono
-                cell_size = 6.0
-                cell_leading = 7.0
-                cell_color = PAPER
-                cell_text = cell.upper()
-            else:
-                cell_font = FONTS.inter_bold if i == 0 else FONTS.inter
-                cell_size = font_size
-                cell_leading = leading
-                cell_color = GRAPHITE
-                cell_text = cell
+                text_y = ty(y + 5.2 * mm)
+                for line in lines:
+                    c.drawString(current_x + cell_pad_x, text_y, line)
+                    text_y -= leading
 
-            draw_cell_text(
-                c,
-                cell_text,
-                cx + padding_x,
-                y + padding_y,
-                col_w[i] - 2 * padding_x,
-                cell_font,
-                cell_size,
-                cell_leading,
-                cell_color,
-                max_lines=5,
-            )
+                current_x += col_w[i]
 
-            cx += col_w[i]
+            # Grille uniquement sur les lignes de contenu, jamais sur le header.
+            c.setStrokeColor(STEEL)
+            c.setLineWidth(0.25)
 
-        # Filets.
-        c.setStrokeColor(LINE)
-        c.setLineWidth(0.35)
+            top_line_y = row_y + row_h
+            bottom_line_y = row_y
 
-        top_line_y = ty(y)
-        bottom_line_y = ty(y + row_h - 3 * mm)
+            c.line(x, bottom_line_y, x + table_w, bottom_line_y)
 
-        c.line(x, top_line_y, x + table_w, top_line_y)
-        c.line(x, bottom_line_y, x + table_w, bottom_line_y)
+            current_x = x
+            for width in col_w[:-1]:
+                current_x += width
+                c.line(current_x, bottom_line_y, current_x, top_line_y)
 
-        cx = x
-        for cw in col_w:
-            c.line(cx, top_line_y, cx, bottom_line_y)
-            cx += cw
-        c.line(x + table_w, top_line_y, x + table_w, bottom_line_y)
-
-        y += row_h - 1 * mm
+        y += row_h
 
     return y + 5 * mm, page_num
-
-
-
 
 
 def parse_image_block(text: str):
