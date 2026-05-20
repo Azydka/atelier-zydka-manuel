@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Générateur Teaser PDF — Atelier Zydka Manuel
-
-Génère un teaser court à partir du manuscrit et des citations marketing.
-
-Sortie :
-exports/pdf/teaser-manuel-presence.pdf
+Version V2 propre : citations filtrées + mini-sommaire forcé.
 """
 
 from __future__ import annotations
@@ -22,8 +18,6 @@ from reportlab.pdfgen import canvas
 
 OUTPUT = Path("exports/pdf/teaser-manuel-presence.pdf")
 CITATIONS_FILE = Path("exports/reseaux/citations/citations_extraites.md")
-MANUSCRIPT = Path("manuscrit_beatmakers.txt")
-
 
 PAGE_W, PAGE_H = A5
 
@@ -34,6 +28,29 @@ SIGNATURE = HexColor("#B59A5B")
 WHITE = HexColor("#FFFFFF")
 
 
+CITATIONS_FIXES = [
+    "Avant de chercher plus de visibilité, rendez votre catalogue exploitable.",
+    "Un beat prêt à vendre est un beat prêt à livrer.",
+    "Votre catalogue doit devenir consultable en moins de deux minutes.",
+    "La protection commence par la traçabilité.",
+    "L’international peut multiplier les opportunités, mais aussi les malentendus.",
+]
+
+
+SOMMAIRE_PROPRE = [
+    "Introduction — Pourquoi ce livre ?",
+    "Partie 1 — Le métier en 2026",
+    "Partie 2 — S’équiper sans se disperser",
+    "Partie 3 — Créer des beats vendables",
+    "Partie 4 — Organiser son catalogue comme un pro",
+    "Partie 5 — Vendre ses beats proprement",
+    "Partie 6 — Protéger ses droits sans devenir juriste",
+    "Partie 7 — Se rendre visible et trouver des clients",
+    "Partie 8 — S’ouvrir aux marchés globaux sans se perdre",
+    "Partie 9 — Plan d’action 90 jours",
+]
+
+
 def ty(y_mm: float) -> float:
     return PAGE_H - y_mm * mm
 
@@ -41,8 +58,11 @@ def ty(y_mm: float) -> float:
 def clean(text: str) -> str:
     text = text.replace("**", "")
     text = text.replace("__", "")
+    text = text.replace("##", "")
+    text = text.replace("#", "")
+    text = text.replace("`", "")
     text = re.sub(r"\s+", " ", text)
-    return text.strip()
+    return text.strip(" -–—:;,. ")
 
 
 def draw_page_base(c: canvas.Canvas, page_num: int, dark: bool = False):
@@ -62,10 +82,14 @@ def draw_page_base(c: canvas.Canvas, page_num: int, dark: bool = False):
 
 
 def draw_wrapped(c, text: str, x_mm: float, y_mm: float, w_mm: float, font: str, size: float, leading: float, color) -> float:
+    text = clean(text)
+    if not text:
+        return y_mm
+
     c.setFillColor(color)
     c.setFont(font, size)
 
-    lines = simpleSplit(clean(text), font, size, w_mm * mm)
+    lines = simpleSplit(text, font, size, w_mm * mm)
     y = y_mm
 
     for line in lines:
@@ -73,54 +97,6 @@ def draw_wrapped(c, text: str, x_mm: float, y_mm: float, w_mm: float, font: str,
         y += leading
 
     return y
-
-
-def load_citations(limit: int = 5) -> list[str]:
-    if not CITATIONS_FILE.exists():
-        return []
-
-    raw = CITATIONS_FILE.read_text(encoding="utf-8")
-    quotes = []
-
-    for line in raw.splitlines():
-        if line.strip().startswith("> "):
-            quote = clean(line.strip()[2:])
-            if 55 <= len(quote) <= 210:
-                quotes.append(quote)
-
-    return quotes[:limit]
-
-
-def get_chapters(limit: int = 9) -> list[str]:
-    if not MANUSCRIPT.exists():
-        return []
-
-    raw = MANUSCRIPT.read_text(encoding="utf-8")
-    chapters = []
-
-    for line in raw.splitlines():
-        line = clean(line)
-        if line.startswith("# "):
-            title = line[2:].strip()
-            if title.lower() != "table des matières":
-                chapters.append(title)
-
-    # Fallback si les titres ne sont pas tous en markdown strict
-    if len(chapters) < 5:
-        possible = [
-            "Le métier en 2026",
-            "S’équiper sans se disperser",
-            "Créer des beats vendables",
-            "Organiser son catalogue comme un pro",
-            "Vendre ses beats proprement",
-            "Protéger ses droits sans devenir juriste",
-            "Se rendre visible et trouver des clients",
-            "S’ouvrir aux marchés globaux sans se perdre",
-            "Plan d’action 90 jours",
-        ]
-        return possible[:limit]
-
-    return chapters[:limit]
 
 
 def cover(c: canvas.Canvas):
@@ -188,44 +164,33 @@ def audience_page(c: canvas.Canvas):
     for item in items:
         c.setFillColor(SIGNATURE)
         c.rect(16 * mm, ty(y + 1) - 4 * mm, 4 * mm, 4 * mm, stroke=0, fill=1)
-        y = draw_wrapped(c, item, 25, y, 95, "Helvetica-Bold", 12.5, 7.2, CARBON)
+        y = draw_wrapped(c, item, 25, y, 92, "Helvetica-Bold", 12, 7.2, CARBON)
         y += 5
 
     c.showPage()
 
 
 def quotes_page(c: canvas.Canvas):
-    quotes = load_citations(5)
-
     draw_page_base(c, 4)
 
     c.setFillColor(SIGNATURE)
     c.setFont("Courier", 8)
     c.drawString(16 * mm, ty(28), "EXTRAITS")
 
-    y = 48
+    y = 52
 
-    if not quotes:
-        quotes = [
-            "Avant de chercher plus de visibilité, rendez votre catalogue exploitable.",
-            "Un beat prêt à vendre est un beat prêt à livrer.",
-            "La protection commence par la traçabilité.",
-        ]
-
-    for i, quote in enumerate(quotes, start=1):
+    for i, quote in enumerate(CITATIONS_FIXES, start=1):
         c.setFillColor(CARBON)
-        c.setFont("Helvetica-Bold", 8)
+        c.setFont("Helvetica-Bold", 9)
         c.drawString(16 * mm, ty(y), f"{i:02d}")
 
-        y = draw_wrapped(c, quote, 27, y, 92, "Helvetica", 10, 5.6, CARBON)
-        y += 7
+        y = draw_wrapped(c, quote, 27, y, 82, "Helvetica", 9.4, 5.3, CARBON)
+        y += 8
 
     c.showPage()
 
 
 def summary_page(c: canvas.Canvas):
-    chapters = get_chapters(9)
-
     draw_page_base(c, 5)
 
     c.setFillColor(SIGNATURE)
@@ -234,16 +199,13 @@ def summary_page(c: canvas.Canvas):
 
     y = 48
 
-    for i, title in enumerate(chapters, start=1):
+    for i, title in enumerate(SOMMAIRE_PROPRE[:9], start=1):
         c.setFillColor(SIGNATURE)
         c.setFont("Courier", 8)
         c.drawString(16 * mm, ty(y), f"{i:02d}")
 
-        y = draw_wrapped(c, title, 28, y, 92, "Helvetica-Bold", 10.8, 6.2, CARBON)
-        y += 2.5
-
-        if y > 178:
-            break
+        y = draw_wrapped(c, title, 28, y, 88, "Helvetica-Bold", 10, 5.8, CARBON)
+        y += 3
 
     c.showPage()
 
@@ -292,6 +254,7 @@ def main() -> int:
     c.save()
 
     print(f"Teaser PDF généré : {OUTPUT}")
+    print("Version : teaser V2 propre")
     return 0
 
 
