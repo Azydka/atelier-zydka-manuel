@@ -61,6 +61,14 @@ def teaser() -> int:
     return run([sys.executable, "generer_teaser_pdf.py"])
 
 
+def visuals() -> int:
+    code = run([sys.executable, "-m", "py_compile", "generer_visuels_reseaux.py"])
+    if code != 0:
+        return code
+
+    return run([sys.executable, "generer_visuels_reseaux.py"])
+
+
 def all_steps() -> int:
     code = check()
     if code != 0:
@@ -90,11 +98,14 @@ def main() -> int:
     if command == "teaser":
         return teaser()
 
+    if command == "visuals":
+        return visuals()
+
     if command == "all":
         return all_steps()
 
     print("Commande inconnue.")
-    print("Commandes disponibles : check, pdf, marketing, teaser, all")
+    print("Commandes disponibles : check, pdf, marketing, teaser, visuals, all")
     return 1
 
 
