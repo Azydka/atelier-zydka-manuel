@@ -78,3 +78,16 @@ Le dépôt contient actuellement la première base technique du moteur PDF.
 ```bash
 git clone https://github.com/Azydka/atelier-zydka-manuel.git
 cd atelier-zydka-manuel
+
+## Philosophie
+
+Atelier Zydka Manuel part d’une idée simple :
+
+> Un manuscrit bien structuré peut devenir plus qu’un livre.
+
+Il peut devenir un PDF premium, un teaser, des visuels, des citations, des rapports de contrôle et un système complet de diffusion.
+
+Le but n’est pas seulement de produire un fichier.
+
+Le but est de transformer une matière brute en présence éditoriale complète.
+
