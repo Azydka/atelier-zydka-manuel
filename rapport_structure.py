@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 RAPPORT STRUCTURE — ATELIER ZYDKA MANUEL
-=======================================
-
-Analyse le manuscrit via parser_manuscrit.py et génère un rapport Markdown
-dans exports/rapports/rapport_structure.md.
 """
 
 from __future__ import annotations
@@ -21,11 +17,9 @@ OUTPUT_DIR = ROOT / "exports" / "rapports"
 OUTPUT = OUTPUT_DIR / "rapport_structure.md"
 
 
-def block_excerpt(text: str, limit: int = 90) -> str:
+def clean_excerpt(text: str, limit: int = 90) -> str:
     text = " ".join((text or "").split())
-    if len(text) <= limit:
-        return text
-    return text[: limit - 1] + "…"
+    return text if len(text) <= limit else text[:limit] + "…"
 
 
 def main() -> int:
@@ -39,29 +33,14 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     global_counter = Counter()
-    chapter_rows = []
     alerts = []
+    rows = []
 
-    for index, chapter in enumerate(chapters, start=1):
+    for idx, chapter in enumerate(chapters, start=1):
         counter = Counter(block.type for block in chapter.blocks)
         global_counter.update(counter)
 
-        chapter_rows.append(
-            {
-                "index": index,
-                "title": chapter.title,
-                "kind": chapter.kind,
-                "blocks": len(chapter.blocks),
-                "paragraphs": counter.get("paragraph", 0),
-                "headings": counter.get("heading", 0),
-                "lists": counter.get("list_item", 0),
-                "tables": counter.get("table", 0),
-                "images": counter.get("image", 0),
-                "quotes": counter.get("quote", 0),
-                "callouts": counter.get("callout", 0),
-                "pagebreaks": counter.get("pagebreak", 0),
-            }
-        )
+        rows.append((idx, chapter, counter))
 
         if not chapter.blocks:
             alerts.append(f"- Chapitre vide : `{chapter.title}`")
@@ -76,7 +55,6 @@ def main() -> int:
             alerts.append(f"- Chapitre très dense : `{chapter.title}`")
 
     lines = []
-
     lines.append("# Rapport de structure — Atelier Zydka Manuel")
     lines.append("")
     lines.append("## Synthèse")
@@ -98,13 +76,18 @@ def main() -> int:
     lines.append("| # | Chapitre | Type | Blocs | Paragraphes | Titres | Listes | Tableaux | Images | Citations | Encadrés |")
     lines.append("|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|")
 
-    for row in chapter_rows:
-        title = row["title"].replace("|", "\\|")
+    for idx, chapter, counter in rows:
+        title = chapter.title.replace("|", "\\|")
         lines.append(
-            f"| {row['index']} | {title} | {row['kind']} | "
-            f"{row['blocks']} | {row['paragraphs']} | {row['headings']} | "
-            f"{row['lists']} | {row['tables']} | {row['images']} | "
-            f"{row['quotes']} | {row['callouts']} |"
+            f"| {idx} | {title} | {chapter.kind} | "
+            f"{len(chapter.blocks)} | "
+            f"{counter.get('paragraph', 0)} | "
+            f"{counter.get('heading', 0)} | "
+            f"{counter.get('list_item', 0)} | "
+            f"{counter.get('table', 0)} | "
+            f"{counter.get('image', 0)} | "
+            f"{counter.get('quote', 0)} | "
+            f"{counter.get('callout', 0)} |"
         )
 
     lines.append("")
@@ -117,24 +100,20 @@ def main() -> int:
         lines.append("Aucune alerte structurelle majeure détectée.")
 
     lines.append("")
-    lines.append("## Détail des blocs par chapitre")
+    lines.append("## Détail des blocs")
     lines.append("")
 
-    for index, chapter in enumerate(chapters, start=1):
-        lines.append(f"### {index:02d}. {chapter.title}")
+    for idx, chapter, counter in rows:
+        lines.append(f"### {idx:02d}. {chapter.title}")
         lines.append("")
-        if not chapter.blocks:
-            lines.append("_Aucun bloc détecté._")
-            lines.append("")
-            continue
 
-        for block in chapter.blocks[:80]:
-            excerpt = block_excerpt(block.text)
+        for block in chapter.blocks[:60]:
             level = f" niveau {block.level}" if block.level else ""
+            excerpt = clean_excerpt(block.text)
             lines.append(f"- `{block.type}`{level} — {excerpt}")
 
-        if len(chapter.blocks) > 80:
-            lines.append(f"- … {len(chapter.blocks) - 80} blocs supplémentaires non affichés.")
+        if len(chapter.blocks) > 60:
+            lines.append(f"- … {len(chapter.blocks) - 60} blocs supplémentaires non affichés.")
 
         lines.append("")
 
