@@ -14,28 +14,49 @@
 - Sauts de page : **0**
 - Score éditorial moyen : **87.4/100**
 
+## Lecture stratégique
+
+- Plusieurs chapitres demandent une reprise éditoriale : le manuscrit est solide, mais encore dense.
+- Les zones les plus denses sont : Introduction — Pourquoi ce livre ?, Partie 1 — Le métier en 2026, Partie 2 — S’équiper sans se disperser.
+- Les tableaux sont concentrés sur quelques sections : vérifier leur lisibilité en A5.
+- Plusieurs chapitres utilisent fortement les listes : utile pédagogiquement, mais à équilibrer avec plus de respiration narrative.
+
+## Plan d’action recommandé
+
+1. Alléger **Partie 4 — Organiser son catalogue comme un pro** : réduire la densité, simplifier les tableaux et créer plus de respirations.
+2. Reprendre **Partie 5 — Vendre ses beats proprement** : regrouper certaines listes et transformer les passages répétitifs en paragraphes courts.
+3. Reprendre **Partie 6 — Protéger ses droits sans devenir juriste** : regrouper certaines listes et transformer les passages répétitifs en paragraphes courts.
+4. Reprendre **Partie 9 — Plan d’action 90 jours** : regrouper certaines listes et transformer les passages répétitifs en paragraphes courts.
+
+## Seuils d’interprétation
+
+- **90 à 100** : section saine, prête pour finition.
+- **75 à 89** : section correcte, à surveiller.
+- **60 à 74** : reprise utile avant version finale.
+- **0 à 59** : priorité éditoriale forte.
+
 ## Diagnostic éditorial
 
-| # | Chapitre | Densité | Score | Recommandation |
-|---:|---|---|---:|---|
-| 1 | Avertissement légal | court | 100 | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
-| 2 | Introduction — Pourquoi ce livre ? | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
-| 3 | Partie 1 — Le métier en 2026 | dense | 87 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
-| 4 | Partie 2 — S’équiper sans se disperser | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
-| 5 | Partie 3 — Créer des beats vendables | équilibré | 90 | Ajouter une citation ou phrase-pivot pour renforcer la mémorisation. |
-| 6 | Partie 4 — Organiser son catalogue comme un pro | très dense | 50 | Vérifier les tableaux : certains pourraient être déplacés en annexe ou simplifiés. |
-| 7 | Partie 5 — Vendre ses beats proprement | très dense | 67 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
-| 8 | Partie 6 — Protéger ses droits sans devenir juriste | dense | 72 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
-| 9 | Partie 7 — Se rendre visible et trouver des clients | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
-| 10 | Partie 8 — S’ouvrir aux marchés globaux sans se perdre | équilibré | 90 | Ajouter une citation ou phrase-pivot pour renforcer la mémorisation. |
-| 11 | Partie 9 — Plan d’action 90 jours | dense | 72 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
-| 12 | Annexes | séparateur | 100 | Page séparatrice détectée : aucun problème éditorial. |
-| 13 | Annexe A — Fichiers bonus inclus | équilibré | 100 | Structure équilibrée. |
-| 14 | ANNEXE B — GLOSSAIRE RAPIDE | court | 100 | Structure équilibrée. |
-| 15 | Annexe C : Ressources par pays | équilibré | 100 | Structure équilibrée. |
-| 16 | ANNEXE D — SOURCES VÉRIFIÉES | court | 100 | Structure équilibrée. |
-| 17 | Annexe E : Instructions d’utilisation du toolkit | court | 100 | Structure équilibrée. |
-| 18 | Conclusion | court | 100 | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
+| # | Chapitre | Densité | Score | Priorité | Recommandation |
+|---:|---|---|---:|---|---|
+| 1 | Avertissement légal | court | 100 | OK | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
+| 2 | Introduction — Pourquoi ce livre ? | dense | 82 | surveillance | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 3 | Partie 1 — Le métier en 2026 | dense | 87 | surveillance | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 4 | Partie 2 — S’équiper sans se disperser | dense | 82 | surveillance | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 5 | Partie 3 — Créer des beats vendables | équilibré | 90 | OK | Structure saine. Optionnel : ajouter une phrase-pivot pour renforcer la mémorisation. |
+| 6 | Partie 4 — Organiser son catalogue comme un pro | très dense | 50 | priorité haute | Vérifier les tableaux : certains pourraient être déplacés en annexe ou simplifiés. |
+| 7 | Partie 5 — Vendre ses beats proprement | très dense | 67 | priorité moyenne | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 8 | Partie 6 — Protéger ses droits sans devenir juriste | dense | 72 | priorité moyenne | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 9 | Partie 7 — Se rendre visible et trouver des clients | dense | 82 | surveillance | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 10 | Partie 8 — S’ouvrir aux marchés globaux sans se perdre | équilibré | 90 | OK | Structure saine. Optionnel : ajouter une phrase-pivot pour renforcer la mémorisation. |
+| 11 | Partie 9 — Plan d’action 90 jours | dense | 72 | priorité moyenne | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 12 | Annexes | séparateur | 100 | OK | Page séparatrice détectée : aucun problème éditorial. |
+| 13 | Annexe A — Fichiers bonus inclus | équilibré | 100 | OK | Structure équilibrée. |
+| 14 | ANNEXE B — GLOSSAIRE RAPIDE | court | 100 | OK | Structure équilibrée. |
+| 15 | Annexe C : Ressources par pays | équilibré | 100 | OK | Structure équilibrée. |
+| 16 | ANNEXE D — SOURCES VÉRIFIÉES | court | 100 | OK | Structure équilibrée. |
+| 17 | Annexe E : Instructions d’utilisation du toolkit | court | 100 | OK | Structure équilibrée. |
+| 18 | Conclusion | court | 100 | OK | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
 
 ## Structure par chapitre
 
