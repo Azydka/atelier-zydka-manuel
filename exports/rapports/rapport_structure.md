@@ -12,6 +12,30 @@
 - Citations : **9**
 - Encadrés : **0**
 - Sauts de page : **0**
+- Score éditorial moyen : **87.4/100**
+
+## Diagnostic éditorial
+
+| # | Chapitre | Densité | Score | Recommandation |
+|---:|---|---|---:|---|
+| 1 | Avertissement légal | court | 100 | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
+| 2 | Introduction — Pourquoi ce livre ? | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 3 | Partie 1 — Le métier en 2026 | dense | 87 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 4 | Partie 2 — S’équiper sans se disperser | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 5 | Partie 3 — Créer des beats vendables | équilibré | 90 | Ajouter une citation ou phrase-pivot pour renforcer la mémorisation. |
+| 6 | Partie 4 — Organiser son catalogue comme un pro | très dense | 50 | Vérifier les tableaux : certains pourraient être déplacés en annexe ou simplifiés. |
+| 7 | Partie 5 — Vendre ses beats proprement | très dense | 67 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 8 | Partie 6 — Protéger ses droits sans devenir juriste | dense | 72 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 9 | Partie 7 — Se rendre visible et trouver des clients | dense | 82 | Surveiller la densité : le chapitre est riche mais peut fatiguer en A5. |
+| 10 | Partie 8 — S’ouvrir aux marchés globaux sans se perdre | équilibré | 90 | Ajouter une citation ou phrase-pivot pour renforcer la mémorisation. |
+| 11 | Partie 9 — Plan d’action 90 jours | dense | 72 | Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif. |
+| 12 | Annexes | séparateur | 100 | Page séparatrice détectée : aucun problème éditorial. |
+| 13 | Annexe A — Fichiers bonus inclus | équilibré | 100 | Structure équilibrée. |
+| 14 | ANNEXE B — GLOSSAIRE RAPIDE | court | 100 | Structure équilibrée. |
+| 15 | Annexe C : Ressources par pays | équilibré | 100 | Structure équilibrée. |
+| 16 | ANNEXE D — SOURCES VÉRIFIÉES | court | 100 | Structure équilibrée. |
+| 17 | Annexe E : Instructions d’utilisation du toolkit | court | 100 | Structure équilibrée. |
+| 18 | Conclusion | court | 100 | Chapitre court : vérifier qu'il apporte assez de valeur autonome. |
 
 ## Structure par chapitre
 
@@ -39,7 +63,20 @@
 ## Alertes éditoriales
 
 - Beaucoup de tableaux dans : `Partie 4 — Organiser son catalogue comme un pro`
-- Chapitre vide : `Annexes`
+- Beaucoup de listes dans : `Partie 4 — Organiser son catalogue comme un pro`
+- Chapitre très dense : `Partie 4 — Organiser son catalogue comme un pro`
+- Beaucoup de listes dans : `Partie 5 — Vendre ses beats proprement`
+- Chapitre très dense : `Partie 5 — Vendre ses beats proprement`
+- Beaucoup de listes dans : `Partie 6 — Protéger ses droits sans devenir juriste`
+- Beaucoup de listes dans : `Partie 9 — Plan d’action 90 jours`
+
+## Priorités de correction
+
+- **Partie 4 — Organiser son catalogue comme un pro** — score 50/100 : Vérifier les tableaux : certains pourraient être déplacés en annexe ou simplifiés.
+- **Partie 5 — Vendre ses beats proprement** — score 67/100 : Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif.
+- **Partie 6 — Protéger ses droits sans devenir juriste** — score 72/100 : Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif.
+- **Partie 9 — Plan d’action 90 jours** — score 72/100 : Réduire ou regrouper certaines listes pour éviter un effet checklist trop massif.
+- **Introduction — Pourquoi ce livre ?** — score 82/100 : Surveiller la densité : le chapitre est riche mais peut fatiguer en A5.
 
 ## Détail des blocs
 
