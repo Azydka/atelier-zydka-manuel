@@ -45,6 +45,14 @@ def pdf() -> int:
     return run([sys.executable, "generer_livre_manuel_presence.py"])
 
 
+
+def structure() -> int:
+    code = run([sys.executable, "-m", "py_compile", "rapport_structure.py"])
+    if code != 0:
+        return code
+
+    return run([sys.executable, "rapport_structure.py"])
+
 def marketing() -> int:
     code = run([sys.executable, "-m", "py_compile", "generer_exports_marketing.py"])
     if code != 0:
@@ -80,6 +88,10 @@ def all_steps() -> int:
     if code != 0:
         return code
 
+    code = structure()
+    if code != 0:
+        return code
+
     code = marketing()
     if code != 0:
         return code
@@ -100,6 +112,9 @@ def main() -> int:
     if command == "pdf":
         return pdf()
 
+    if command == "structure":
+        return structure()
+
     if command == "marketing":
         return marketing()
 
@@ -113,7 +128,7 @@ def main() -> int:
         return all_steps()
 
     print("Commande inconnue.")
-    print("Commandes disponibles : check, pdf, marketing, teaser, visuals, all")
+    print("Commandes disponibles : check, pdf, structure, marketing, teaser, visuals, all")
     return 1
 
 
