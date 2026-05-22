@@ -78,6 +78,7 @@ Le dépôt contient actuellement la première base technique du moteur PDF.
 ```bash
 git clone https://github.com/Azydka/atelier-zydka-manuel.git
 cd atelier-zydka-manuel
+```
 
 ## Philosophie
 
