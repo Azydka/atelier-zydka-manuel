@@ -9,3 +9,9 @@ manuelsortie/
 # Archives locales
 Archives dev/
 exports/reseaux/cartes/
+
+# Releases générées
+/dist/
+
+# macOS
+.DS_Store
