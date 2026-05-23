@@ -11,6 +11,7 @@ python3 make.py teaser     # génère le teaser PDF
 python3 make.py visuals    # génère les visuels réseaux
 python3 make.py all        # lance tout le pipeline
 python3 make.py release    # crée un dossier de distribution propre
+python3 make.py archive    # crée une archive ZIP transmissible
 """
 
 from __future__ import annotations
@@ -18,12 +19,14 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
 DIST_ROOT = ROOT / "dist"
 RELEASE_DIR = DIST_ROOT / "atelier-zydka-manuel-release"
+ZIP_PATH = DIST_ROOT / "atelier-zydka-manuel-release.zip"
 
 
 def run(command: list[str]) -> int:
@@ -52,11 +55,13 @@ def copy_dir(src: Path, dest: Path) -> None:
         shutil.rmtree(dest)
 
     dest.parent.mkdir(parents=True, exist_ok=True)
+
     shutil.copytree(
         src,
         dest,
         ignore=shutil.ignore_patterns(".DS_Store", "__pycache__"),
     )
+
     print(f"Copié : {src.relative_to(ROOT)} → {dest.relative_to(ROOT)}")
 
 
@@ -172,6 +177,32 @@ def release() -> int:
     return 0
 
 
+def archive() -> int:
+    code = release()
+    if code != 0:
+        return code
+
+    if ZIP_PATH.exists():
+        ZIP_PATH.unlink()
+
+    with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
+        for path in RELEASE_DIR.rglob("*"):
+            if ".DS_Store" in path.parts:
+                continue
+
+            if "__pycache__" in path.parts:
+                continue
+
+            if path.is_file():
+                zipf.write(path, path.relative_to(DIST_ROOT))
+
+    print("")
+    print("Archive ZIP générée :")
+    print(ZIP_PATH)
+
+    return 0
+
+
 def main() -> int:
     command = sys.argv[1] if len(sys.argv) > 1 else "all"
 
@@ -199,8 +230,12 @@ def main() -> int:
     if command == "release":
         return release()
 
+    if command == "archive":
+        return archive()
+
     print("Commande inconnue.")
-    print("Commandes disponibles : check, pdf, structure, marketing, teaser, visuals, all, release")
+    print("Commandes disponibles : check, pdf, structure, marketing, teaser, visuals, all, release, archive")
+
     return 1
 
 
