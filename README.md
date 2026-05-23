@@ -226,3 +226,41 @@ Priorités immédiates V2.1 :
 Ce projet est en cours de structuration.
 
 Une licence d’utilisation dédiée devra être ajoutée avant diffusion commerciale publique.
+
+---
+
+## Aperçu visuel
+
+Quelques captures permettent de visualiser les principaux livrables générés par Atelier Zydka Manuel.
+
+### PDF principal
+
+![PDF principal](docs/screenshots/01_pdf_principal.png)
+
+### Teaser PDF
+
+![Teaser PDF](docs/screenshots/02_teaser_pdf.png)
+
+### Rapport éditorial
+
+![Rapport structure](docs/screenshots/03_rapport_structure.png)
+
+### Citations marketing
+
+![Citations marketing](docs/screenshots/04_citations_marketing.png)
+
+### Visuels réseaux sociaux
+
+![Visuels réseaux sociaux](docs/screenshots/05_visuels_reseaux.png)
+
+### Dossier de release
+
+![Dossier release](docs/screenshots/06_dossier_release.png)
+
+### Archive ZIP
+
+![Archive ZIP](docs/screenshots/07_archive_zip.png)
+
+### Terminal — génération archive
+
+![Terminal make archive](docs/screenshots/08_terminal_make_archive.png)
