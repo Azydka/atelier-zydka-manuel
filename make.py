@@ -161,6 +161,11 @@ def copy_documentation() -> None:
         RELEASE_DIR / "docs" / "PAGE_VENTE.md",
     )
 
+    copy_file(
+        ROOT / "docs" / "BETA_TEST.md",
+        RELEASE_DIR / "docs" / "BETA_TEST.md",
+    )
+
 
 def copy_outputs() -> None:
     copy_file(
