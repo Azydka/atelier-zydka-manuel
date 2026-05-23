@@ -15,3 +15,8 @@ exports/reseaux/cartes/
 
 # macOS
 .DS_Store
+
+# Contenus privés non versionnés
+private/
+*_private.txt
+manuscrit_complet_*.txt
