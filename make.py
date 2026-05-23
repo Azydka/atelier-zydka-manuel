@@ -67,6 +67,7 @@ def copy_dir(src: Path, dest: Path) -> None:
 
 def check() -> int:
     code = run([sys.executable, "-m", "py_compile", "verifier_manuscrit.py"])
+
     if code != 0:
         return code
 
@@ -75,10 +76,12 @@ def check() -> int:
 
 def pdf() -> int:
     code = run([sys.executable, "-m", "py_compile", "parser_manuscrit.py"])
+
     if code != 0:
         return code
 
     code = run([sys.executable, "-m", "py_compile", "generer_livre_manuel_presence.py"])
+
     if code != 0:
         return code
 
@@ -87,6 +90,7 @@ def pdf() -> int:
 
 def structure() -> int:
     code = run([sys.executable, "-m", "py_compile", "rapport_structure.py"])
+
     if code != 0:
         return code
 
@@ -95,6 +99,7 @@ def structure() -> int:
 
 def marketing() -> int:
     code = run([sys.executable, "-m", "py_compile", "generer_exports_marketing.py"])
+
     if code != 0:
         return code
 
@@ -103,6 +108,7 @@ def marketing() -> int:
 
 def teaser() -> int:
     code = run([sys.executable, "-m", "py_compile", "generer_teaser_pdf.py"])
+
     if code != 0:
         return code
 
@@ -111,6 +117,7 @@ def teaser() -> int:
 
 def visuals() -> int:
     code = run([sys.executable, "-m", "py_compile", "generer_visuels_reseaux.py"])
+
     if code != 0:
         return code
 
@@ -119,6 +126,7 @@ def visuals() -> int:
 
 def all_steps() -> int:
     code = check()
+
     if code != 0:
         print("")
         print("Arrêt : le check a détecté une erreur bloquante.")
@@ -126,25 +134,35 @@ def all_steps() -> int:
 
     for step in (pdf, structure, marketing, teaser, visuals):
         code = step()
+
         if code != 0:
             return code
 
     return 0
 
 
-def release() -> int:
-    code = all_steps()
-    if code != 0:
-        return code
-
-    if RELEASE_DIR.exists():
-        shutil.rmtree(RELEASE_DIR)
-
-    RELEASE_DIR.mkdir(parents=True, exist_ok=True)
-
+def copy_documentation() -> None:
     copy_file(ROOT / "README.md", RELEASE_DIR / "README.md")
     copy_file(ROOT / "RELEASE_NOTES.md", RELEASE_DIR / "RELEASE_NOTES.md")
+    copy_file(ROOT / "LICENSE.md", RELEASE_DIR / "LICENSE.md")
 
+    copy_file(
+        ROOT / "docs" / "GUIDE_UTILISATEUR.md",
+        RELEASE_DIR / "docs" / "GUIDE_UTILISATEUR.md",
+    )
+
+    copy_file(
+        ROOT / "docs" / "FAQ.md",
+        RELEASE_DIR / "docs" / "FAQ.md",
+    )
+
+    copy_file(
+        ROOT / "docs" / "PAGE_VENTE.md",
+        RELEASE_DIR / "docs" / "PAGE_VENTE.md",
+    )
+
+
+def copy_outputs() -> None:
     copy_file(
         ROOT / "manuelsortie" / "manuel-de-presence-atelier-zydka.pdf",
         RELEASE_DIR / "pdf" / "manuel-de-presence-atelier-zydka.pdf",
@@ -170,6 +188,21 @@ def release() -> int:
         RELEASE_DIR / "reseaux" / "cartes",
     )
 
+
+def release() -> int:
+    code = all_steps()
+
+    if code != 0:
+        return code
+
+    if RELEASE_DIR.exists():
+        shutil.rmtree(RELEASE_DIR)
+
+    RELEASE_DIR.mkdir(parents=True, exist_ok=True)
+
+    copy_documentation()
+    copy_outputs()
+
     print("")
     print("Release générée :")
     print(RELEASE_DIR)
@@ -179,6 +212,7 @@ def release() -> int:
 
 def archive() -> int:
     code = release()
+
     if code != 0:
         return code
 
