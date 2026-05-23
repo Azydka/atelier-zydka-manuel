@@ -1,5 +1,82 @@
 # Atelier Zydka Manuel
 
+**Atelier Zydka Manuel** est un système éditorial automatisé qui transforme un manuscrit source en produit éditorial complet.
+
+Il permet de générer :
+
+- un livre PDF principal ;
+- un teaser PDF ;
+- un rapport éditorial ;
+- des citations marketing ;
+- des visuels réseaux sociaux ;
+- un dossier de release propre ;
+- une archive ZIP transmissible.
+
+Le projet est conçu comme un mini-studio éditorial local pour transformer une matière brute en produit premium, personnalisable et diffusable.
+
+---
+
+## Vision produit
+
+Atelier Zydka Manuel transforme un manuscrit brut en livrables éditoriaux prêts à diffuser.
+
+Promesse courte :
+
+> Transformer une matière brute en produit éditorial complet, personnalisable et diffusable.
+
+Promesse commerciale :
+
+> Transformez votre manuscrit en livre PDF premium, teaser, citations marketing, visuels réseaux sociaux et dossier de publication prêt à diffuser.
+
+---
+
+## État actuel
+
+Version actuelle : **V2.1 — Packaging éditorial propre**
+
+Le projet dispose actuellement de :
+
+- pipeline complet ;
+- génération PDF ;
+- génération teaser ;
+- génération rapport éditorial ;
+- génération citations marketing ;
+- génération visuels réseaux sociaux ;
+- dossier de release ;
+- archive ZIP ;
+- manuscrit V13 intégré ;
+- citations marketing contrôlées ;
+- commande `make release` ;
+- commande `make archive`.
+
+---
+
+## Structure du projet
+
+```text
+atelier-zydka-manuel/
+├── make.py
+├── config.json
+├── manuscrit_beatmakers.txt
+├── parser_manuscrit.py
+├── verifier_manuscrit.py
+├── generer_livre_manuel_presence.py
+├── rapport_structure.py
+├── generer_exports_marketing.py
+├── generer_teaser_pdf.py
+├── generer_visuels_reseaux.py
+├── manuelsortie/
+├── exports/
+│   ├── pdf/
+│   ├── rapports/
+│   └── reseaux/
+│       ├── citations/
+│       └── cartes/
+├── dist/
+├── images/
+├── README.md
+└── RELEASE_NOTES.md# Atelier Zydka Manuel
+
 **Générateur éditorial automatisé pour produire un livre PDF premium, ses rapports de contrôle, son teaser et ses visuels marketing à partir d’un manuscrit source.**
 
 Atelier Zydka Manuel transforme un manuscrit texte enrichi en système de publication complet :
