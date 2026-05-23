@@ -1,5 +1,40 @@
 # Release Notes — Atelier Zydka Manuel
 
+## V2.1 — Packaging éditorial propre
+
+### Ajouté
+
+- Ajout de la commande `python3 make.py archive`.
+- Génération automatique d’une archive ZIP transmissible.
+- Création du fichier `dist/atelier-zydka-manuel-release.zip`.
+- Intégration du manuscrit **Beatmaker Indépendant 2027 — Édition V13 Ultime**.
+- Mise en place d’une sélection éditoriale contrôlée pour les citations marketing.
+- Génération de visuels réseaux sociaux plus propres à partir de citations validées.
+- Amélioration du positionnement produit autour d’un mini-studio éditorial local.
+
+### Modifié
+
+- Mise à jour du manuscrit principal `manuscrit_beatmakers.txt`.
+- Réécriture de `generer_exports_marketing.py` pour éviter les extractions parasites.
+- Mise à jour du fichier `exports/reseaux/citations/citations_extraites.md`.
+- Clarification du workflow de génération complet.
+- Consolidation de la logique de release.
+
+### Corrigé
+
+- Suppression des titres d’annexes dans les citations marketing.
+- Suppression des fragments Markdown dans les visuels sociaux.
+- Suppression des symboles parasites issus d’emojis non rendus.
+- Réduction du risque de cartes sociales inutilisables.
+- Séparation plus propre entre contenu éditorial, exports et livrable final.
+
+### Commandes principales
+
+```bash
+python3 make.py all
+python3 make.py release
+python3 make.py archive# Release Notes — Atelier Zydka Manuel
+
 ## Version produit — 22/05/2026
 
 Cette release stabilise **Atelier Zydka Manuel** comme générateur éditorial complet.
