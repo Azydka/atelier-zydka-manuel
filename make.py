@@ -22,11 +22,21 @@ import sys
 import zipfile
 from pathlib import Path
 
+from config_utils import load_config
+
 
 ROOT = Path(__file__).resolve().parent
 DIST_ROOT = ROOT / "dist"
-RELEASE_DIR = DIST_ROOT / "atelier-zydka-manuel-release"
-ZIP_PATH = DIST_ROOT / "atelier-zydka-manuel-release.zip"
+
+CONFIG = load_config()
+
+RELEASE_NAME = CONFIG.get("release_name", "atelier-zydka-manuel-release")
+ZIP_NAME = CONFIG.get("zip_name", "atelier-zydka-manuel-release.zip")
+OUTPUT_PDF_NAME = CONFIG.get("output_pdf_name", "manuel-de-presence-atelier-zydka.pdf")
+TEASER_PDF_NAME = CONFIG.get("teaser_pdf_name", "teaser-manuel-presence.pdf")
+
+RELEASE_DIR = DIST_ROOT / RELEASE_NAME
+ZIP_PATH = DIST_ROOT / ZIP_NAME
 
 
 def run(command: list[str]) -> int:
@@ -169,13 +179,13 @@ def copy_documentation() -> None:
 
 def copy_outputs() -> None:
     copy_file(
-        ROOT / "manuelsortie" / "manuel-de-presence-atelier-zydka.pdf",
-        RELEASE_DIR / "pdf" / "manuel-de-presence-atelier-zydka.pdf",
+        ROOT / "manuelsortie" / OUTPUT_PDF_NAME,
+        RELEASE_DIR / "pdf" / OUTPUT_PDF_NAME,
     )
 
     copy_file(
-        ROOT / "exports" / "pdf" / "teaser-manuel-presence.pdf",
-        RELEASE_DIR / "pdf" / "teaser-manuel-presence.pdf",
+        ROOT / "exports" / "pdf" / TEASER_PDF_NAME,
+        RELEASE_DIR / "pdf" / TEASER_PDF_NAME,
     )
 
     copy_file(

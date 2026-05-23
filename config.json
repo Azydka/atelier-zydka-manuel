@@ -1,27 +1,20 @@
 {
-  "book": {
-    "title": "Le Manuel de Présence",
-    "subtitle": "Atelier Zydka",
-    "author": "Atelier Zydka"
-  },
-  "layout": {
-    "format": "A5",
-    "page_width_mm": 148,
-    "page_height_mm": 210,
-    "margin_left_mm": 22,
-    "margin_right_mm": 16,
-    "margin_top_mm": 18,
-    "margin_bottom_mm": 16
-  },
-  "features": {
-    "include_cover": true,
-    "include_back_cover": true,
-    "include_annex_page": false,
-    "include_demo_pages": false,
-    "include_fixed_intro_pages": false,
-    "include_visual_opening_pages": false,
-    "include_table_of_contents": true,
-    "strict_missing_images": false,
-    "include_chapter_openers": false
+  "project_title": "Atelier Zydka Manuel",
+  "book_title": "Manuscrit de démonstration",
+  "book_subtitle": "Transformer un manuscrit brut en pack éditorial complet",
+  "author_name": "Atelier Zydka",
+  "brand_name": "Atelier Zydka",
+  "baseline": "Culture · méthode · indépendance",
+  "year": "2026",
+  "language": "fr",
+  "output_pdf_name": "manuel-de-presence-atelier-zydka.pdf",
+  "teaser_pdf_name": "teaser-manuel-presence.pdf",
+  "release_name": "atelier-zydka-manuel-release",
+  "zip_name": "atelier-zydka-manuel-release.zip",
+  "theme": {
+    "background": "#090909",
+    "text": "#F4F1EB",
+    "accent": "#C79A3B",
+    "muted": "#96928A"
   }
 }
