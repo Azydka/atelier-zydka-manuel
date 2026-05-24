@@ -337,3 +337,21 @@ Ou :
 ### Objectif
 
 La V3.1 réduit la friction d’installation et de lancement pour les utilisateurs non techniques.
+
+---
+
+## V3.1.1 — Pack d’onboarding
+
+### Ajouté
+
+- Ajout de `START_HERE.md`.
+- Ajout de `INSTALLATION.md`.
+- Ajout de `QUICKSTART.md`.
+- Inclusion des documents d’onboarding dans la release ZIP.
+- Amélioration du premier contact utilisateur après téléchargement.
+
+### Objectif
+
+La V3.1.1 facilite la prise en main immédiate du projet après décompression du ZIP.
+
+L’utilisateur sait désormais par où commencer, comment installer les dépendances, comment lancer l’application et comment générer son premier pack éditorial.
