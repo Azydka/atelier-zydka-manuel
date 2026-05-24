@@ -12,11 +12,14 @@ Double-cliquez sur :
 
 La première fois, l'installation peut prendre quelques minutes.
 
-Si macOS bloque le fichier :
+Si macOS bloque le fichier avec un message du type “développeur non identifié” :
 
-1. faites clic droit sur install_and_launch.command ;
-2. cliquez sur Ouvrir ;
-3. confirmez l'ouverture.
+1. cliquez d'abord sur OK ;
+2. faites clic droit sur install_and_launch.command ;
+3. cliquez sur Ouvrir ;
+4. confirmez encore avec Ouvrir.
+
+C'est un comportement normal de macOS pour les fichiers téléchargés depuis Internet.
 
 ## Lancer l'application sur Windows
 
