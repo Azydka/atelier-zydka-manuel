@@ -383,3 +383,36 @@ Ouvrez l’onglet Exports pour consulter :
 - 🟠 correction recommandée ;
 - 🔴 problème prioritaire ;
 - ⚫ section vide ou structurelle.
+
+---
+
+## V3.5 — Lire le score qualité
+
+La V3.5 ajoute un score qualité visible directement dans le tableau de bord.
+
+### Générer le score
+
+Vous pouvez lancer :
+
+    python3 make.py quality
+
+Ou générer tout le pack :
+
+    python3 make.py archive
+
+### Fichiers générés
+
+    exports/rapports/rapport_qualite.md
+    exports/rapports/score_qualite.json
+
+### Dans l’interface
+
+Ouvrez le tableau de bord Streamlit.
+
+Le score qualité indique rapidement si le manuscrit semble :
+
+- prêt ;
+- améliorable ;
+- à corriger en priorité.
+
+Pour lire le détail, ouvrez l’onglet Exports et consultez le rapport qualité éditorial.

@@ -581,3 +581,38 @@ Le rapport qualité est visible dans l’onglet Exports de l’interface Streaml
 La V3.4 ajoute une couche de contrôle éditorial avant publication.
 
 Elle permet de repérer rapidement les problèmes structurels ou éditoriaux avant de générer un pack final.
+
+---
+
+## V3.5 — Score qualité dans le tableau de bord
+
+Depuis la V3.5, Atelier Zydka Manuel affiche le score qualité éditorial directement dans le tableau de bord Streamlit.
+
+Le rapport qualité génère désormais deux fichiers :
+
+    exports/rapports/rapport_qualite.md
+    exports/rapports/score_qualite.json
+
+Le fichier JSON permet à l’interface de lire automatiquement le score qualité et de l’afficher comme indicateur produit.
+
+### Objectif
+
+Rendre le diagnostic éditorial immédiatement visible sans devoir ouvrir manuellement le rapport complet.
+
+### Commande dédiée
+
+    python3 make.py quality
+
+### Génération complète
+
+    python3 make.py archive
+
+### Dans l’interface
+
+Le tableau de bord affiche :
+
+- le score qualité sur 100 ;
+- le statut du manuscrit ;
+- une alerte si le score est faible ou moyen.
+
+Le rapport complet reste disponible dans l’onglet Exports.

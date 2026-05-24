@@ -442,3 +442,22 @@ Le rapport qualité détecte :
 La V3.4 ajoute une couche de contrôle éditorial avancé avant publication.
 
 Elle rapproche Atelier Zydka Manuel d’un véritable studio éditorial local capable de diagnostiquer un manuscrit avant génération du pack final.
+
+---
+
+## V3.5 — Score qualité dans le tableau de bord
+
+### Ajouté
+
+- Génération de `exports/rapports/score_qualite.json`.
+- Inclusion de `score_qualite.json` dans la release ZIP.
+- Lecture du score qualité par l’interface Streamlit.
+- Affichage du score qualité dans le tableau de bord.
+- Ajout d’alertes selon le niveau du score.
+- Maintien du rapport complet dans l’onglet Exports.
+
+### Objectif
+
+La V3.5 transforme le rapport qualité en indicateur produit immédiatement visible.
+
+L’utilisateur n’a plus besoin d’ouvrir le rapport complet pour savoir si le manuscrit mérite une correction avant publication.
