@@ -6,6 +6,7 @@ Commandes :
 python3 make.py check      # vérifie le manuscrit
 python3 make.py pdf        # génère le PDF principal
 python3 make.py structure  # génère le rapport éditorial
+python3 make.py quality    # génère le rapport qualité éditorial
 python3 make.py marketing  # extrait les citations marketing
 python3 make.py teaser     # génère le teaser PDF
 python3 make.py visuals    # génère les visuels réseaux
@@ -107,6 +108,15 @@ def structure() -> int:
     return run([sys.executable, "rapport_structure.py"])
 
 
+def quality() -> int:
+    code = run([sys.executable, "-m", "py_compile", "rapport_qualite.py"])
+
+    if code != 0:
+        return code
+
+    return run([sys.executable, "rapport_qualite.py"])
+
+
 def marketing() -> int:
     code = run([sys.executable, "-m", "py_compile", "generer_exports_marketing.py"])
 
@@ -142,7 +152,7 @@ def all_steps() -> int:
         print("Arrêt : le check a détecté une erreur bloquante.")
         return code
 
-    for step in (pdf, structure, marketing, teaser, visuals):
+    for step in (pdf, structure, quality, marketing, teaser, visuals):
         code = step()
 
         if code != 0:
@@ -202,6 +212,11 @@ def copy_outputs() -> None:
     copy_file(
         ROOT / "exports" / "rapports" / "rapport_structure.md",
         RELEASE_DIR / "rapports" / "rapport_structure.md",
+    )
+
+    copy_file(
+        ROOT / "exports" / "rapports" / "rapport_qualite.md",
+        RELEASE_DIR / "rapports" / "rapport_qualite.md",
     )
 
     copy_file(
@@ -274,6 +289,9 @@ def main() -> int:
 
     if command == "structure":
         return structure()
+
+    if command == "quality":
+        return quality()
 
     if command == "marketing":
         return marketing()
