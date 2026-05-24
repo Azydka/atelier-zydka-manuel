@@ -161,6 +161,7 @@ def copy_documentation() -> None:
 
     copy_file(ROOT / "requirements.txt", RELEASE_DIR / "requirements.txt")
     copy_file(ROOT / "app_streamlit.py", RELEASE_DIR / "app_streamlit.py")
+    copy_file(ROOT / "project_manager.py", RELEASE_DIR / "project_manager.py")
     copy_file(ROOT / "launch_app.sh", RELEASE_DIR / "launch_app.sh")
     copy_file(ROOT / "launch_app.command", RELEASE_DIR / "launch_app.command")
 
