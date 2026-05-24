@@ -205,22 +205,37 @@ with tabs[0]:
 
     st.subheader("Score qualité éditorial")
 
-    quality_score = load_quality_score()
+    col_score, col_action = st.columns([2, 1])
 
-    if quality_score:
-        score = int(quality_score.get("score", 0))
-        label = quality_score.get("label", "statut inconnu")
+    with col_action:
+        if st.button("Rafraîchir le diagnostic qualité"):
+            with st.spinner("Diagnostic qualité en cours..."):
+                code, output = run_command([sys.executable, "make.py", "quality"])
 
-        st.metric("Score qualité", f"{score}/100", label)
+            if code == 0:
+                st.success("Diagnostic qualité mis à jour.")
+                st.rerun()
+            else:
+                st.error(f"Erreur pendant le diagnostic qualité. Code : {code}")
+                st.code(output, language="text")
 
-        if score < 60:
-            st.error("Score bas. Consultez l’onglet Exports pour corriger le manuscrit.")
-        elif score < 80:
-            st.warning("Score moyen. Des améliorations sont recommandées.")
+    with col_score:
+        quality_score = load_quality_score()
+
+        if quality_score:
+            score = int(quality_score.get("score", 0))
+            label = quality_score.get("label", "statut inconnu")
+
+            st.metric("Score qualité", f"{score}/100", label)
+
+            if score < 60:
+                st.error("Score bas. Consultez l’onglet Exports pour corriger le manuscrit.")
+            elif score < 80:
+                st.warning("Score moyen. Des améliorations sont recommandées.")
+            else:
+                st.success("Bon score. Le manuscrit semble exploitable pour une génération.")
         else:
-            st.success("Bon score. Le manuscrit semble exploitable pour une génération.")
-    else:
-        st.info("Aucun score qualité généré. Lancez `python3 make.py quality` ou générez une archive.")
+            st.info("Aucun score qualité généré. Cliquez sur Rafraîchir le diagnostic qualité ou générez une archive.")
 
     st.divider()
 
