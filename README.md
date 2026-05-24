@@ -336,3 +336,43 @@ Champs utilisés :
     theme.muted
 
 Cette évolution rend le PDF principal plus cohérent avec la promesse de personnalisation du moteur éditorial.
+
+---
+
+## V3.0 — Interface locale Streamlit
+
+Depuis la V3.0, Atelier Zydka Manuel dispose d’une interface locale expérimentale basée sur Streamlit.
+
+Elle permet de piloter le moteur sans utiliser directement le Terminal pour chaque action.
+
+Fonctions disponibles :
+
+- visualiser l’état du projet ;
+- modifier `config.json` ;
+- modifier ou importer un manuscrit `.txt` ou `.md` ;
+- lancer la génération de l’archive ZIP ;
+- consulter les logs ;
+- télécharger le ZIP généré ;
+- afficher le rapport éditorial ;
+- afficher les citations marketing ;
+- retrouver les dossiers de sortie.
+
+### Lancer l’interface
+
+Commande :
+
+    python3 -m streamlit run app_streamlit.py
+
+L’application s’ouvre ensuite dans le navigateur à l’adresse :
+
+    http://localhost:8501
+
+### Note importante
+
+L’interface est locale. Elle ne publie rien en ligne.
+
+Les vrais livres ou contenus commerciaux doivent rester dans un dossier privé non versionné :
+
+    private/
+
+Le dépôt public doit continuer à contenir uniquement un manuscrit de démonstration.

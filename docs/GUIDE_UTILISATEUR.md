@@ -133,3 +133,40 @@ Après modification, relancez :
     python3 make.py archive
 
 Le PDF principal sera régénéré avec les nouvelles informations.
+
+---
+
+## V3.0 — Utiliser l’interface locale
+
+Depuis la V3.0, il est possible d’utiliser une interface locale Streamlit.
+
+Pour la lancer :
+
+    python3 -m streamlit run app_streamlit.py
+
+L’interface permet de :
+
+- modifier la configuration du projet ;
+- modifier le manuscrit ;
+- importer un fichier `.txt` ou `.md` ;
+- générer l’archive ZIP ;
+- télécharger le ZIP ;
+- consulter le rapport éditorial ;
+- consulter les citations marketing.
+
+### Onglets disponibles
+
+- Tableau de bord ;
+- Configuration ;
+- Manuscrit ;
+- Génération ;
+- Exports ;
+- Aide.
+
+### Règle importante
+
+Ne collez pas un livre complet dans le manuscrit public si vous comptez pousser le dépôt sur GitHub.
+
+Pour les projets commerciaux, utilisez un dossier local privé non versionné :
+
+    private/

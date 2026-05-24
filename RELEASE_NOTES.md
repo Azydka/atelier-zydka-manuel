@@ -250,3 +250,28 @@ Le projet passe de :
 La V2.3 renforce la promesse de personnalisation du moteur éditorial.
 
 Le PDF principal n’est plus seulement généré techniquement : il commence à refléter les paramètres du projet défini dans `config.json`.
+
+---
+
+## V3.0 — Interface locale Streamlit
+
+### Ajouté
+
+- Ajout de `app_streamlit.py`.
+- Création d’une interface locale Streamlit.
+- Ajout d’un tableau de bord projet.
+- Ajout d’un formulaire de modification de `config.json`.
+- Ajout d’un éditeur de manuscrit.
+- Ajout d’un import de fichier `.txt` ou `.md`.
+- Ajout d’un bouton pour générer l’archive ZIP.
+- Ajout d’un affichage des logs de génération.
+- Ajout d’un bouton de téléchargement du ZIP généré.
+- Ajout d’un onglet Exports pour consulter le rapport éditorial et les citations.
+
+### Commande de lancement
+
+    python3 -m streamlit run app_streamlit.py
+
+### Objectif
+
+La V3.0 transforme Atelier Zydka Manuel en application locale utilisable sans lancer manuellement chaque commande du pipeline.
