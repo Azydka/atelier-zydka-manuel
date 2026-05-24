@@ -69,6 +69,7 @@ from reportlab.lib.utils import simpleSplit
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+from config_utils import load_config as load_project_config
 
 # ============================================================
 # CONFIGURATION JSON
@@ -112,6 +113,13 @@ def load_config(path: str = CONFIG_PATH) -> dict:
 CONFIG = load_config()
 FEATURES = CONFIG.get("features", {})
 
+PROJECT_CONFIG = load_project_config()
+BOOK_TITLE = PROJECT_CONFIG.get("book_title", "Manuscrit de démonstration")
+BOOK_SUBTITLE = PROJECT_CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
+AUTHOR_NAME = PROJECT_CONFIG.get("author_name", "Atelier Zydka")
+BRAND_NAME = PROJECT_CONFIG.get("brand_name", "Atelier Zydka")
+OUTPUT_PDF_NAME = PROJECT_CONFIG.get("output_pdf_name", "manuel-de-presence-atelier-zydka.pdf")
+
 
 
 
@@ -121,7 +129,7 @@ FEATURES = CONFIG.get("features", {})
 
 INPUT_MANUSCRIPT = "manuscrit_beatmakers.txt"
 OUTPUT_DIR = "manuelsortie"
-OUTPUT_PDF = os.path.join(OUTPUT_DIR, "manuel-de-presence-atelier-zydka.pdf")
+OUTPUT_PDF = os.path.join(OUTPUT_DIR, OUTPUT_PDF_NAME)
 IMAGES_DIR = "images"
 
 
@@ -1429,10 +1437,10 @@ def generate():
     chapters = parse_chapters(raw)
 
     c = canvas.Canvas(OUTPUT_PDF, pagesize=PAGE_SIZE, pageCompression=0)
-    c.setTitle("Le Manuel de présence — Atelier Zydka")
-    c.setAuthor("Atelier Zydka")
-    c.setSubject("Livre A5 pour beatmakers indépendants")
-    c.setCreator("ReportLab — Atelier Source Éditoriale")
+    c.setTitle(f"{BOOK_TITLE} — {BRAND_NAME}")
+    c.setAuthor(AUTHOR_NAME)
+    c.setSubject(BOOK_SUBTITLE)
+    c.setCreator(f"ReportLab — {BRAND_NAME}")
 
     page = 1
 
