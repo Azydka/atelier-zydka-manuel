@@ -1,98 +1,75 @@
-# Commencez ici — Atelier Zydka Manuel
+# Atelier Zydka Manuel — Démarrage rapide
 
 Bienvenue dans Atelier Zydka Manuel.
 
-Cet outil permet de transformer un manuscrit en pack éditorial complet :
+Ce dossier contient une application locale qui transforme un manuscrit en pack éditorial complet : PDF principal, teaser PDF, citations marketing, visuels réseaux sociaux, rapports éditoriaux et archive ZIP.
 
-- PDF principal ;
-- teaser PDF ;
-- citations marketing ;
-- visuels réseaux sociaux ;
-- rapport éditorial ;
-- archive ZIP prête à diffuser.
+## Lancer l'application sur Mac
 
----
+Double-cliquez sur :
 
-## 1. Installation rapide
+    install_and_launch.command
 
-Installez les dépendances :
+La première fois, l'installation peut prendre quelques minutes.
 
-    python3 -m pip install -r requirements.txt
+Si macOS bloque le fichier :
 
----
+1. faites clic droit sur install_and_launch.command ;
+2. cliquez sur Ouvrir ;
+3. confirmez l'ouverture.
 
-## 2. Lancer l'application
+## Lancer l'application sur Windows
 
-### Méthode recommandée
+Double-cliquez sur :
 
-Sur Mac ou Linux :
+    install_and_launch.bat
 
-    ./launch_app.sh
+Si Windows affiche une alerte :
 
-### Sur Mac
+1. cliquez sur Informations complémentaires ;
+2. cliquez sur Exécuter quand même.
 
-Vous pouvez aussi essayer de double-cliquer sur :
+## Ce que fait le lanceur
 
-    launch_app.command
+Le lanceur :
 
-Si macOS bloque le fichier, utilisez la méthode Terminal :
+1. vérifie que Python est disponible ;
+2. installe les dépendances nécessaires ;
+3. lance l'interface Atelier Zydka Manuel ;
+4. affiche une adresse locale de type http://localhost:8501.
 
-    ./launch_app.sh
+## Si l'interface ne s'ouvre pas
 
-### Méthode directe
-
-    python3 -m streamlit run app_streamlit.py
-
-L'application s'ouvre dans le navigateur à l'adresse :
+Copiez l'adresse affichée dans le terminal, par exemple :
 
     http://localhost:8501
 
----
+Puis collez-la dans votre navigateur.
 
-## 3. Utilisation simple
+## Utilisation recommandée
 
-Dans l'interface :
+Pour vos vrais livres, utilisez toujours l'onglet Projets privés.
 
-1. Ouvrez l'onglet Configuration.
-2. Modifiez le titre, l'auteur, la marque et les couleurs.
-3. Ouvrez l'onglet Manuscrit.
-4. Collez ou importez un manuscrit `.txt` ou `.md`.
-5. Ouvrez l'onglet Génération.
-6. Cliquez sur Générer l'archive ZIP.
-7. Téléchargez le ZIP généré.
+Les vrais manuscrits doivent rester dans :
 
----
+    private/projets/
 
-## 4. Fichier final
+Ne remplacez pas directement le fichier de démonstration public.
 
-Le fichier final est généré ici :
+## En cas de problème
 
-    dist/atelier-zydka-manuel-release.zip
+Sur Mac, ouvrez un terminal dans ce dossier et tapez :
 
----
+    python3 -m pip install -r requirements.txt
+    python3 -m streamlit run app_streamlit.py
 
-## 5. Important
+Sur Windows, ouvrez PowerShell ou Invite de commandes dans ce dossier et tapez :
 
-Le dépôt public contient un manuscrit de démonstration.
+    python -m pip install -r requirements.txt
+    python -m streamlit run app_streamlit.py
 
-Les vrais livres, manuscrits commerciaux ou contenus privés doivent rester dans un dossier local non versionné :
+## Note
 
-    private/
+Cette version est encore une bêta locale.
 
-Ne publiez pas vos livres complets dans le dépôt public.
-
----
-
-## 6. Documentation utile
-
-À lire ensuite :
-
-- README.md
-- docs/GUIDE_UTILISATEUR.md
-- docs/FAQ.md
-- docs/BETA_TEST.md
-- LICENSE.md
-
----
-
-Fin du document.
+Elle est pensée pour tester le workflow complet avant une future version plus simple avec installateur natif.

@@ -176,6 +176,9 @@ def copy_documentation() -> None:
     copy_dir(ROOT / "demo", RELEASE_DIR / "demo")
     copy_file(ROOT / "launch_app.sh", RELEASE_DIR / "launch_app.sh")
     copy_file(ROOT / "launch_app.command", RELEASE_DIR / "launch_app.command")
+    copy_file(ROOT / "install_and_launch.command", RELEASE_DIR / "install_and_launch.command")
+    copy_file(ROOT / "install_and_launch.sh", RELEASE_DIR / "install_and_launch.sh")
+    copy_file(ROOT / "install_and_launch.bat", RELEASE_DIR / "install_and_launch.bat")
 
     copy_file(
         ROOT / "docs" / "GUIDE_UTILISATEUR.md",
