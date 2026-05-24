@@ -264,3 +264,42 @@ Quelques captures permettent de visualiser les principaux livrables générés p
 ### Terminal — génération archive
 
 ![Terminal make archive](docs/screenshots/08_terminal_make_archive.png)
+
+---
+
+## Personnalisation via config.json
+
+Depuis la V2.2, plusieurs éléments du projet peuvent être personnalisés depuis :
+
+    config.json
+
+Champs principaux :
+
+- project_title
+- book_title
+- book_subtitle
+- author_name
+- brand_name
+- baseline
+- year
+- output_pdf_name
+- teaser_pdf_name
+- release_name
+- zip_name
+- theme.background
+- theme.text
+- theme.accent
+- theme.muted
+
+Exemple :
+
+    {
+      "book_title": "Mon guide",
+      "author_name": "Nom de l’auteur",
+      "brand_name": "Ma marque",
+      "baseline": "Créer · publier · diffuser",
+      "release_name": "mon-guide-release",
+      "zip_name": "mon-guide-release.zip"
+    }
+
+Cette évolution permet d’adapter le moteur à un autre projet sans modifier directement les scripts Python.

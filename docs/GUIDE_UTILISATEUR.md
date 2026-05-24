@@ -53,3 +53,48 @@ exports/reseaux/citations/citations_extraites.md
 exports/reseaux/cartes/
 dist/atelier-zydka-manuel-release/
 dist/atelier-zydka-manuel-release.zip
+
+---
+
+## Personnaliser le projet avec config.json
+
+Depuis la V2.2, le fichier suivant permet de personnaliser une partie du projet :
+
+    config.json
+
+Ce fichier permet notamment de modifier :
+
+- le titre du projet ;
+- le titre du livre ;
+- le sous-titre ;
+- le nom de l’auteur ;
+- le nom de marque ;
+- la baseline ;
+- l’année ;
+- le nom du PDF principal ;
+- le nom du teaser PDF ;
+- le nom du dossier de release ;
+- le nom du ZIP ;
+- les couleurs principales.
+
+Exemple de champs utiles :
+
+    "book_title": "Mon guide",
+    "book_subtitle": "Transformer une idée en produit éditorial",
+    "author_name": "Nom de l’auteur",
+    "brand_name": "Ma marque",
+    "baseline": "Créer · publier · diffuser",
+    "zip_name": "mon-guide-release.zip"
+
+Après modification de config.json, relancez :
+
+    python3 make.py archive
+
+Les changements seront appliqués aux éléments déjà connectés à la configuration :
+
+- archive ZIP ;
+- dossier de release ;
+- visuels réseaux ;
+- teaser PDF ;
+- métadonnées du PDF principal ;
+- nom du PDF principal.

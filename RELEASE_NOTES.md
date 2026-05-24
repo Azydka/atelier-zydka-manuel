@@ -195,3 +195,36 @@ Action future :
 Cette version marque le passage du projet d’un simple générateur PDF à un véritable système éditorial automatisé.
 
 Le socle actuel est propre, versionné, testé et exploitable.
+
+---
+
+## V2.2 — Configuration personnalisable
+
+### Ajouté
+
+- Ajout de `config_utils.py`.
+- Centralisation de la lecture de `config.json`.
+- Enrichissement de `config.json` avec les champs projet, livre, auteur, marque, baseline, année, fichiers de sortie et thème.
+- Personnalisation du nom du dossier de release via `release_name`.
+- Personnalisation du nom de l’archive ZIP via `zip_name`.
+- Personnalisation du nom du PDF principal via `output_pdf_name`.
+- Personnalisation du nom du teaser PDF via `teaser_pdf_name`.
+- Connexion des visuels réseaux à `brand_name`, `baseline` et `theme`.
+- Connexion du teaser PDF à `book_title`, `book_subtitle`, `author_name`, `brand_name`, `year` et `theme`.
+- Connexion partielle du PDF principal à `book_title`, `book_subtitle`, `author_name`, `brand_name` et `output_pdf_name`.
+
+### Objectif
+
+La V2.2 transforme Atelier Zydka Manuel en moteur éditorial personnalisable à partir d’un fichier `config.json`.
+
+Le projet passe de :
+
+    générateur lié à un projet précis
+
+à :
+
+    moteur éditorial adaptable à plusieurs projets.
+
+### Commande à utiliser après personnalisation
+
+    python3 make.py archive
