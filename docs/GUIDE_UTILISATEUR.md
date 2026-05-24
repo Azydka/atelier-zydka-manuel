@@ -416,3 +416,24 @@ Le score qualité indique rapidement si le manuscrit semble :
 - à corriger en priorité.
 
 Pour lire le détail, ouvrez l’onglet Exports et consultez le rapport qualité éditorial.
+
+---
+
+## V3.6 — Rafraîchir le diagnostic qualité
+
+La V3.6 ajoute un bouton de diagnostic qualité dans le tableau de bord.
+
+### Utilisation
+
+Dans l’interface Streamlit :
+
+1. ouvrez le Tableau de bord ;
+2. cliquez sur Rafraîchir le diagnostic qualité ;
+3. attendez la fin du diagnostic ;
+4. consultez le score qualité mis à jour.
+
+Cette action lance uniquement :
+
+    python3 make.py quality
+
+Elle ne régénère pas tout le ZIP.

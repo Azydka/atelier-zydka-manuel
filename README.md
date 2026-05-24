@@ -616,3 +616,29 @@ Le tableau de bord affiche :
 - une alerte si le score est faible ou moyen.
 
 Le rapport complet reste disponible dans l’onglet Exports.
+
+---
+
+## V3.6 — Rafraîchissement du diagnostic qualité
+
+Depuis la V3.6, le tableau de bord Streamlit permet de rafraîchir le diagnostic qualité directement depuis l’interface.
+
+Un bouton permet de lancer :
+
+    python3 make.py quality
+
+sans générer toute l’archive ZIP.
+
+### Objectif
+
+Rendre le contrôle qualité plus rapide et plus interactif.
+
+L’utilisateur peut modifier son manuscrit, rafraîchir le diagnostic, puis consulter immédiatement le score qualité dans le tableau de bord.
+
+### Dans l’interface
+
+Ouvrez le tableau de bord puis cliquez sur :
+
+    Rafraîchir le diagnostic qualité
+
+Le score qualité est ensuite mis à jour automatiquement.

@@ -461,3 +461,18 @@ Elle rapproche Atelier Zydka Manuel d’un véritable studio éditorial local ca
 La V3.5 transforme le rapport qualité en indicateur produit immédiatement visible.
 
 L’utilisateur n’a plus besoin d’ouvrir le rapport complet pour savoir si le manuscrit mérite une correction avant publication.
+
+---
+
+## V3.6 — Rafraîchissement du diagnostic qualité
+
+### Ajouté
+
+- Ajout d’un bouton Rafraîchir le diagnostic qualité dans le tableau de bord Streamlit.
+- Exécution de `python3 make.py quality` depuis l’interface.
+- Mise à jour du score qualité sans générer toute l’archive ZIP.
+- Amélioration de l’expérience de contrôle éditorial.
+
+### Objectif
+
+La V3.6 rend le diagnostic qualité plus rapide, plus interactif et plus intégré au flux de travail.
