@@ -45,6 +45,7 @@ MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
 
 ZIP_PATH = ROOT / "dist" / "atelier-zydka-manuel-release.zip"
 REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_structure.md"
+QUALITY_REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_qualite.md"
 CITATIONS_PATH = ROOT / "exports" / "reseaux" / "citations" / "citations_extraites.md"
 
 PDF_DIR = ROOT / "manuelsortie"
@@ -544,6 +545,13 @@ with tabs[5]:
         st.markdown(read_text(REPORT_PATH))
     else:
         st.info("Rapport non généré.")
+
+    st.subheader("Rapport qualité éditorial")
+
+    if QUALITY_REPORT_PATH.exists():
+        st.markdown(read_text(QUALITY_REPORT_PATH))
+    else:
+        st.info("Rapport qualité non généré.")
 
     st.subheader("Citations marketing")
 
