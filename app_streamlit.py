@@ -28,6 +28,7 @@ from project_manager import (
     create_project,
     get_project_summary,
     list_projects,
+    project_path,
     load_project_to_active_files,
     read_project_config,
     read_project_manuscript,
@@ -78,17 +79,20 @@ def write_text(path: Path, content: str) -> None:
 
 
 def load_active_config() -> dict:
-    if not CONFIG_PATH.exists():
+    path = current_config_path()
+
+    if not path.exists():
         return {}
 
     try:
-        return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return {}
 
 
 def save_active_config(config: dict) -> None:
-    CONFIG_PATH.write_text(
+    path = current_config_path()
+    path.write_text(
         json.dumps(config, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
@@ -139,6 +143,60 @@ def set_active_project(project_slug: str | None) -> None:
     st.session_state["active_private_project"] = project_slug
 
 
+def current_config_path() -> Path:
+    active = get_active_project()
+
+    if active:
+        return project_path(active) / "config.json"
+
+    return CONFIG_PATH
+
+
+def current_manuscript_path() -> Path:
+    active = get_active_project()
+
+    if active:
+        return project_path(active) / "manuscrit.txt"
+
+    return MANUSCRIPT_PATH
+
+
+def read_current_manuscript() -> str:
+    return read_text(current_manuscript_path())
+
+
+def write_current_manuscript(content: str) -> None:
+    write_text(current_manuscript_path(), content)
+
+
+def restore_path(path: Path, original_content: str | None) -> None:
+    if original_content is None:
+        if path.exists():
+            path.unlink()
+        return
+
+    write_text(path, original_content)
+
+
+def run_command_for_current_project(command: list[str]) -> tuple[int, str]:
+    active = get_active_project()
+
+    if not active:
+        return run_command(command)
+
+    original_config = CONFIG_PATH.read_text(encoding="utf-8") if CONFIG_PATH.exists() else None
+    original_manuscript = MANUSCRIPT_PATH.read_text(encoding="utf-8") if MANUSCRIPT_PATH.exists() else None
+
+    try:
+        write_text(CONFIG_PATH, read_text(current_config_path()))
+        write_text(MANUSCRIPT_PATH, read_text(current_manuscript_path()))
+
+        return run_command(command)
+    finally:
+        restore_path(CONFIG_PATH, original_config)
+        restore_path(MANUSCRIPT_PATH, original_manuscript)
+
+
 # ============================================================
 # HEADER
 # ============================================================
@@ -179,7 +237,7 @@ with tabs[0]:
 
     with col1:
         render_status_card("Configuration active", CONFIG_PATH)
-        render_status_card("Manuscrit actif", MANUSCRIPT_PATH)
+        render_status_card("Manuscrit courant", current_manuscript_path())
 
     with col2:
         render_status_card("PDF principal", PDF_DIR)
@@ -210,7 +268,7 @@ with tabs[0]:
     with col_action:
         if st.button("Rafraîchir le diagnostic qualité"):
             with st.spinner("Diagnostic qualité en cours..."):
-                code, output = run_command([sys.executable, "make.py", "quality"])
+                code, output = run_command_for_current_project([sys.executable, "make.py", "quality"])
 
             if code == 0:
                 st.success("Diagnostic qualité mis à jour.")
@@ -283,7 +341,6 @@ with tabs[1]:
         else:
             path = create_project(new_project_name)
             set_active_project(path.name)
-            load_project_to_active_files(path.name)
             st.success(f"Projet créé et chargé : {path.name}")
             st.rerun()
 
@@ -306,7 +363,6 @@ with tabs[1]:
 
         with col1:
             if st.button("Charger ce projet"):
-                load_project_to_active_files(selected_project)
                 set_active_project(selected_project)
                 st.success(f"Projet chargé : {selected_project}")
                 st.rerun()
@@ -329,7 +385,7 @@ with tabs[1]:
     if active_project:
         if st.button("Sauvegarder config + manuscrit dans le projet actif"):
             config = load_active_config()
-            manuscript = read_text(MANUSCRIPT_PATH)
+            manuscript = read_current_manuscript()
             save_project(active_project, config, manuscript)
             st.success(f"Projet sauvegardé : {active_project}")
     else:
@@ -458,7 +514,7 @@ with tabs[2]:
         save_active_config(new_config)
 
         if active_project:
-            manuscript = read_text(MANUSCRIPT_PATH)
+            manuscript = read_current_manuscript()
             save_project(active_project, new_config, manuscript)
             st.success(f"config.json enregistré et projet privé sauvegardé : {active_project}")
         else:
@@ -477,7 +533,7 @@ with tabs[3]:
         "Ne poussez jamais un livre complet dans le dépôt public."
     )
 
-    manuscript = read_text(MANUSCRIPT_PATH)
+    manuscript = read_current_manuscript()
 
     edited_manuscript = st.text_area(
         "Contenu du manuscrit actif",
@@ -489,7 +545,7 @@ with tabs[3]:
 
     with col1:
         if st.button("Enregistrer le manuscrit"):
-            write_text(MANUSCRIPT_PATH, edited_manuscript)
+            write_current_manuscript(edited_manuscript)
 
             if active_project:
                 config = load_active_config()
@@ -506,7 +562,7 @@ with tabs[3]:
 
         if uploaded_file is not None:
             content = uploaded_file.read().decode("utf-8")
-            write_text(MANUSCRIPT_PATH, content)
+            write_current_manuscript(content)
 
             if active_project:
                 config = load_active_config()
@@ -529,17 +585,17 @@ with tabs[4]:
     if active_project:
         st.info(
             f"Projet privé actif : {active_project}. "
-            "La génération utilise les fichiers actifs chargés depuis ce projet."
+            "La génération utilise temporairement ce projet privé sans modifier la démo publique."
         )
 
     if st.button("Générer l’archive ZIP", type="primary"):
         if active_project:
             config = load_active_config()
-            manuscript = read_text(MANUSCRIPT_PATH)
+            manuscript = read_current_manuscript()
             save_project(active_project, config, manuscript)
 
         with st.spinner("Génération en cours..."):
-            code, output = run_command([sys.executable, "make.py", "archive"])
+            code, output = run_command_for_current_project([sys.executable, "make.py", "archive"])
 
         if code == 0:
             st.success("Archive générée avec succès.")

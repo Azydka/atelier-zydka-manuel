@@ -190,6 +190,15 @@ def save_project(
 
 
 def load_project_to_active_files(project_slug: str) -> None:
+    """
+    V3.7 — fonction conservée pour compatibilité.
+
+    Sécurité :
+    cette fonction ne copie plus les fichiers privés vers les fichiers publics actifs.
+    Elle vérifie seulement que le projet privé est complet.
+
+    La génération Streamlit utilise désormais une copie temporaire restaurée automatiquement.
+    """
     path = project_path(project_slug)
 
     config_path = path / "config.json"
@@ -200,9 +209,6 @@ def load_project_to_active_files(project_slug: str) -> None:
 
     if not manuscript_path.exists():
         raise FileNotFoundError(f"Manuscrit introuvable : {manuscript_path}")
-
-    shutil.copy2(config_path, ACTIVE_CONFIG)
-    shutil.copy2(manuscript_path, ACTIVE_MANUSCRIPT)
 
 
 def save_active_files_to_project(project_slug: str) -> None:
