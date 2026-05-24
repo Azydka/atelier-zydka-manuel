@@ -2,12 +2,14 @@
 """
 Interface locale Streamlit — Atelier Zydka Manuel
 
-V3.0 MVP :
-- afficher et modifier config.json ;
-- afficher et modifier le manuscrit de démonstration ;
-- lancer python3 make.py archive ;
-- afficher les logs ;
-- proposer le téléchargement du ZIP généré.
+V3.2 :
+- tableau de bord ;
+- édition de config.json ;
+- édition / import de manuscrit ;
+- génération de l'archive ZIP ;
+- téléchargement du ZIP ;
+- consultation des exports ;
+- gestion de projets privés dans private/projets/.
 
 Lancement :
 python3 -m streamlit run app_streamlit.py
@@ -22,13 +24,27 @@ from pathlib import Path
 
 import streamlit as st
 
+from project_manager import (
+    create_project,
+    get_project_summary,
+    list_projects,
+    load_project_to_active_files,
+    read_project_config,
+    read_project_manuscript,
+    save_active_files_to_project,
+    save_project,
+)
+
 
 ROOT = Path(__file__).resolve().parent
+
 CONFIG_PATH = ROOT / "config.json"
 MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
+
 ZIP_PATH = ROOT / "dist" / "atelier-zydka-manuel-release.zip"
 REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_structure.md"
 CITATIONS_PATH = ROOT / "exports" / "reseaux" / "citations" / "citations_extraites.md"
+
 PDF_DIR = ROOT / "manuelsortie"
 TEASER_DIR = ROOT / "exports" / "pdf"
 VISUALS_DIR = ROOT / "exports" / "reseaux" / "cartes"
@@ -41,9 +57,14 @@ st.set_page_config(
 )
 
 
+# ============================================================
+# OUTILS FICHIERS
+# ============================================================
+
 def read_text(path: Path, default: str = "") -> str:
     if not path.exists():
         return default
+
     return path.read_text(encoding="utf-8")
 
 
@@ -52,7 +73,7 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def load_config() -> dict:
+def load_active_config() -> dict:
     if not CONFIG_PATH.exists():
         return {}
 
@@ -62,7 +83,7 @@ def load_config() -> dict:
         return {}
 
 
-def save_config(config: dict) -> None:
+def save_active_config(config: dict) -> None:
     CONFIG_PATH.write_text(
         json.dumps(config, indent=2, ensure_ascii=False),
         encoding="utf-8",
@@ -96,12 +117,33 @@ def render_status_card(label: str, path: Path) -> None:
     st.caption(str(path.relative_to(ROOT)))
 
 
+def get_active_project() -> str | None:
+    return st.session_state.get("active_private_project")
+
+
+def set_active_project(project_slug: str | None) -> None:
+    st.session_state["active_private_project"] = project_slug
+
+
+# ============================================================
+# HEADER
+# ============================================================
+
 st.title("Atelier Zydka Manuel")
-st.caption("Interface locale V3.0 MVP — générateur éditorial PDF / teaser / visuels / ZIP")
+st.caption("Interface locale V3.2 — générateur éditorial avec projets privés")
+
+active_project = get_active_project()
+
+if active_project:
+    st.success(f"Projet privé actif : {active_project}")
+else:
+    st.info("Aucun projet privé chargé. Le moteur utilise les fichiers actifs du dépôt.")
+
 
 tabs = st.tabs(
     [
         "Tableau de bord",
+        "Projets privés",
         "Configuration",
         "Manuscrit",
         "Génération",
@@ -111,14 +153,18 @@ tabs = st.tabs(
 )
 
 
+# ============================================================
+# TABLEAU DE BORD
+# ============================================================
+
 with tabs[0]:
     st.header("Tableau de bord")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        render_status_card("Configuration", CONFIG_PATH)
-        render_status_card("Manuscrit", MANUSCRIPT_PATH)
+        render_status_card("Configuration active", CONFIG_PATH)
+        render_status_card("Manuscrit actif", MANUSCRIPT_PATH)
 
     with col2:
         render_status_card("PDF principal", PDF_DIR)
@@ -130,20 +176,123 @@ with tabs[0]:
 
     st.divider()
 
-    config = load_config()
+    config = load_active_config()
 
-    st.subheader("Projet actuel")
+    st.subheader("Projet actif")
 
+    st.write("**Projet privé chargé :**", active_project or "Aucun")
     st.write("**Titre du livre :**", config.get("book_title", "Non défini"))
     st.write("**Auteur :**", config.get("author_name", "Non défini"))
     st.write("**Marque :**", config.get("brand_name", "Non défini"))
     st.write("**ZIP :**", config.get("zip_name", "atelier-zydka-manuel-release.zip"))
 
+    st.divider()
+
+    st.subheader("Règle de sécurité")
+
+    st.warning(
+        "Les vrais manuscrits commerciaux doivent être stockés dans private/projets/. "
+        "Le dépôt public doit conserver uniquement un manuscrit de démonstration."
+    )
+
+
+# ============================================================
+# PROJETS PRIVÉS
+# ============================================================
 
 with tabs[1]:
+    st.header("Projets privés")
+
+    st.write(
+        "Les projets privés permettent de travailler sur plusieurs livres sans publier "
+        "les manuscrits commerciaux dans le dépôt GitHub."
+    )
+
+    st.code(
+        "private/projets/nom-du-projet/config.json\n"
+        "private/projets/nom-du-projet/manuscrit.txt",
+        language="text",
+    )
+
+    st.divider()
+
+    st.subheader("Créer un nouveau projet privé")
+
+    with st.form("create_private_project_form"):
+        new_project_name = st.text_input(
+            "Nom du projet",
+            placeholder="Exemple : Beatmaker Indépendant 2027",
+        )
+
+        create_submitted = st.form_submit_button("Créer le projet privé")
+
+    if create_submitted:
+        if not new_project_name.strip():
+            st.error("Merci d’indiquer un nom de projet.")
+        else:
+            path = create_project(new_project_name)
+            set_active_project(path.name)
+            load_project_to_active_files(path.name)
+            st.success(f"Projet créé et chargé : {path.name}")
+            st.rerun()
+
+    st.divider()
+
+    st.subheader("Charger un projet privé existant")
+
+    projects = list_projects()
+
+    if not projects:
+        st.info("Aucun projet privé pour le moment.")
+    else:
+        selected_project = st.selectbox(
+            "Projet disponible",
+            projects,
+            index=projects.index(active_project) if active_project in projects else 0,
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("Charger ce projet"):
+                load_project_to_active_files(selected_project)
+                set_active_project(selected_project)
+                st.success(f"Projet chargé : {selected_project}")
+                st.rerun()
+
+        with col2:
+            if st.button("Sauvegarder les fichiers actifs dans ce projet"):
+                save_active_files_to_project(selected_project)
+                set_active_project(selected_project)
+                st.success(f"Fichiers actifs sauvegardés dans : {selected_project}")
+
+        with col3:
+            if st.button("Afficher le résumé"):
+                summary = get_project_summary(selected_project)
+                st.json(summary)
+
+    st.divider()
+
+    st.subheader("Sauvegarde rapide")
+
+    if active_project:
+        if st.button("Sauvegarder config + manuscrit dans le projet actif"):
+            config = load_active_config()
+            manuscript = read_text(MANUSCRIPT_PATH)
+            save_project(active_project, config, manuscript)
+            st.success(f"Projet sauvegardé : {active_project}")
+    else:
+        st.info("Chargez ou créez un projet privé pour activer la sauvegarde rapide.")
+
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
+with tabs[2]:
     st.header("Configuration du projet")
 
-    config = load_config()
+    config = load_active_config()
 
     with st.form("config_form"):
         project_title = st.text_input(
@@ -158,7 +307,10 @@ with tabs[1]:
 
         book_subtitle = st.text_area(
             "Sous-titre",
-            value=config.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet"),
+            value=config.get(
+                "book_subtitle",
+                "Transformer un manuscrit brut en pack éditorial complet",
+            ),
             height=80,
         )
 
@@ -252,22 +404,32 @@ with tabs[1]:
             },
         }
 
-        save_config(new_config)
-        st.success("config.json enregistré.")
+        save_active_config(new_config)
+
+        if active_project:
+            manuscript = read_text(MANUSCRIPT_PATH)
+            save_project(active_project, new_config, manuscript)
+            st.success(f"config.json enregistré et projet privé sauvegardé : {active_project}")
+        else:
+            st.success("config.json enregistré.")
 
 
-with tabs[2]:
+# ============================================================
+# MANUSCRIT
+# ============================================================
+
+with tabs[3]:
     st.header("Manuscrit")
 
     st.warning(
-        "Ne colle pas ici un livre complet si tu comptes pousser le dépôt public sur GitHub. "
-        "Pour les livres commerciaux, travaille plutôt dans private/ ou sur une copie locale non publiée."
+        "Pour les livres commerciaux, utilisez un projet privé. "
+        "Ne poussez jamais un livre complet dans le dépôt public."
     )
 
     manuscript = read_text(MANUSCRIPT_PATH)
 
     edited_manuscript = st.text_area(
-        "Contenu de manuscrit_beatmakers.txt",
+        "Contenu du manuscrit actif",
         value=manuscript,
         height=520,
     )
@@ -277,7 +439,13 @@ with tabs[2]:
     with col1:
         if st.button("Enregistrer le manuscrit"):
             write_text(MANUSCRIPT_PATH, edited_manuscript)
-            st.success("Manuscrit enregistré.")
+
+            if active_project:
+                config = load_active_config()
+                save_project(active_project, config, edited_manuscript)
+                st.success(f"Manuscrit enregistré et projet privé sauvegardé : {active_project}")
+            else:
+                st.success("Manuscrit enregistré dans manuscrit_beatmakers.txt.")
 
     with col2:
         uploaded_file = st.file_uploader(
@@ -288,17 +456,37 @@ with tabs[2]:
         if uploaded_file is not None:
             content = uploaded_file.read().decode("utf-8")
             write_text(MANUSCRIPT_PATH, content)
-            st.success("Fichier importé dans manuscrit_beatmakers.txt.")
+
+            if active_project:
+                config = load_active_config()
+                save_project(active_project, config, content)
+
+            st.success("Fichier importé dans le manuscrit actif.")
             st.rerun()
 
 
-with tabs[3]:
+# ============================================================
+# GÉNÉRATION
+# ============================================================
+
+with tabs[4]:
     st.header("Génération")
 
-    st.write("Commande recommandée :")
+    st.write("Commande utilisée :")
     st.code("python3 make.py archive", language="bash")
 
+    if active_project:
+        st.info(
+            f"Projet privé actif : {active_project}. "
+            "La génération utilise les fichiers actifs chargés depuis ce projet."
+        )
+
     if st.button("Générer l’archive ZIP", type="primary"):
+        if active_project:
+            config = load_active_config()
+            manuscript = read_text(MANUSCRIPT_PATH)
+            save_project(active_project, config, manuscript)
+
         with st.spinner("Génération en cours..."):
             code, output = run_command([sys.executable, "make.py", "archive"])
 
@@ -312,7 +500,21 @@ with tabs[3]:
 
     st.divider()
 
-    if ZIP_PATH.exists():
+    config = load_active_config()
+    zip_name = config.get("zip_name", "atelier-zydka-manuel-release.zip")
+    configured_zip_path = ROOT / "dist" / zip_name
+
+    if configured_zip_path.exists():
+        st.success(f"ZIP disponible : {configured_zip_path.name}")
+
+        with configured_zip_path.open("rb") as file:
+            st.download_button(
+                label="Télécharger le ZIP",
+                data=file,
+                file_name=configured_zip_path.name,
+                mime="application/zip",
+            )
+    elif ZIP_PATH.exists():
         st.success("ZIP disponible")
 
         with ZIP_PATH.open("rb") as file:
@@ -326,7 +528,11 @@ with tabs[3]:
         st.info("Aucune archive ZIP générée pour l’instant.")
 
 
-with tabs[4]:
+# ============================================================
+# EXPORTS
+# ============================================================
+
+with tabs[5]:
     st.header("Exports")
 
     st.subheader("Rapport éditorial")
@@ -352,26 +558,33 @@ with tabs[4]:
                 "exports/pdf/",
                 "exports/reseaux/cartes/",
                 "dist/",
+                "private/projets/",
             ]
         ),
         language="text",
     )
 
 
-with tabs[5]:
+# ============================================================
+# AIDE
+# ============================================================
+
+with tabs[6]:
     st.header("Aide")
 
     st.markdown(
         """
 ### Utilisation rapide
 
-1. Ouvre l’onglet **Configuration**
-2. Modifie le titre, l’auteur, la marque, les couleurs
-3. Ouvre l’onglet **Manuscrit**
-4. Colle ou importe un manuscrit de test
-5. Ouvre l’onglet **Génération**
-6. Clique sur **Générer l’archive ZIP**
-7. Télécharge le ZIP
+1. Ouvrez l’onglet **Projets privés**.
+2. Créez ou chargez un projet privé.
+3. Ouvrez l’onglet **Configuration**.
+4. Modifiez le titre, l’auteur, la marque, les couleurs.
+5. Ouvrez l’onglet **Manuscrit**.
+6. Collez ou importez un manuscrit.
+7. Ouvrez l’onglet **Génération**.
+8. Cliquez sur **Générer l’archive ZIP**.
+9. Téléchargez le ZIP.
 
 ### Règle importante
 
@@ -379,7 +592,7 @@ Le dépôt public doit contenir une démo.
 
 Les vrais livres ou contenus commerciaux doivent rester dans :
 
-    private/
+    private/projets/
 
 ### Commande Terminal équivalente
 
