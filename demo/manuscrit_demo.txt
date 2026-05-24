@@ -1,0 +1,75 @@
+# MANUSCRIT DE DÉMONSTRATION — ATELIER ZYDKA MANUEL
+
+## Transformer un manuscrit brut en pack éditorial complet
+
+Ceci est un manuscrit de démonstration destiné à tester Atelier Zydka Manuel.
+
+Il ne contient pas le livre complet, ni les contenus propriétaires destinés à la vente.
+
+---
+
+# Introduction
+
+Atelier Zydka Manuel est un système éditorial local qui transforme un manuscrit source en plusieurs livrables :
+
+- PDF principal ;
+- teaser PDF ;
+- rapport éditorial ;
+- citations marketing ;
+- visuels réseaux sociaux ;
+- dossier de release ;
+- archive ZIP.
+
+L’objectif est de montrer le fonctionnement du moteur sans exposer de contenu privé.
+
+---
+
+# Partie 1 — Préparer son manuscrit
+
+Un bon manuscrit source doit être clair, structuré et facile à transformer.
+
+Il doit contenir :
+
+- des titres propres ;
+- des sections lisibles ;
+- des phrases exploitables ;
+- des blocs simples ;
+- peu de mise en forme inutile.
+
+À retenir : un manuscrit propre produit de meilleurs exports.
+
+---
+
+# Partie 2 — Générer les livrables
+
+La commande principale est :
+
+python3 make.py archive
+
+Elle permet de générer le PDF, le teaser, les citations, les visuels, la release et le ZIP final.
+
+Un bon système éditorial ne se contente pas de produire un fichier. Il prépare un pack complet.
+
+---
+
+# Partie 3 — Tester le résultat
+
+Après génération, il faut vérifier :
+
+- le PDF principal ;
+- le teaser ;
+- les visuels ;
+- le rapport ;
+- le contenu du ZIP.
+
+Un produit éditorial n’est prêt que lorsqu’il peut être compris par quelqu’un d’autre que son créateur.
+
+---
+
+# Conclusion
+
+Ce manuscrit de démonstration sert uniquement à tester le moteur Atelier Zydka Manuel.
+
+Le vrai contenu éditorial doit rester dans un dossier privé, non versionné et non publié.
+
+Fin du document.

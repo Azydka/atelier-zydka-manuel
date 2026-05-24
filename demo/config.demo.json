@@ -1,0 +1,20 @@
+{
+  "project_title": "Atelier Zydka Manuel",
+  "book_title": "Manuscrit de démonstration",
+  "book_subtitle": "Transformer un manuscrit brut en pack éditorial complet",
+  "author_name": "Atelier Zydka",
+  "brand_name": "Atelier Zydka",
+  "baseline": "Culture · méthode · indépendance",
+  "year": "2026",
+  "language": "fr",
+  "output_pdf_name": "manuel-de-presence-atelier-zydka.pdf",
+  "teaser_pdf_name": "teaser-manuel-presence.pdf",
+  "release_name": "atelier-zydka-manuel-release",
+  "zip_name": "atelier-zydka-manuel-release.zip",
+  "theme": {
+    "background": "#090909",
+    "text": "#F4F1EB",
+    "accent": "#C79A3B",
+    "muted": "#96928A"
+  }
+}
