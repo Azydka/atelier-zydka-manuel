@@ -155,6 +155,9 @@ def copy_documentation() -> None:
     copy_file(ROOT / "README.md", RELEASE_DIR / "README.md")
     copy_file(ROOT / "RELEASE_NOTES.md", RELEASE_DIR / "RELEASE_NOTES.md")
     copy_file(ROOT / "LICENSE.md", RELEASE_DIR / "LICENSE.md")
+    copy_file(ROOT / "START_HERE.md", RELEASE_DIR / "START_HERE.md")
+    copy_file(ROOT / "INSTALLATION.md", RELEASE_DIR / "INSTALLATION.md")
+    copy_file(ROOT / "QUICKSTART.md", RELEASE_DIR / "QUICKSTART.md")
 
     copy_file(ROOT / "requirements.txt", RELEASE_DIR / "requirements.txt")
     copy_file(ROOT / "app_streamlit.py", RELEASE_DIR / "app_streamlit.py")
