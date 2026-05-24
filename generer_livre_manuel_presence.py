@@ -114,10 +114,14 @@ CONFIG = load_config()
 FEATURES = CONFIG.get("features", {})
 
 PROJECT_CONFIG = load_project_config()
+PROJECT_TITLE = PROJECT_CONFIG.get("project_title", "Atelier Zydka Manuel")
 BOOK_TITLE = PROJECT_CONFIG.get("book_title", "Manuscrit de démonstration")
 BOOK_SUBTITLE = PROJECT_CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
 AUTHOR_NAME = PROJECT_CONFIG.get("author_name", "Atelier Zydka")
 BRAND_NAME = PROJECT_CONFIG.get("brand_name", "Atelier Zydka")
+BASELINE = PROJECT_CONFIG.get("baseline", "Culture · méthode · indépendance")
+YEAR = PROJECT_CONFIG.get("year", "2026")
+THEME = PROJECT_CONFIG.get("theme", {})
 OUTPUT_PDF_NAME = PROJECT_CONFIG.get("output_pdf_name", "manuel-de-presence-atelier-zydka.pdf")
 
 
@@ -154,12 +158,12 @@ NOTE_X = M_LEFT + MAIN_COL + COL_GAP
 CONTENT_TOP = 18 * mm
 CONTENT_BOTTOM = 194 * mm
 
-CARBON = HexColor("#0B0B0A")
-PAPER = HexColor("#F6F6F4")
+CARBON = HexColor(THEME.get("background", "#0B0B0A"))
+PAPER = HexColor(THEME.get("text", "#F6F6F4"))
 GRAPHITE = HexColor("#3A3A38")
 STEEL = HexColor("#2A353F")
-SIGNATURE = HexColor("#D8C9AE")
-SOFT = HexColor("#8A8A88")
+SIGNATURE = HexColor(THEME.get("accent", "#D8C9AE"))
+SOFT = HexColor(THEME.get("muted", "#8A8A88"))
 LINE = HexColor("#B9B9B5")
 TABLE_ALT = HexColor("#EFEFEB")
 
@@ -1016,7 +1020,7 @@ def draw_opening_image_page(c, image_name: str, title: str, page_num: int):
 
 def cover(c, page_num):
     draw_bg(c, CARBON)
-    draw_micro(c, "Version générée\nPDF éditorial premium\nAtelier Zydka", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
+    draw_micro(c, f"Version générée\\nPDF éditorial configurable\\n{BRAND_NAME}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
 
     # Marque haut droite
     c.setFillColor(SIGNATURE)
@@ -1028,8 +1032,8 @@ def cover(c, page_num):
     draw_mono(c, "Studio · Présence · Système · Décision", M_LEFT, 91 * mm, 94 * mm, dark=True)
     signature_line(c, M_LEFT, 102 * mm, dark=True)
     draw_h1(c, "Le Manuel\nde Présence", M_LEFT, 110 * mm, 112 * mm, color=PAPER, size=43)
-    draw_text(c, "Atelier Zydka", M_LEFT, 153 * mm, 92 * mm, FONTS.inter_bold, 10, 12, SIGNATURE, uppercase=True)
-    draw_serif(c, "Livre pour beatmakers indépendants : stratégie, organisation et présence.", M_LEFT, 165 * mm, 90 * mm, dark=True, size=14)
+    draw_text(c, AUTHOR_NAME, M_LEFT, 153 * mm, 92 * mm, FONTS.inter_bold, 10, 12, SIGNATURE, uppercase=True)
+    draw_serif(c, BOOK_SUBTITLE, M_LEFT, 165 * mm, 90 * mm, dark=True, size=14)
 
     draw_micro(c, "Document de pilotage", M_LEFT, 190 * mm, 50 * mm, color=SOFT)
     draw_micro(c, "Référence studio", 100 * mm, 190 * mm, 36 * mm, color=SOFT)
@@ -1292,7 +1296,7 @@ def annex_page(c, page_num):
 
 def back_cover(c, page_num):
     draw_bg(c, CARBON)
-    draw_micro(c, "Le Manuel de Présence\nAtelier Zydka", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
+    draw_micro(c, f"{BOOK_TITLE}\\n{BRAND_NAME}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
     c.setFillColor(SIGNATURE)
     c.rect(122 * mm, ty(18 * mm) - 10 * mm, 10 * mm, 10 * mm, stroke=0, fill=1)
     c.setFillColor(CARBON)
@@ -1300,7 +1304,7 @@ def back_cover(c, page_num):
     c.drawCentredString(127 * mm, ty(18 * mm) - 6.8 * mm, "Z")
     signature_line(c, M_LEFT, 98 * mm, dark=True)
     draw_h2(c, "Construire moins.\nConstruire plus juste.", M_LEFT, 108 * mm, 98 * mm, color=PAPER, size=32)
-    draw_serif(c, "Atelier Zydka — Construire la présence. Signer l’univers.", M_LEFT, 151 * mm, 82 * mm, dark=True, size=15)
+    draw_serif(c, f"{BRAND_NAME} — {BOOK_SUBTITLE}", M_LEFT, 151 * mm, 82 * mm, dark=True, size=15)
     draw_micro(c, "Document de pilotage", M_LEFT, 190 * mm, 50 * mm, color=SOFT)
     draw_micro(c, "Accent clair · finition premium", 82 * mm, 190 * mm, 55 * mm, color=SOFT)
     finish(c)
