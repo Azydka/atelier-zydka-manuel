@@ -409,3 +409,36 @@ Elle permet de restaurer rapidement les fichiers publics :
 
     demo/config.demo.json
     demo/manuscrit_demo.txt
+
+---
+
+## V3.4 — Rapport qualité éditorial avancé
+
+### Ajouté
+
+- Ajout de `rapport_qualite.py`.
+- Ajout de la commande `python3 make.py quality`.
+- Génération de `exports/rapports/rapport_qualite.md`.
+- Inclusion du rapport qualité dans le pipeline `make.py archive`.
+- Inclusion du rapport qualité dans le ZIP de release.
+- Affichage du rapport qualité dans l’onglet Exports de Streamlit.
+
+### Analyse effectuée
+
+Le rapport qualité détecte :
+
+- chapitres ou sections trop courts ;
+- chapitres ou sections trop longs ;
+- titres trop longs ;
+- notes internes ;
+- mentions TODO, FIXME, À RELIRE ;
+- statuts éditoriaux ;
+- densité des sections ;
+- score qualité global ;
+- recommandations éditoriales.
+
+### Objectif
+
+La V3.4 ajoute une couche de contrôle éditorial avancé avant publication.
+
+Elle rapproche Atelier Zydka Manuel d’un véritable studio éditorial local capable de diagnostiquer un manuscrit avant génération du pack final.

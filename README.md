@@ -537,3 +537,47 @@ Dans Streamlit :
         git status
 
 Cette étape réduit fortement le risque de publier accidentellement un manuscrit privé sur GitHub.
+
+---
+
+## V3.4 — Rapport qualité éditorial avancé
+
+Depuis la V3.4, Atelier Zydka Manuel génère un rapport qualité éditorial avancé.
+
+Ce rapport permet d’analyser le manuscrit actif avant publication.
+
+Il détecte notamment :
+
+- les chapitres ou sections trop courts ;
+- les chapitres ou sections trop longs ;
+- les titres trop longs ;
+- les notes internes restantes ;
+- les mentions TODO, FIXME, À RELIRE ;
+- les statuts éditoriaux ;
+- la densité globale du manuscrit ;
+- un score qualité global ;
+- des recommandations éditoriales.
+
+### Commande dédiée
+
+    python3 make.py quality
+
+### Génération complète
+
+Le rapport qualité est aussi généré avec :
+
+    python3 make.py archive
+
+### Sortie générée
+
+    exports/rapports/rapport_qualite.md
+
+### Dans l’interface
+
+Le rapport qualité est visible dans l’onglet Exports de l’interface Streamlit.
+
+### Objectif
+
+La V3.4 ajoute une couche de contrôle éditorial avant publication.
+
+Elle permet de repérer rapidement les problèmes structurels ou éditoriaux avant de générer un pack final.

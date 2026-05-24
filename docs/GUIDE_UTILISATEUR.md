@@ -329,3 +329,57 @@ Les projets privés restent dans :
     private/projets/
 
 Le dépôt public doit rester une démo.
+
+---
+
+## V3.4 — Rapport qualité éditorial
+
+La V3.4 ajoute un rapport qualité éditorial avancé.
+
+Ce rapport analyse le manuscrit actif et donne une vue claire sur son état de préparation.
+
+### Générer le rapport qualité
+
+Commande :
+
+    python3 make.py quality
+
+Le fichier généré se trouve ici :
+
+    exports/rapports/rapport_qualite.md
+
+### Générer avec tout le pack
+
+Le rapport est aussi généré automatiquement avec :
+
+    python3 make.py archive
+
+### Ce que le rapport analyse
+
+- nombre de chapitres ou sections ;
+- nombre de mots ;
+- nombre de paragraphes ;
+- densité des sections ;
+- titres trop longs ;
+- sections vides ;
+- sections trop longues ;
+- notes internes ;
+- statuts éditoriaux ;
+- score global ;
+- recommandations.
+
+### Dans l’interface Streamlit
+
+Ouvrez l’onglet Exports pour consulter :
+
+- le rapport éditorial ;
+- le rapport qualité éditorial ;
+- les citations marketing.
+
+### Interprétation rapide
+
+- 🟢 prêt ou confortable ;
+- 🟡 à surveiller ;
+- 🟠 correction recommandée ;
+- 🔴 problème prioritaire ;
+- ⚫ section vide ou structurelle.
