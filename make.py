@@ -220,6 +220,11 @@ def copy_outputs() -> None:
     )
 
     copy_file(
+        ROOT / "exports" / "rapports" / "score_qualite.json",
+        RELEASE_DIR / "rapports" / "score_qualite.json",
+    )
+
+    copy_file(
         ROOT / "exports" / "reseaux" / "citations" / "citations_extraites.md",
         RELEASE_DIR / "reseaux" / "citations_extraites.md",
     )

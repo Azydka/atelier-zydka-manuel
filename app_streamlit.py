@@ -46,6 +46,7 @@ MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
 ZIP_PATH = ROOT / "dist" / "atelier-zydka-manuel-release.zip"
 REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_structure.md"
 QUALITY_REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_qualite.md"
+QUALITY_SCORE_PATH = ROOT / "exports" / "rapports" / "score_qualite.json"
 CITATIONS_PATH = ROOT / "exports" / "reseaux" / "citations" / "citations_extraites.md"
 
 PDF_DIR = ROOT / "manuelsortie"
@@ -111,6 +112,16 @@ def run_command(command: list[str]) -> tuple[int, str]:
         output += result.stderr
 
     return result.returncode, output
+
+
+def load_quality_score() -> dict | None:
+    if not QUALITY_SCORE_PATH.exists():
+        return None
+
+    try:
+        return json.loads(QUALITY_SCORE_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
 
 
 def render_status_card(label: str, path: Path) -> None:
@@ -189,6 +200,27 @@ with tabs[0]:
     st.write("**Auteur :**", config.get("author_name", "Non défini"))
     st.write("**Marque :**", config.get("brand_name", "Non défini"))
     st.write("**ZIP :**", config.get("zip_name", "atelier-zydka-manuel-release.zip"))
+
+    st.divider()
+
+    st.subheader("Score qualité éditorial")
+
+    quality_score = load_quality_score()
+
+    if quality_score:
+        score = int(quality_score.get("score", 0))
+        label = quality_score.get("label", "statut inconnu")
+
+        st.metric("Score qualité", f"{score}/100", label)
+
+        if score < 60:
+            st.error("Score bas. Consultez l’onglet Exports pour corriger le manuscrit.")
+        elif score < 80:
+            st.warning("Score moyen. Des améliorations sont recommandées.")
+        else:
+            st.success("Bon score. Le manuscrit semble exploitable pour une génération.")
+    else:
+        st.info("Aucun score qualité généré. Lancez `python3 make.py quality` ou générez une archive.")
 
     st.divider()
 

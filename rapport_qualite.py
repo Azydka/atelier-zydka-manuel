@@ -17,6 +17,7 @@ exports/rapports/rapport_qualite.md
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from datetime import datetime
@@ -28,6 +29,7 @@ ROOT = Path(__file__).resolve().parent
 MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
 OUTPUT_DIR = ROOT / "exports" / "rapports"
 OUTPUT_PATH = OUTPUT_DIR / "rapport_qualite.md"
+SCORE_PATH = OUTPUT_DIR / "score_qualite.json"
 
 
 INTERNAL_NOTE_PATTERNS = [
@@ -286,6 +288,71 @@ def build_recommendations(
     return recommendations
 
 
+def build_quality_data() -> dict:
+    text = read_manuscript()
+    chapters = split_chapters(text)
+
+    total_words = count_words(text)
+    total_chars = len(text)
+    total_paragraphs = count_paragraphs(text)
+    internal_notes = detect_internal_notes(text)
+
+    long_titles = 0
+    empty_chapters = 0
+    too_long_chapters = 0
+    missing_statuses = 0
+
+    for chapter in chapters:
+        density_icon, density_label = classify_density(chapter.word_count)
+        title_status = title_warning(chapter.title)
+        status = chapter.status
+
+        if "titre long" in title_status:
+            long_titles += 1
+
+        if chapter.word_count == 0:
+            empty_chapters += 1
+
+        if density_label == "trop long":
+            too_long_chapters += 1
+
+        if status == "non renseigné":
+            missing_statuses += 1
+
+    score = calculate_score(
+        chapters=chapters,
+        internal_notes=internal_notes,
+        long_titles=long_titles,
+        empty_chapters=empty_chapters,
+        too_long_chapters=too_long_chapters,
+        missing_statuses=missing_statuses,
+    )
+
+    recommendations = build_recommendations(
+        internal_notes=internal_notes,
+        long_titles=long_titles,
+        empty_chapters=empty_chapters,
+        too_long_chapters=too_long_chapters,
+        missing_statuses=missing_statuses,
+    )
+
+    return {
+        "score": score,
+        "label": score_label(score),
+        "chapters_count": len(chapters),
+        "total_words": total_words,
+        "total_chars": total_chars,
+        "total_paragraphs": total_paragraphs,
+        "internal_notes_count": len(internal_notes),
+        "long_titles_count": long_titles,
+        "empty_chapters_count": empty_chapters,
+        "too_long_chapters_count": too_long_chapters,
+        "missing_statuses_count": missing_statuses,
+        "recommendations": recommendations,
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+    }
+
+
 def generate_report() -> str:
     text = read_manuscript()
     chapters = split_chapters(text)
@@ -425,7 +492,14 @@ def main() -> int:
     report = generate_report()
     OUTPUT_PATH.write_text(report, encoding="utf-8")
 
+    quality_data = build_quality_data()
+    SCORE_PATH.write_text(
+        json.dumps(quality_data, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
     print(f"Rapport qualité généré : {OUTPUT_PATH}")
+    print(f"Score qualité généré : {SCORE_PATH}")
 
     return 0
 
