@@ -275,3 +275,33 @@ Le PDF principal n’est plus seulement généré techniquement : il commence à
 ### Objectif
 
 La V3.0 transforme Atelier Zydka Manuel en application locale utilisable sans lancer manuellement chaque commande du pipeline.
+
+---
+
+## V3.1 — Lancement simplifié
+
+### Ajouté
+
+- Ajout de `requirements.txt`.
+- Ajout de `launch_app.sh`.
+- Ajout de `launch_app.command`.
+- Simplification du lancement de l’interface locale Streamlit.
+- Documentation des commandes d’installation et de lancement.
+
+### Commandes utiles
+
+Installer les dépendances :
+
+    python3 -m pip install -r requirements.txt
+
+Lancer l’application :
+
+    python3 -m streamlit run app_streamlit.py
+
+Ou :
+
+    ./launch_app.sh
+
+### Objectif
+
+La V3.1 réduit la friction d’installation et de lancement pour les utilisateurs non techniques.

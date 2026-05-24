@@ -376,3 +376,45 @@ Les vrais livres ou contenus commerciaux doivent rester dans un dossier privé n
     private/
 
 Le dépôt public doit continuer à contenir uniquement un manuscrit de démonstration.
+
+---
+
+## V3.1 — Lancement simplifié de l’application
+
+Depuis la V3.1, Atelier Zydka Manuel contient des fichiers de lancement pour faciliter l’ouverture de l’interface locale.
+
+### Installer les dépendances
+
+Commande recommandée :
+
+    python3 -m pip install -r requirements.txt
+
+### Lancer l’application avec le Terminal
+
+Commande directe :
+
+    python3 -m streamlit run app_streamlit.py
+
+### Lancer avec le script shell
+
+Sur Mac ou Linux :
+
+    ./launch_app.sh
+
+### Lancer avec le fichier macOS
+
+Sur Mac, il est possible de double-cliquer sur :
+
+    launch_app.command
+
+Si macOS bloque l’ouverture pour des raisons de sécurité, utilisez plutôt la commande Terminal :
+
+    ./launch_app.sh
+
+### Fichiers ajoutés
+
+- requirements.txt
+- launch_app.sh
+- launch_app.command
+
+Cette évolution réduit la friction de lancement pour les utilisateurs non techniques.
