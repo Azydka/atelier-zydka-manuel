@@ -496,3 +496,44 @@ Le dossier `private/` ne doit pas être versionné.
 Les vrais livres, guides, formations ou contenus commerciaux doivent rester dans :
 
     private/projets/
+
+---
+
+## V3.3 — Restauration de la démo publique
+
+Depuis la V3.3, Atelier Zydka Manuel ajoute un garde-fou anti-fuite de contenu privé.
+
+Le projet contient désormais :
+
+- un dossier `demo/` avec une configuration publique de démonstration ;
+- un script `restore_demo.py` ;
+- un bouton Streamlit **Restaurer la démo publique** dans l’onglet Sécurité.
+
+### Objectif
+
+Après avoir travaillé sur un projet privé, il est possible de restaurer rapidement les fichiers publics :
+
+    config.json
+    manuscrit_beatmakers.txt
+
+à partir de :
+
+    demo/config.demo.json
+    demo/manuscrit_demo.txt
+
+### Commande Terminal
+
+    python3 restore_demo.py
+
+### Depuis l’interface
+
+Dans Streamlit :
+
+1. ouvrez l’onglet Sécurité ;
+2. cochez la confirmation ;
+3. cliquez sur Restaurer la démo publique ;
+4. vérifiez ensuite avec :
+
+        git status
+
+Cette étape réduit fortement le risque de publier accidentellement un manuscrit privé sur GitHub.

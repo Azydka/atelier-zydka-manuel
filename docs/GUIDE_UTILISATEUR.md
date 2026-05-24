@@ -290,3 +290,42 @@ Ne publiez jamais vos vrais manuscrits dans le dépôt public.
 Utilisez les projets privés pour les livres commerciaux :
 
     private/projets/
+
+---
+
+## V3.3 — Restaurer la démo publique
+
+La V3.3 ajoute une sécurité importante avant les commits ou les publications GitHub.
+
+Quand vous chargez un projet privé, ses fichiers peuvent devenir les fichiers actifs du moteur.
+
+Avant de pousser le dépôt public, restaurez la démo publique.
+
+### Méthode interface
+
+Dans l’application Streamlit :
+
+1. ouvrez l’onglet Sécurité ;
+2. cochez la case de confirmation ;
+3. cliquez sur Restaurer la démo publique ;
+4. ouvrez le Terminal ;
+5. vérifiez :
+
+        git status
+
+### Méthode Terminal
+
+    python3 restore_demo.py
+
+### Fichiers restaurés
+
+    demo/config.demo.json → config.json
+    demo/manuscrit_demo.txt → manuscrit_beatmakers.txt
+
+### Règle importante
+
+Les projets privés restent dans :
+
+    private/projets/
+
+Le dépôt public doit rester une démo.

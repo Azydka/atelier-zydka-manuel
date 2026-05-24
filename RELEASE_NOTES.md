@@ -380,3 +380,32 @@ Le dépôt public reste un moteur avec manuscrit de démonstration.
 Les contenus sensibles ou commerciaux restent dans :
 
     private/projets/
+
+---
+
+## V3.3 — Restauration de la démo publique
+
+### Ajouté
+
+- Ajout du dossier `demo/`.
+- Ajout de `demo/config.demo.json`.
+- Ajout de `demo/manuscrit_demo.txt`.
+- Ajout de `restore_demo.py`.
+- Inclusion de `restore_demo.py` et du dossier `demo/` dans la release ZIP.
+- Ajout d’un onglet Sécurité dans l’interface Streamlit.
+- Ajout d’un bouton **Restaurer la démo publique**.
+- Ajout d’une confirmation obligatoire avant restauration.
+
+### Objectif
+
+La V3.3 réduit le risque de publier accidentellement un manuscrit privé dans le dépôt GitHub.
+
+Elle permet de restaurer rapidement les fichiers publics :
+
+    config.json
+    manuscrit_beatmakers.txt
+
+à partir de la démo officielle :
+
+    demo/config.demo.json
+    demo/manuscrit_demo.txt
