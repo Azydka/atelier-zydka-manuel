@@ -305,3 +305,35 @@ Ou :
 ### Objectif
 
 La V3.1 réduit la friction d’installation et de lancement pour les utilisateurs non techniques.
+
+---
+
+## V3.1 — Lancement simplifié
+
+### Ajouté
+
+- Ajout de `requirements.txt`.
+- Ajout de `launch_app.sh`.
+- Ajout de `launch_app.command`.
+- Inclusion de `app_streamlit.py` dans la release ZIP.
+- Inclusion des fichiers de lancement dans la release ZIP.
+- Simplification du lancement de l’interface locale Streamlit.
+- Documentation des commandes d’installation et de lancement.
+
+### Commandes utiles
+
+Installer les dépendances :
+
+    python3 -m pip install -r requirements.txt
+
+Lancer l’application :
+
+    python3 -m streamlit run app_streamlit.py
+
+Ou :
+
+    ./launch_app.sh
+
+### Objectif
+
+La V3.1 réduit la friction d’installation et de lancement pour les utilisateurs non techniques.

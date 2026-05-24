@@ -206,3 +206,39 @@ Si macOS bloque le fichier, utilisez plutôt :
 L’application reste locale. Elle s’ouvre dans le navigateur, généralement à l’adresse :
 
     http://localhost:8501
+
+---
+
+## V3.1 — Lancement simplifié
+
+La V3.1 ajoute des fichiers pour lancer plus facilement l’interface locale.
+
+### Installer les dépendances
+
+Avant de lancer l’application, installez les dépendances :
+
+    python3 -m pip install -r requirements.txt
+
+### Méthode 1 — Lancement classique
+
+    python3 -m streamlit run app_streamlit.py
+
+### Méthode 2 — Script de lancement
+
+    ./launch_app.sh
+
+### Méthode 3 — Fichier macOS
+
+Sur Mac, vous pouvez essayer de double-cliquer sur :
+
+    launch_app.command
+
+Si macOS bloque le fichier, utilisez plutôt :
+
+    ./launch_app.sh
+
+### Remarque
+
+L’application reste locale. Elle s’ouvre dans le navigateur, généralement à l’adresse :
+
+    http://localhost:8501
