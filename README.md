@@ -303,3 +303,36 @@ Exemple :
     }
 
 Cette évolution permet d’adapter le moteur à un autre projet sans modifier directement les scripts Python.
+
+---
+
+## V2.3 — PDF principal configurable
+
+Depuis la V2.3, le PDF principal utilise davantage les valeurs définies dans `config.json`.
+
+Éléments désormais connectés :
+
+- titre du livre ;
+- sous-titre ;
+- auteur ;
+- marque ;
+- baseline ;
+- année ;
+- couleurs principales du thème ;
+- nom du fichier PDF.
+
+Champs utilisés :
+
+    book_title
+    book_subtitle
+    author_name
+    brand_name
+    baseline
+    year
+    output_pdf_name
+    theme.background
+    theme.text
+    theme.accent
+    theme.muted
+
+Cette évolution rend le PDF principal plus cohérent avec la promesse de personnalisation du moteur éditorial.

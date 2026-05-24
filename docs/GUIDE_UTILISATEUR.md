@@ -98,3 +98,38 @@ Les changements seront appliqués aux éléments déjà connectés à la configu
 - teaser PDF ;
 - métadonnées du PDF principal ;
 - nom du PDF principal.
+
+---
+
+## V2.3 — Personnalisation du PDF principal
+
+Depuis la V2.3, le PDF principal est davantage piloté par `config.json`.
+
+Les éléments suivants peuvent être personnalisés :
+
+- titre affiché sur la couverture ;
+- sous-titre ;
+- auteur ;
+- marque ;
+- baseline ;
+- année ;
+- couleurs principales ;
+- nom du fichier PDF.
+
+Exemple :
+
+    {
+      "book_title": "Mon guide professionnel",
+      "book_subtitle": "Méthode, structure et diffusion",
+      "author_name": "Nom de l’auteur",
+      "brand_name": "Ma marque",
+      "baseline": "Créer · publier · diffuser",
+      "year": "2026",
+      "output_pdf_name": "mon-guide.pdf"
+    }
+
+Après modification, relancez :
+
+    python3 make.py archive
+
+Le PDF principal sera régénéré avec les nouvelles informations.

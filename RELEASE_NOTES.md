@@ -228,3 +228,25 @@ Le projet passe de :
 ### Commande à utiliser après personnalisation
 
     python3 make.py archive
+
+---
+
+## V2.3 — PDF principal configurable
+
+### Ajouté
+
+- Connexion visuelle de la couverture PDF principale à `config.json`.
+- Utilisation de `book_title` pour le titre de couverture.
+- Utilisation de `book_subtitle` pour le sous-titre.
+- Utilisation de `author_name` pour l’auteur.
+- Utilisation de `brand_name` pour la marque.
+- Utilisation de `baseline` pour la ligne éditoriale.
+- Utilisation de `year` pour l’année.
+- Connexion des couleurs principales du PDF au thème défini dans `config.json`.
+- Connexion de la quatrième de couverture à `book_title`, `book_subtitle` et `brand_name`.
+
+### Objectif
+
+La V2.3 renforce la promesse de personnalisation du moteur éditorial.
+
+Le PDF principal n’est plus seulement généré techniquement : il commence à refléter les paramètres du projet défini dans `config.json`.
