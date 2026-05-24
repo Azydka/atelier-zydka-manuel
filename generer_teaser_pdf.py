@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Générateur Teaser PDF — Atelier Zydka Manuel
-Version V2 propre : citations filtrées + mini-sommaire forcé.
+Générateur de teaser PDF — Atelier Zydka Manuel
+
+Version V2.2 :
+- lit le titre depuis config.json ;
+- lit le sous-titre depuis config.json ;
+- lit l'auteur depuis config.json ;
+- lit la marque depuis config.json ;
+- lit l'année depuis config.json ;
+- lit le nom du fichier teaser depuis config.json ;
+- lit les couleurs principales depuis config.json.
+
+Sortie :
+exports/pdf/<teaser_pdf_name>
 """
 
 from __future__ import annotations
@@ -9,252 +20,255 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from reportlab.lib.colors import HexColor
+from reportlab.lib.colors import HexColor, white
 from reportlab.lib.pagesizes import A5
-from reportlab.lib.units import mm
-from reportlab.lib.utils import simpleSplit
+from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
-
-OUTPUT = Path("exports/pdf/teaser-manuel-presence.pdf")
-CITATIONS_FILE = Path("exports/reseaux/citations/citations_extraites.md")
-
-PAGE_W, PAGE_H = A5
-
-CARBON = HexColor("#111111")
-PAPER = HexColor("#F4F1EA")
-STEEL = HexColor("#8A8A8A")
-SIGNATURE = HexColor("#B59A5B")
-WHITE = HexColor("#FFFFFF")
+from config_utils import load_config
 
 
-CITATIONS_FIXES = [
-    "Avant de chercher plus de visibilité, rendez votre catalogue exploitable.",
-    "Un beat prêt à vendre est un beat prêt à livrer.",
-    "Votre catalogue doit devenir consultable en moins de deux minutes.",
-    "La protection commence par la traçabilité.",
-    "L’international peut multiplier les opportunités, mais aussi les malentendus.",
-]
+ROOT = Path(__file__).resolve().parent
+MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
+OUTPUT_DIR = ROOT / "exports" / "pdf"
+
+CONFIG = load_config()
+
+PROJECT_TITLE = CONFIG.get("project_title", "Atelier Zydka Manuel")
+BOOK_TITLE = CONFIG.get("book_title", "Manuscrit de démonstration")
+BOOK_SUBTITLE = CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
+AUTHOR_NAME = CONFIG.get("author_name", "Atelier Zydka")
+BRAND_NAME = CONFIG.get("brand_name", "Atelier Zydka")
+YEAR = CONFIG.get("year", "2026")
+TEASER_PDF_NAME = CONFIG.get("teaser_pdf_name", "teaser-manuel-presence.pdf")
+
+THEME = CONFIG.get("theme", {})
+BACKGROUND = HexColor(THEME.get("background", "#090909"))
+TEXT = HexColor(THEME.get("text", "#F4F1EB"))
+ACCENT = HexColor(THEME.get("accent", "#C79A3B"))
+MUTED = HexColor(THEME.get("muted", "#96928A"))
+
+PAGE_WIDTH, PAGE_HEIGHT = A5
 
 
-SOMMAIRE_PROPRE = [
-    "Introduction — Pourquoi ce livre ?",
-    "Partie 1 — Le métier en 2026",
-    "Partie 2 — S’équiper sans se disperser",
-    "Partie 3 — Créer des beats vendables",
-    "Partie 4 — Organiser son catalogue comme un pro",
-    "Partie 5 — Vendre ses beats proprement",
-    "Partie 6 — Protéger ses droits sans devenir juriste",
-    "Partie 7 — Se rendre visible et trouver des clients",
-    "Partie 8 — S’ouvrir aux marchés globaux sans se perdre",
-    "Partie 9 — Plan d’action 90 jours",
-]
-
-
-def ty(y_mm: float) -> float:
-    return PAGE_H - y_mm * mm
-
-
-def clean(text: str) -> str:
-    text = text.replace("**", "")
-    text = text.replace("__", "")
-    text = text.replace("##", "")
-    text = text.replace("#", "")
-    text = text.replace("`", "")
+def clean_line(text: str) -> str:
+    text = text.strip()
     text = re.sub(r"\s+", " ", text)
-    return text.strip(" -–—:;,. ")
+    return text
 
 
-def draw_page_base(c: canvas.Canvas, page_num: int, dark: bool = False):
-    c.setFillColor(CARBON if dark else PAPER)
-    c.rect(0, 0, PAGE_W, PAGE_H, stroke=0, fill=1)
+def extract_headings_and_paragraphs(text: str) -> tuple[list[str], list[str]]:
+    headings: list[str] = []
+    paragraphs: list[str] = []
 
-    c.setFillColor(SIGNATURE if dark else CARBON)
-    c.setFont("Courier", 7)
-    c.drawString(16 * mm, 10 * mm, f"{page_num:03d}")
+    for raw_line in text.splitlines():
+        line = clean_line(raw_line)
 
-    c.setFillColor(SIGNATURE)
-    c.rect(16 * mm, 16 * mm, 9 * mm, 9 * mm, stroke=0, fill=1)
+        if not line:
+            continue
 
-    c.setFillColor(CARBON if not dark else PAPER)
-    c.setFont("Helvetica-Bold", 7)
-    c.drawCentredString(20.5 * mm, 18.8 * mm, "Z")
+        if line.startswith("#"):
+            heading = line.lstrip("#").strip()
+            if heading:
+                headings.append(heading)
+            continue
 
+        if line.startswith("- "):
+            continue
 
-def draw_wrapped(c, text: str, x_mm: float, y_mm: float, w_mm: float, font: str, size: float, leading: float, color) -> float:
-    text = clean(text)
-    if not text:
-        return y_mm
+        if line.startswith("```"):
+            continue
 
-    c.setFillColor(color)
-    c.setFont(font, size)
+        if len(line) >= 60:
+            paragraphs.append(line)
 
-    lines = simpleSplit(text, font, size, w_mm * mm)
-    y = y_mm
-
-    for line in lines:
-        c.drawString(x_mm * mm, ty(y), line)
-        y += leading
-
-    return y
+    return headings, paragraphs
 
 
-def cover(c: canvas.Canvas):
-    draw_page_base(c, 1, dark=True)
+def wrap_text(text: str, font_name: str, font_size: int, max_width: float) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current = ""
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(30), "TEASER PDF / ATELIER ZYDKA")
+    for word in words:
+        test = word if not current else f"{current} {word}"
 
-    c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 27)
-    c.drawString(16 * mm, ty(62), "LE MANUEL")
-    c.drawString(16 * mm, ty(75), "DE PRÉSENCE")
+        if stringWidth(test, font_name, font_size) <= max_width:
+            current = test
+        else:
+            if current:
+                lines.append(current)
+            current = word
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Helvetica-Bold", 15)
-    c.drawString(16 * mm, ty(95), "Beatmaker indépendant 2027")
+    if current:
+        lines.append(current)
 
-    draw_wrapped(
-        c,
-        "Un extrait court pour comprendre l’approche : organiser, protéger, vendre et rendre visible son travail sans se disperser.",
-        16, 122, 105, "Helvetica", 10.5, 5.8, WHITE
-    )
-
-    c.showPage()
+    return lines
 
 
-def promise_page(c: canvas.Canvas):
-    draw_page_base(c, 2)
+def draw_page_background(pdf: canvas.Canvas) -> None:
+    pdf.setFillColor(BACKGROUND)
+    pdf.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, fill=1, stroke=0)
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(28), "PROMESSE")
+    pdf.setStrokeColor(ACCENT)
+    pdf.setLineWidth(1.2)
+    pdf.rect(18, 18, PAGE_WIDTH - 36, PAGE_HEIGHT - 36, fill=0, stroke=1)
 
-    draw_wrapped(
-        c,
-        "Ce manuel aide les beatmakers indépendants à passer d’un disque dur rempli de fichiers à un catalogue clair, vendable et défendable.",
-        16, 55, 105, "Helvetica-Bold", 17, 9, CARBON
-    )
-
-    draw_wrapped(
-        c,
-        "L’objectif n’est pas de produire plus dans le désordre. L’objectif est de construire un système simple : fichiers propres, offres claires, droits compris, prospection suivie, visibilité régulière.",
-        16, 112, 105, "Helvetica", 10.5, 6.2, CARBON
-    )
-
-    c.showPage()
+    pdf.setFillColor(ACCENT)
+    pdf.rect(28, PAGE_HEIGHT - 32, 90, 4, fill=1, stroke=0)
 
 
-def audience_page(c: canvas.Canvas):
-    draw_page_base(c, 3)
-
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(28), "POUR QUI ?")
-
-    items = [
-        "Beatmakers qui veulent vendre proprement.",
-        "Producteurs qui ont trop de fichiers et pas assez de système.",
-        "Artistes-producteurs qui veulent clarifier leurs droits.",
-        "Créateurs qui veulent structurer leur catalogue avant de chercher plus de visibilité.",
-    ]
-
-    y = 55
-    for item in items:
-        c.setFillColor(SIGNATURE)
-        c.rect(16 * mm, ty(y + 1) - 4 * mm, 4 * mm, 4 * mm, stroke=0, fill=1)
-        y = draw_wrapped(c, item, 25, y, 92, "Helvetica-Bold", 12, 7.2, CARBON)
-        y += 5
-
-    c.showPage()
+def draw_footer(pdf: canvas.Canvas, page_number: int) -> None:
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica", 8)
+    pdf.drawString(28, 22, BRAND_NAME)
+    pdf.drawRightString(PAGE_WIDTH - 28, 22, str(page_number))
 
 
-def quotes_page(c: canvas.Canvas):
-    draw_page_base(c, 4)
+def draw_cover_page(pdf: canvas.Canvas) -> None:
+    draw_page_background(pdf)
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(28), "EXTRAITS")
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawString(28, PAGE_HEIGHT - 50, PROJECT_TITLE.upper())
 
-    y = 52
+    pdf.setFillColor(TEXT)
+    pdf.setFont("Helvetica-Bold", 24)
 
-    for i, quote in enumerate(CITATIONS_FIXES, start=1):
-        c.setFillColor(CARBON)
-        c.setFont("Helvetica-Bold", 9)
-        c.drawString(16 * mm, ty(y), f"{i:02d}")
+    title_lines = wrap_text(BOOK_TITLE, "Helvetica-Bold", 24, PAGE_WIDTH - 56)
+    y = PAGE_HEIGHT - 95
 
-        y = draw_wrapped(c, quote, 27, y, 82, "Helvetica", 9.4, 5.3, CARBON)
-        y += 8
+    for line in title_lines:
+        pdf.drawString(28, y, line)
+        y -= 28
 
-    c.showPage()
+    pdf.setFillColor(ACCENT)
+    pdf.rect(28, y - 6, 70, 3, fill=1, stroke=0)
+
+    y -= 28
+
+    pdf.setFillColor(TEXT)
+    pdf.setFont("Helvetica", 12)
+
+    subtitle_lines = wrap_text(BOOK_SUBTITLE, "Helvetica", 12, PAGE_WIDTH - 56)
+    for line in subtitle_lines:
+        pdf.drawString(28, y, line)
+        y -= 16
+
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica", 10)
+    pdf.drawString(28, 72, f"Auteur : {AUTHOR_NAME}")
+    pdf.drawString(28, 56, f"Marque : {BRAND_NAME}")
+    pdf.drawString(28, 40, f"Année : {YEAR}")
+
+    pdf.setFillColor(TEXT)
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawRightString(PAGE_WIDTH - 28, 40, "Teaser PDF")
+
+    draw_footer(pdf, 1)
+    pdf.showPage()
 
 
-def summary_page(c: canvas.Canvas):
-    draw_page_base(c, 5)
+def draw_overview_page(pdf: canvas.Canvas, headings: list[str]) -> None:
+    draw_page_background(pdf)
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(28), "MINI SOMMAIRE")
+    pdf.setFillColor(TEXT)
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(28, PAGE_HEIGHT - 52, "Ce que contient cette démo")
 
-    y = 48
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica", 10)
+    pdf.drawString(28, PAGE_HEIGHT - 70, "Aperçu de la structure détectée dans le manuscrit.")
 
-    for i, title in enumerate(SOMMAIRE_PROPRE[:9], start=1):
-        c.setFillColor(SIGNATURE)
-        c.setFont("Courier", 8)
-        c.drawString(16 * mm, ty(y), f"{i:02d}")
+    y = PAGE_HEIGHT - 98
 
-        y = draw_wrapped(c, title, 28, y, 88, "Helvetica-Bold", 10, 5.8, CARBON)
-        y += 3
+    pdf.setFont("Helvetica", 10)
+    for index, heading in enumerate(headings[:8], start=1):
+        if y < 50:
+            break
 
-    c.showPage()
+        pdf.setFillColor(ACCENT)
+        pdf.drawString(28, y, f"{index:02d}")
+
+        pdf.setFillColor(TEXT)
+        wrapped = wrap_text(heading, "Helvetica", 10, PAGE_WIDTH - 70)
+
+        first_line = True
+        for line in wrapped:
+            x = 48 if first_line else 52
+            pdf.drawString(x, y, line)
+            y -= 14
+            first_line = False
+
+        y -= 6
+
+    draw_footer(pdf, 2)
+    pdf.showPage()
 
 
-def final_page(c: canvas.Canvas):
-    draw_page_base(c, 6, dark=True)
+def draw_excerpt_page(pdf: canvas.Canvas, paragraphs: list[str]) -> None:
+    draw_page_background(pdf)
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Courier", 8)
-    c.drawString(16 * mm, ty(30), "APPEL À L’ACTION")
+    pdf.setFillColor(TEXT)
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(28, PAGE_HEIGHT - 52, "Extrait")
 
-    draw_wrapped(
-        c,
-        "Ne cherchez pas seulement à faire plus de beats. Construisez un système qui rend vos beats trouvables, vendables et exploitables.",
-        16, 62, 105, "Helvetica-Bold", 19, 9.5, WHITE
-    )
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica", 10)
+    pdf.drawString(28, PAGE_HEIGHT - 70, "Quelques paragraphes issus du manuscrit de démonstration.")
 
-    draw_wrapped(
-        c,
-        "Le manuel complet développe la méthode, les modèles, les checklists et les fichiers bonus pour passer à l’action.",
-        16, 132, 105, "Helvetica", 10.5, 6.2, WHITE
-    )
+    y = PAGE_HEIGHT - 100
+    pdf.setFont("Helvetica", 9.5)
 
-    c.setFillColor(SIGNATURE)
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(16 * mm, ty(178), "Atelier Zydka")
+    for paragraph in paragraphs[:3]:
+        wrapped = wrap_text(paragraph, "Helvetica", 9.5, PAGE_WIDTH - 56)
 
-    c.showPage()
+        for line in wrapped:
+            if y < 45:
+                break
+
+            pdf.setFillColor(TEXT)
+            pdf.drawString(28, y, line)
+            y -= 12
+
+        y -= 10
+
+        if y < 45:
+            break
+
+    draw_footer(pdf, 3)
+    pdf.showPage()
 
 
 def main() -> int:
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    if not MANUSCRIPT_PATH.exists():
+        print(f"Manuscrit introuvable : {MANUSCRIPT_PATH}")
+        return 1
 
-    c = canvas.Canvas(str(OUTPUT), pagesize=A5, pageCompression=0)
-    c.setTitle("Teaser — Le Manuel de Présence")
-    c.setAuthor("Atelier Zydka")
-    c.setSubject("Teaser PDF du manuel pour beatmakers indépendants")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    output_path = OUTPUT_DIR / TEASER_PDF_NAME
 
-    cover(c)
-    promise_page(c)
-    audience_page(c)
-    quotes_page(c)
-    summary_page(c)
-    final_page(c)
+    manuscript = MANUSCRIPT_PATH.read_text(encoding="utf-8")
+    headings, paragraphs = extract_headings_and_paragraphs(manuscript)
 
-    c.save()
+    pdf = canvas.Canvas(str(output_path), pagesize=A5)
+    pdf.setTitle(f"{BOOK_TITLE} — Teaser")
+    pdf.setAuthor(AUTHOR_NAME)
+    pdf.setSubject(BOOK_SUBTITLE)
+    pdf.setCreator(BRAND_NAME)
 
-    print(f"Teaser PDF généré : {OUTPUT}")
-    print("Version : teaser V2 propre")
+    draw_cover_page(pdf)
+    draw_overview_page(pdf, headings)
+    draw_excerpt_page(pdf, paragraphs)
+
+    pdf.save()
+
+    print(f"Teaser PDF généré : {output_path.relative_to(ROOT)}")
+    print("Version : teaser V2.2 configurable")
+    print(f"Titre : {BOOK_TITLE}")
+    print(f"Sous-titre : {BOOK_SUBTITLE}")
+    print(f"Auteur : {AUTHOR_NAME}")
+
     return 0
 
 
