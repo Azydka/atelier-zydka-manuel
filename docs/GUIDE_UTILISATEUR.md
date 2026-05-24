@@ -242,3 +242,51 @@ Si macOS bloque le fichier, utilisez plutôt :
 L’application reste locale. Elle s’ouvre dans le navigateur, généralement à l’adresse :
 
     http://localhost:8501
+
+---
+
+## V3.2 — Utiliser les projets privés
+
+La V3.2 ajoute un mode projets privés.
+
+Ce mode permet de travailler sur plusieurs livres sans remplacer définitivement le manuscrit public du dépôt.
+
+### Créer un projet privé
+
+Dans l’interface :
+
+1. Ouvrez l’onglet Projets privés.
+2. Entrez le nom du projet.
+3. Cliquez sur Créer le projet privé.
+
+Un dossier est créé ici :
+
+    private/projets/nom-du-projet/
+
+Il contient :
+
+    config.json
+    manuscrit.txt
+
+### Charger un projet privé
+
+Dans l’onglet Projets privés :
+
+1. Sélectionnez un projet existant.
+2. Cliquez sur Charger ce projet.
+
+Le projet devient actif dans l’application.
+
+### Sauvegarder un projet privé
+
+Après modification de la configuration ou du manuscrit, utilisez :
+
+    Sauvegarder config + manuscrit dans le projet actif
+
+### Règle importante
+
+Ne publiez jamais vos vrais manuscrits dans le dépôt public.
+
+Utilisez les projets privés pour les livres commerciaux :
+
+    private/projets/

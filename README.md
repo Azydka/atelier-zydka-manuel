@@ -461,3 +461,38 @@ Si macOS bloque l’ouverture pour des raisons de sécurité, utilisez plutôt l
 - app_streamlit.py
 
 Cette évolution réduit la friction de lancement pour les utilisateurs non techniques.
+
+---
+
+## V3.2 — Mode projets privés
+
+Depuis la V3.2, Atelier Zydka Manuel permet de travailler avec des projets privés stockés localement.
+
+Objectif :
+
+    utiliser de vrais manuscrits commerciaux sans les publier dans le dépôt GitHub.
+
+Structure utilisée :
+
+    private/
+    └── projets/
+        └── nom-du-projet/
+            ├── config.json
+            └── manuscrit.txt
+
+L’interface Streamlit permet désormais de :
+
+- créer un projet privé ;
+- charger un projet privé ;
+- sauvegarder la configuration dans un projet privé ;
+- sauvegarder le manuscrit dans un projet privé ;
+- générer le pack éditorial depuis un projet chargé ;
+- conserver le dépôt public avec un simple manuscrit de démonstration.
+
+### Important
+
+Le dossier `private/` ne doit pas être versionné.
+
+Les vrais livres, guides, formations ou contenus commerciaux doivent rester dans :
+
+    private/projets/

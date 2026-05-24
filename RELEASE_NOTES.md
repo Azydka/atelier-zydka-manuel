@@ -355,3 +355,28 @@ La V3.1 réduit la friction d’installation et de lancement pour les utilisateu
 La V3.1.1 facilite la prise en main immédiate du projet après décompression du ZIP.
 
 L’utilisateur sait désormais par où commencer, comment installer les dépendances, comment lancer l’application et comment générer son premier pack éditorial.
+
+---
+
+## V3.2 — Mode projets privés
+
+### Ajouté
+
+- Ajout de `project_manager.py`.
+- Création d’une structure de projets privés dans `private/projets/`.
+- Ajout d’un onglet Projets privés dans l’interface Streamlit.
+- Possibilité de créer un projet privé.
+- Possibilité de charger un projet privé.
+- Possibilité de sauvegarder `config.json` et le manuscrit dans un projet privé.
+- Possibilité de générer un pack depuis un projet privé chargé.
+- Inclusion de `project_manager.py` dans la release ZIP.
+
+### Objectif
+
+La V3.2 permet d’utiliser Atelier Zydka Manuel avec de vrais livres sans exposer les contenus commerciaux dans GitHub.
+
+Le dépôt public reste un moteur avec manuscrit de démonstration.
+
+Les contenus sensibles ou commerciaux restent dans :
+
+    private/projets/
