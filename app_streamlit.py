@@ -35,6 +35,8 @@ from project_manager import (
     save_project,
 )
 
+from restore_demo import main as restore_public_demo
+
 
 ROOT = Path(__file__).resolve().parent
 
@@ -148,6 +150,7 @@ tabs = st.tabs(
         "Manuscrit",
         "Génération",
         "Exports",
+        "Sécurité",
         "Aide",
     ]
 )
@@ -566,10 +569,67 @@ with tabs[5]:
 
 
 # ============================================================
-# AIDE
+# SÉCURITÉ
 # ============================================================
 
 with tabs[6]:
+    st.header("Sécurité")
+
+    st.warning(
+        "Cette section permet de restaurer la démo publique avant un commit ou un push GitHub. "
+        "Elle remplace config.json et manuscrit_beatmakers.txt par les fichiers de démonstration."
+    )
+
+    st.subheader("Restaurer la démo publique")
+
+    st.write(
+        "À utiliser après avoir travaillé sur un projet privé, afin d’éviter de laisser "
+        "un vrai manuscrit commercial dans les fichiers actifs du dépôt."
+    )
+
+    st.code(
+        "demo/config.demo.json → config.json\n"
+        "demo/manuscrit_demo.txt → manuscrit_beatmakers.txt",
+        language="text",
+    )
+
+    confirm_restore = st.checkbox(
+        "Je confirme vouloir restaurer la démo publique dans les fichiers actifs."
+    )
+
+    if st.button("Restaurer la démo publique", type="primary"):
+        if not confirm_restore:
+            st.error("Cochez la confirmation avant de restaurer la démo.")
+        else:
+            try:
+                restore_public_demo()
+                set_active_project(None)
+                st.success("Démo publique restaurée. Aucun projet privé n’est désormais chargé.")
+                st.info("Avant de pousser sur GitHub, vérifiez quand même le Terminal avec : git status")
+            except Exception as error:
+                st.error(f"Erreur pendant la restauration : {error}")
+
+    st.divider()
+
+    st.subheader("Rappel important")
+
+    st.markdown(
+        """
+- `private/projets/` contient vos vrais projets.
+- `config.json` et `manuscrit_beatmakers.txt` sont les fichiers actifs du moteur.
+- Avant un `git add` ou un `git push`, restaurez la démo publique si vous avez chargé un projet privé.
+- Vérifiez toujours avec :
+
+        git status
+        """
+    )
+
+
+# ============================================================
+# AIDE
+# ============================================================
+
+with tabs[7]:
     st.header("Aide")
 
     st.markdown(
