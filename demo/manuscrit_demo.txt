@@ -1,8 +1,8 @@
-# MANUSCRIT DE DÉMONSTRATION — ATELIER ZYDKA MANUEL
+# MANUSCRIT DE DÉMONSTRATION — MANUSCRIPT STUDIO BY ATELIER ZYDKA
 
 ## Transformer un manuscrit brut en pack éditorial complet
 
-Ceci est un manuscrit de démonstration destiné à tester Atelier Zydka Manuel.
+Ceci est un manuscrit de démonstration destiné à tester Manuscript Studio by Atelier Zydka.
 
 Il ne contient pas le livre complet, ni les contenus propriétaires destinés à la vente.
 
@@ -10,7 +10,7 @@ Il ne contient pas le livre complet, ni les contenus propriétaires destinés à
 
 # Introduction
 
-Atelier Zydka Manuel est un système éditorial local qui transforme un manuscrit source en plusieurs livrables :
+Manuscript Studio by Atelier Zydka est un système éditorial local qui transforme un manuscrit source en plusieurs livrables :
 
 - PDF principal ;
 - teaser PDF ;
@@ -68,7 +68,7 @@ Un produit éditorial n’est prêt que lorsqu’il peut être compris par quelq
 
 # Conclusion
 
-Ce manuscrit de démonstration sert uniquement à tester le moteur Atelier Zydka Manuel.
+Ce manuscrit de démonstration sert uniquement à tester le moteur Manuscript Studio by Atelier Zydka.
 
 Le vrai contenu éditorial doit rester dans un dossier privé, non versionné et non publié.
 

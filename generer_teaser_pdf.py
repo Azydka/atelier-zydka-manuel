@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Générateur de teaser PDF — Atelier Zydka Manuel
+Générateur de teaser PDF — Manuscript Studio by Atelier Zydka
 
 Version V2.2 :
 - lit le titre depuis config.json ;
@@ -34,7 +34,7 @@ OUTPUT_DIR = ROOT / "exports" / "pdf"
 
 CONFIG = load_config()
 
-PROJECT_TITLE = CONFIG.get("project_title", "Atelier Zydka Manuel")
+PROJECT_TITLE = CONFIG.get("project_title", "Manuscript Studio by Atelier Zydka")
 BOOK_TITLE = CONFIG.get("book_title", "Manuscrit de démonstration")
 BOOK_SUBTITLE = CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
 AUTHOR_NAME = CONFIG.get("author_name", "Atelier Zydka")

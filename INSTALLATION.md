@@ -1,8 +1,8 @@
-# Installation — Atelier Zydka Manuel
+# Installation — Manuscript Studio by Atelier Zydka
 
 ## Prérequis
 
-Atelier Zydka Manuel nécessite :
+Manuscript Studio by Atelier Zydka nécessite :
 
 - Python 3 ;
 - pip ;

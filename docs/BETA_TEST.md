@@ -1,4 +1,4 @@
-# Bêta-test — Atelier Zydka Manuel
+# Bêta-test — Manuscript Studio by Atelier Zydka
 
 Version : V2.1 Early Access  
 Statut : test utilisateur  
@@ -8,7 +8,7 @@ Date : 23/05/2026
 
 ## Objectif
 
-Ce bêta-test sert à vérifier si Atelier Zydka Manuel est compréhensible, testable et utile pour une personne extérieure au projet.
+Ce bêta-test sert à vérifier si Manuscript Studio by Atelier Zydka est compréhensible, testable et utile pour une personne extérieure au projet.
 
 L’objectif est de répondre à trois questions :
 
@@ -50,7 +50,7 @@ Ouvrir d’abord :
 
 Questions :
 
-- Comprenez-vous ce que fait Atelier Zydka Manuel ?
+- Comprenez-vous ce que fait Manuscript Studio by Atelier Zydka ?
 - Comprenez-vous à quoi sert le projet ?
 - Comprenez-vous la différence entre le moteur et le manuscrit de démonstration ?
 - Le positionnement est-il clair ?
@@ -129,6 +129,6 @@ Le plus important est d’être concret.
 
 Ce bêta-test ne cherche pas à flatter le projet.
 
-Il cherche à savoir si Atelier Zydka Manuel est assez clair, utile et crédible pour devenir un vrai produit éditorial.
+Il cherche à savoir si Manuscript Studio by Atelier Zydka est assez clair, utile et crédible pour devenir un vrai produit éditorial.
 
 Fin du document.

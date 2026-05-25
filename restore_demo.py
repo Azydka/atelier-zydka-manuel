@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Restauration de la démo publique — Atelier Zydka Manuel
+Restauration de la démo publique — Manuscript Studio by Atelier Zydka
 
 Objectif :
 - restaurer config.json depuis demo/config.demo.json ;

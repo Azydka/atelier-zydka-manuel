@@ -1,4 +1,4 @@
-# Quickstart — Atelier Zydka Manuel
+# Quickstart — Manuscript Studio by Atelier Zydka
 
 ## Objectif
 

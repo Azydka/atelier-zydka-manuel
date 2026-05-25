@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Interface locale Streamlit — Atelier Zydka Manuel
+Interface locale Streamlit — Manuscript Studio by Atelier Zydka
 
 V3.2 :
 - tableau de bord ;
@@ -56,7 +56,7 @@ VISUALS_DIR = ROOT / "exports" / "reseaux" / "cartes"
 
 
 st.set_page_config(
-    page_title="Atelier Zydka Manuel",
+    page_title="Manuscript Studio by Atelier Zydka",
     page_icon="📚",
     layout="wide",
 )
@@ -201,7 +201,7 @@ def run_command_for_current_project(command: list[str]) -> tuple[int, str]:
 # HEADER
 # ============================================================
 
-st.title("Atelier Zydka Manuel")
+st.title("Manuscript Studio by Atelier Zydka")
 st.caption("Interface locale V3.2 — générateur éditorial avec projets privés")
 
 active_project = get_active_project()
@@ -404,7 +404,7 @@ with tabs[2]:
     with st.form("config_form"):
         project_title = st.text_input(
             "Titre du projet",
-            value=config.get("project_title", "Atelier Zydka Manuel"),
+            value=config.get("project_title", "Manuscript Studio by Atelier Zydka"),
         )
 
         book_title = st.text_input(

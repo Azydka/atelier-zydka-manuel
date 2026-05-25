@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Générateur de visuels réseaux — Atelier Zydka Manuel
+Générateur de visuels réseaux — Manuscript Studio by Atelier Zydka
 
 Version V2.2 :
 - lit la marque depuis config.json ;

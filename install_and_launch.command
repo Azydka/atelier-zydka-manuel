@@ -4,7 +4,7 @@ cd "$(dirname "$0")" || exit 1
 clear
 
 echo "======================================"
-echo " Atelier Zydka Manuel"
+echo " Manuscript Studio by Atelier Zydka"
 echo " Installation + lancement"
 echo "======================================"
 echo ""
@@ -39,7 +39,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo ""
-echo "Lancement de l'interface Atelier Zydka Manuel..."
+echo "Lancement de l'interface Manuscript Studio by Atelier Zydka..."
 echo ""
 echo "Si le navigateur ne s'ouvre pas automatiquement, copiez l'adresse affichée dans le terminal."
 echo ""

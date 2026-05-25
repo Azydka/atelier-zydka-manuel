@@ -1,6 +1,6 @@
-# Atelier Zydka Manuel
+# Manuscript Studio by Atelier Zydka
 
-Atelier Zydka Manuel est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
+Manuscript Studio by Atelier Zydka est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
 
 Il permet de générer :
 
@@ -128,7 +128,7 @@ Le manuscrit principal est :
 
 Version actuellement intégrée :
 
-    Manuscrit de démonstration — Atelier Zydka Manuel
+    Manuscrit de démonstration — Manuscript Studio by Atelier Zydka
 
 Les vrais manuscrits doivent rester dans :
 
@@ -237,7 +237,7 @@ Une licence d’utilisation dédiée devra être ajoutée avant diffusion commer
 
 ## Aperçu visuel
 
-Quelques captures permettent de visualiser les principaux livrables générés par Atelier Zydka Manuel.
+Quelques captures permettent de visualiser les principaux livrables générés par Manuscript Studio by Atelier Zydka.
 
 ### PDF principal
 
@@ -347,7 +347,7 @@ Cette évolution rend le PDF principal plus cohérent avec la promesse de person
 
 ## V3.0 — Interface locale Streamlit
 
-Depuis la V3.0, Atelier Zydka Manuel dispose d’une interface locale expérimentale basée sur Streamlit.
+Depuis la V3.0, Manuscript Studio by Atelier Zydka dispose d’une interface locale expérimentale basée sur Streamlit.
 
 Elle permet de piloter le moteur sans utiliser directement le Terminal pour chaque action.
 
@@ -387,7 +387,7 @@ Le dépôt public doit continuer à contenir uniquement un manuscrit de démonst
 
 ## V3.1 — Lancement simplifié de l’application
 
-Depuis la V3.1, Atelier Zydka Manuel contient des fichiers de lancement pour faciliter l’ouverture de l’interface locale.
+Depuis la V3.1, Manuscript Studio by Atelier Zydka contient des fichiers de lancement pour faciliter l’ouverture de l’interface locale.
 
 ### Installer les dépendances
 
@@ -429,7 +429,7 @@ Cette évolution réduit la friction de lancement pour les utilisateurs non tech
 
 ## V3.1 — Lancement simplifié de l’application
 
-Depuis la V3.1, Atelier Zydka Manuel contient des fichiers de lancement pour faciliter l’ouverture de l’interface locale.
+Depuis la V3.1, Manuscript Studio by Atelier Zydka contient des fichiers de lancement pour faciliter l’ouverture de l’interface locale.
 
 ### Installer les dépendances
 
@@ -472,7 +472,7 @@ Cette évolution réduit la friction de lancement pour les utilisateurs non tech
 
 ## V3.2 — Mode projets privés
 
-Depuis la V3.2, Atelier Zydka Manuel permet de travailler avec des projets privés stockés localement.
+Depuis la V3.2, Manuscript Studio by Atelier Zydka permet de travailler avec des projets privés stockés localement.
 
 Objectif :
 
@@ -507,7 +507,7 @@ Les vrais livres, guides, formations ou contenus commerciaux doivent rester dans
 
 ## V3.3 — Restauration de la démo publique
 
-Depuis la V3.3, Atelier Zydka Manuel ajoute un garde-fou anti-fuite de contenu privé.
+Depuis la V3.3, Manuscript Studio by Atelier Zydka ajoute un garde-fou anti-fuite de contenu privé.
 
 Le projet contient désormais :
 
@@ -548,7 +548,7 @@ Cette étape réduit fortement le risque de publier accidentellement un manuscri
 
 ## V3.4 — Rapport qualité éditorial avancé
 
-Depuis la V3.4, Atelier Zydka Manuel génère un rapport qualité éditorial avancé.
+Depuis la V3.4, Manuscript Studio by Atelier Zydka génère un rapport qualité éditorial avancé.
 
 Ce rapport permet d’analyser le manuscrit actif avant publication.
 
@@ -592,7 +592,7 @@ Elle permet de repérer rapidement les problèmes structurels ou éditoriaux ava
 
 ## V3.5 — Score qualité dans le tableau de bord
 
-Depuis la V3.5, Atelier Zydka Manuel affiche le score qualité éditorial directement dans le tableau de bord Streamlit.
+Depuis la V3.5, Manuscript Studio by Atelier Zydka affiche le score qualité éditorial directement dans le tableau de bord Streamlit.
 
 Le rapport qualité génère désormais deux fichiers :
 

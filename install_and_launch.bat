@@ -2,7 +2,7 @@
 cd /d "%~dp0"
 
 echo ======================================
-echo Atelier Zydka Manuel
+echo Manuscript Studio by Atelier Zydka
 echo Installation + lancement
 echo ======================================
 echo.
@@ -34,7 +34,7 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo Lancement de l'interface Atelier Zydka Manuel...
+echo Lancement de l'interface Manuscript Studio by Atelier Zydka...
 %PYTHON_CMD% -m streamlit run app_streamlit.py
 
 pause

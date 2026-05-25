@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Vérificateur de manuscrit — Atelier Zydka Manuel
+Vérificateur de manuscrit — Manuscript Studio by Atelier Zydka
 
 Objectif :
 Détecter les erreurs éditoriales courantes avant génération PDF.

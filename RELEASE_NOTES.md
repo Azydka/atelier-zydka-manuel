@@ -1,4 +1,4 @@
-# Release Notes — Atelier Zydka Manuel
+# Release Notes — Manuscript Studio by Atelier Zydka
 
 ## V2.1 — Packaging éditorial propre
 
@@ -33,11 +33,11 @@
 ```bash
 python3 make.py all
 python3 make.py release
-python3 make.py archive# Release Notes — Atelier Zydka Manuel
+python3 make.py archive# Release Notes — Manuscript Studio by Atelier Zydka
 
 ## Version produit — 22/05/2026
 
-Cette release stabilise **Atelier Zydka Manuel** comme générateur éditorial complet.
+Cette release stabilise **Manuscript Studio by Atelier Zydka** comme générateur éditorial complet.
 
 Le projet ne se limite plus à produire un PDF. Il génère désormais un ensemble cohérent de livrables éditoriaux, marketing et de contrôle qualité à partir d’un manuscrit source.
 
@@ -215,7 +215,7 @@ Le socle actuel est propre, versionné, testé et exploitable.
 
 ### Objectif
 
-La V2.2 transforme Atelier Zydka Manuel en moteur éditorial personnalisable à partir d’un fichier `config.json`.
+La V2.2 transforme Manuscript Studio by Atelier Zydka en moteur éditorial personnalisable à partir d’un fichier `config.json`.
 
 Le projet passe de :
 
@@ -274,7 +274,7 @@ Le PDF principal n’est plus seulement généré techniquement : il commence à
 
 ### Objectif
 
-La V3.0 transforme Atelier Zydka Manuel en application locale utilisable sans lancer manuellement chaque commande du pipeline.
+La V3.0 transforme Manuscript Studio by Atelier Zydka en application locale utilisable sans lancer manuellement chaque commande du pipeline.
 
 ---
 
@@ -373,7 +373,7 @@ L’utilisateur sait désormais par où commencer, comment installer les dépend
 
 ### Objectif
 
-La V3.2 permet d’utiliser Atelier Zydka Manuel avec de vrais livres sans exposer les contenus commerciaux dans GitHub.
+La V3.2 permet d’utiliser Manuscript Studio by Atelier Zydka avec de vrais livres sans exposer les contenus commerciaux dans GitHub.
 
 Le dépôt public reste un moteur avec manuscrit de démonstration.
 
@@ -441,7 +441,7 @@ Le rapport qualité détecte :
 
 La V3.4 ajoute une couche de contrôle éditorial avancé avant publication.
 
-Elle rapproche Atelier Zydka Manuel d’un véritable studio éditorial local capable de diagnostiquer un manuscrit avant génération du pack final.
+Elle rapproche Manuscript Studio by Atelier Zydka d’un véritable studio éditorial local capable de diagnostiquer un manuscrit avant génération du pack final.
 
 ---
 

@@ -114,7 +114,7 @@ CONFIG = load_config()
 FEATURES = CONFIG.get("features", {})
 
 PROJECT_CONFIG = load_project_config()
-PROJECT_TITLE = PROJECT_CONFIG.get("project_title", "Atelier Zydka Manuel")
+PROJECT_TITLE = PROJECT_CONFIG.get("project_title", "Manuscript Studio by Atelier Zydka")
 BOOK_TITLE = PROJECT_CONFIG.get("book_title", "Manuscrit de démonstration")
 BOOK_SUBTITLE = PROJECT_CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
 AUTHOR_NAME = PROJECT_CONFIG.get("author_name", "Atelier Zydka")

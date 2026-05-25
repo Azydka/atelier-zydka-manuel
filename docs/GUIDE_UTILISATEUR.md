@@ -1,7 +1,7 @@
-# Guide utilisateur — Atelier Zydka Manuel
+# Guide utilisateur — Manuscript Studio by Atelier Zydka
 
 Version : V2.1  
-Projet : Atelier Zydka Manuel  
+Projet : Manuscript Studio by Atelier Zydka  
 Statut : Packaging éditorial propre  
 Dernière mise à jour : 23/05/2026
 
@@ -9,7 +9,7 @@ Dernière mise à jour : 23/05/2026
 
 ## 1. Présentation
 
-**Atelier Zydka Manuel** est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
+**Manuscript Studio by Atelier Zydka** est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
 
 À partir d’un fichier texte principal, l’outil peut générer :
 
@@ -27,7 +27,7 @@ L’objectif est de transformer une matière brute en produit éditorial complet
 
 ## 2. À qui s’adresse cet outil ?
 
-Atelier Zydka Manuel s’adresse à :
+Manuscript Studio by Atelier Zydka s’adresse à :
 
 - un auteur indépendant ;
 - un créateur de guide pratique ;

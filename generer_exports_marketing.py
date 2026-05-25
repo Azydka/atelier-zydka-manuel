@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Exports marketing — Atelier Zydka Manuel
+Exports marketing — Manuscript Studio by Atelier Zydka
 
 Version propre V2.1 :
 génère une sélection contrôlée de citations marketing premium.
@@ -47,7 +47,7 @@ def write_output() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     lines = [
-        "# Citations extraites — Atelier Zydka Manuel",
+        "# Citations extraites — Manuscript Studio by Atelier Zydka",
         "",
         "Fichier généré automatiquement depuis une sélection éditoriale contrôlée.",
         "",

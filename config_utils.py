@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Utilitaires de configuration — Atelier Zydka Manuel
+Utilitaires de configuration — Manuscript Studio by Atelier Zydka
 
 Ce module centralise la lecture de config.json pour éviter de dupliquer
 la logique dans chaque script.
@@ -18,7 +18,7 @@ CONFIG_PATH = ROOT / "config.json"
 
 
 DEFAULT_CONFIG: dict[str, Any] = {
-    "project_title": "Atelier Zydka Manuel",
+    "project_title": "Manuscript Studio by Atelier Zydka",
     "book_title": "Manuscrit de démonstration",
     "book_subtitle": "Transformer un manuscrit brut en pack éditorial complet",
     "author_name": "Atelier Zydka",

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Gestionnaire de projets privés — Atelier Zydka Manuel
+Gestionnaire de projets privés — Manuscript Studio by Atelier Zydka
 
 V3.2 :
 - crée des projets privés dans private/projets/
@@ -36,7 +36,7 @@ ACTIVE_MANUSCRIPT = ROOT / "manuscrit_beatmakers.txt"
 
 
 DEFAULT_PROJECT_CONFIG: dict[str, Any] = {
-    "project_title": "Atelier Zydka Manuel",
+    "project_title": "Manuscript Studio by Atelier Zydka",
     "book_title": "Nouveau projet éditorial",
     "book_subtitle": "Transformer un manuscrit en pack éditorial complet",
     "author_name": "Auteur",

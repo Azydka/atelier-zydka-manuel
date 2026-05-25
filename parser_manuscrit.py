@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-PARSER MANUSCRIT — ATELIER ZYDKA MANUEL
+PARSER MANUSCRIT — MANUSCRIPT STUDIO BY ATELIER ZYDKA
 ======================================
 
 Objectif :

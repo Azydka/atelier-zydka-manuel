@@ -1,6 +1,6 @@
-# Atelier Zydka Manuel — Démarrage rapide
+# Manuscript Studio by Atelier Zydka — Démarrage rapide
 
-Bienvenue dans Atelier Zydka Manuel.
+Bienvenue dans Manuscript Studio by Atelier Zydka.
 
 Ce dossier contient une application locale qui transforme un manuscrit en pack éditorial complet : PDF principal, teaser PDF, citations marketing, visuels réseaux sociaux, rapports éditoriaux et archive ZIP.
 
@@ -38,7 +38,7 @@ Le lanceur :
 
 1. vérifie que Python est disponible ;
 2. installe les dépendances nécessaires ;
-3. lance l'interface Atelier Zydka Manuel ;
+3. lance l'interface Manuscript Studio by Atelier Zydka ;
 4. affiche une adresse locale de type http://localhost:8501.
 
 ## Si l'interface ne s'ouvre pas

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Make script — Atelier Zydka Manuel
+Make script — Manuscript Studio by Atelier Zydka
 
 Commandes :
 python3 make.py check      # vérifie le manuscrit

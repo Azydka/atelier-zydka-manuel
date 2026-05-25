@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-RAPPORT STRUCTURE — ATELIER ZYDKA MANUEL
+RAPPORT STRUCTURE — MANUSCRIPT STUDIO BY ATELIER ZYDKA
 =======================================
 
 Génère un rapport technique + éditorial du manuscrit :
@@ -251,7 +251,7 @@ def main() -> int:
     average_score = round(sum(row["score"] for row in rows) / len(rows), 1) if rows else 0
 
     lines = []
-    lines.append("# Rapport de structure — Atelier Zydka Manuel")
+    lines.append("# Rapport de structure — Manuscript Studio by Atelier Zydka")
     lines.append("")
     lines.append("## Synthèse")
     lines.append("")

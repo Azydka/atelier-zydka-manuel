@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Rapport qualité éditorial — Atelier Zydka Manuel
+Rapport qualité éditorial — Manuscript Studio by Atelier Zydka
 
 V3.4 :
 - analyse le manuscrit actif ;
@@ -413,7 +413,7 @@ def generate_report() -> str:
 
     lines: list[str] = []
 
-    lines.append("# Rapport qualité éditorial — Atelier Zydka Manuel")
+    lines.append("# Rapport qualité éditorial — Manuscript Studio by Atelier Zydka")
     lines.append("")
     lines.append(f"Date de génération : {now}")
     lines.append("")

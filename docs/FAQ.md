@@ -1,4 +1,4 @@
-# FAQ — Atelier Zydka Manuel
+# FAQ — Manuscript Studio by Atelier Zydka
 
 Version : V2.1  
 Statut : Early Access  
@@ -6,9 +6,9 @@ Date : 23/05/2026
 
 ---
 
-## Qu’est-ce qu’Atelier Zydka Manuel ?
+## Qu’est-ce qu’Manuscript Studio by Atelier Zydka ?
 
-Atelier Zydka Manuel est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
+Manuscript Studio by Atelier Zydka est un système éditorial local qui transforme un manuscrit source en pack éditorial complet.
 
 Il peut générer un PDF principal, un teaser PDF, un rapport éditorial, des citations marketing, des visuels réseaux sociaux, un dossier de release et une archive ZIP transmissible.
 

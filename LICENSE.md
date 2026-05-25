@@ -1,7 +1,7 @@
-# Licence d’utilisation — Atelier Zydka Manuel
+# Licence d’utilisation — Manuscript Studio by Atelier Zydka
 
 Version : Early Access V2.1  
-Projet : Atelier Zydka Manuel  
+Projet : Manuscript Studio by Atelier Zydka  
 Éditeur : Atelier Zydka  
 Date : 23/05/2026
 
@@ -9,9 +9,9 @@ Date : 23/05/2026
 
 ## 1. Objet
 
-Cette licence définit les conditions d’utilisation du projet **Atelier Zydka Manuel**.
+Cette licence définit les conditions d’utilisation du projet **Manuscript Studio by Atelier Zydka**.
 
-Atelier Zydka Manuel est un système éditorial local permettant de transformer un manuscrit source en livrables éditoriaux :
+Manuscript Studio by Atelier Zydka est un système éditorial local permettant de transformer un manuscrit source en livrables éditoriaux :
 
 - PDF principal ;
 - teaser PDF ;
@@ -56,7 +56,7 @@ Exemples autorisés :
 - créer des visuels de promotion ;
 - préparer un pack éditorial pour son propre projet.
 
-Cependant, cette licence n’autorise pas automatiquement la revente du logiciel, du code, du moteur, de la structure ou d’une version dérivée d’Atelier Zydka Manuel.
+Cependant, cette licence n’autorise pas automatiquement la revente du logiciel, du code, du moteur, de la structure ou d’une version dérivée d’Manuscript Studio by Atelier Zydka.
 
 ---
 
@@ -88,7 +88,7 @@ Toute redistribution publique ou commerciale d’une version modifiée nécessit
 
 L’utilisateur reste propriétaire des contenus qu’il injecte dans le projet : manuscrits, textes, images, marques, logos, fichiers audio ou documents sources.
 
-L’utilisateur est seul responsable des contenus utilisés avec Atelier Zydka Manuel.
+L’utilisateur est seul responsable des contenus utilisés avec Manuscript Studio by Atelier Zydka.
 
 Il doit notamment s’assurer qu’il possède les droits nécessaires sur :
 
@@ -105,7 +105,7 @@ Il doit notamment s’assurer qu’il possède les droits nécessaires sur :
 
 ## 8. Responsabilité
 
-Atelier Zydka Manuel est fourni en l’état.
+Manuscript Studio by Atelier Zydka est fourni en l’état.
 
 Aucune garantie n’est donnée concernant :
 
@@ -175,7 +175,7 @@ Site : à compléter
 
 ## 13. Résumé simple
 
-Vous pouvez utiliser Atelier Zydka Manuel pour générer vos propres documents.
+Vous pouvez utiliser Manuscript Studio by Atelier Zydka pour générer vos propres documents.
 
 Vous ne pouvez pas revendre, redistribuer ou transformer l’outil en service commercial concurrent sans accord écrit.
 

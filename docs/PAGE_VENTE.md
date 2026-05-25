@@ -1,4 +1,4 @@
-# Page de vente — Atelier Zydka Manuel
+# Page de vente — Manuscript Studio by Atelier Zydka
 
 Version : V2.1 Early Access  
 Statut : brouillon commercial  
@@ -6,11 +6,11 @@ Date : 23/05/2026
 
 ---
 
-# Atelier Zydka Manuel
+# Manuscript Studio by Atelier Zydka
 
 ## Transformez un manuscrit brut en pack éditorial complet
 
-Atelier Zydka Manuel est un mini-studio éditorial local qui transforme un manuscrit source en livrables prêts à diffuser :
+Manuscript Studio by Atelier Zydka est un mini-studio éditorial local qui transforme un manuscrit source en livrables prêts à diffuser :
 
 - livre PDF ;
 - teaser PDF ;
@@ -34,7 +34,7 @@ Résultat : le contenu existe, mais il reste difficile à présenter, tester ou 
 
 ## La solution
 
-Atelier Zydka Manuel automatise le passage entre un manuscrit brut et un pack éditorial complet.
+Manuscript Studio by Atelier Zydka automatise le passage entre un manuscrit brut et un pack éditorial complet.
 
 Commande principale :
 
@@ -65,7 +65,7 @@ Le pack généré peut contenir :
 
 ## Pour qui ?
 
-Atelier Zydka Manuel est pensé pour :
+Manuscript Studio by Atelier Zydka est pensé pour :
 
 - auteurs indépendants ;
 - formateurs ;
@@ -92,7 +92,7 @@ Cette séparation permet de montrer le moteur sans exposer le vrai produit édit
 
 ## Bénéfices
 
-Atelier Zydka Manuel permet de :
+Manuscript Studio by Atelier Zydka permet de :
 
 - gagner du temps ;
 - structurer un contenu long ;
