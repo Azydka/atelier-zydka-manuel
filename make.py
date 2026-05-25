@@ -40,6 +40,62 @@ RELEASE_DIR = DIST_ROOT / RELEASE_NAME
 ZIP_PATH = DIST_ROOT / ZIP_NAME
 
 
+SENSITIVE_RELEASE_PATTERNS = [
+    "BEATMAKER INDÉPENDANT",
+    "BEATMAKER INDEPENDANT",
+    "ÉDITION V13",
+    "EDITION V13",
+    "Beatmaker_Toolkit",
+    "beatmaker-indépendant-2027",
+    "beatmaker_independant_2027",
+    "manuscrit_beatmakers_v13",
+]
+
+
+def assert_no_sensitive_content(path: Path) -> None:
+    """
+    Bloque la génération d'une release publique si un contenu privé
+    ou un mot-clé de manuscrit réel est détecté dans le dossier de release.
+    """
+    matches: list[str] = []
+
+    for file_path in path.rglob("*"):
+        if not file_path.is_file():
+            continue
+
+        if "__pycache__" in file_path.parts:
+            continue
+
+        # On évite de lire les binaires lourds, mais on contrôle les noms.
+        for pattern in SENSITIVE_RELEASE_PATTERNS:
+            if pattern in str(file_path):
+                relative = file_path.relative_to(path)
+                matches.append(f"{relative} -> {pattern}")
+
+        if file_path.suffix.lower() in {".png", ".jpg", ".jpeg", ".pdf", ".zip", ".ico"}:
+            continue
+
+        try:
+            content = file_path.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            continue
+
+        for pattern in SENSITIVE_RELEASE_PATTERNS:
+            if pattern in content:
+                relative = file_path.relative_to(path)
+                matches.append(f"{relative} -> {pattern}")
+
+    if matches:
+        details = "\n".join(f"- {item}" for item in matches)
+        raise RuntimeError(
+            "Contenu sensible détecté dans la release publique.\n"
+            "Génération ZIP bloquée.\n\n"
+            f"{details}\n\n"
+            "Nettoyez les fichiers publics avant de relancer make.py archive."
+        )
+
+
+
 def run(command: list[str]) -> int:
     print("")
     print("→ " + " ".join(command))
@@ -267,6 +323,8 @@ def archive() -> int:
 
     if ZIP_PATH.exists():
         ZIP_PATH.unlink()
+
+    assert_no_sensitive_content(RELEASE_DIR)
 
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
         for path in RELEASE_DIR.rglob("*"):

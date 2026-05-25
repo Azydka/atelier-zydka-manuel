@@ -128,7 +128,13 @@ Le manuscrit principal est :
 
 Version actuellement intégrée :
 
-    BEATMAKER INDÉPENDANT 2027 — ÉDITION V13 Ultime
+    Manuscrit de démonstration — Atelier Zydka Manuel
+
+Les vrais manuscrits doivent rester dans :
+
+    private/projets/
+
+Ils ne doivent jamais être intégrés dans la release publique.
 
 ## Documentation
 
