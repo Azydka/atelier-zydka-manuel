@@ -2,13 +2,13 @@ __pycache__/
 *.pyc
 .DS_Store
 
-# Exports générés
+# Exports générés (ne jamais versionner : peuvent contenir un manuscrit privé)
 manuelsortie/
+exports/
 *.pdf
 
 # Archives locales
 Archives dev/
-exports/reseaux/cartes/
 
 # Releases générées
 /dist/
@@ -20,3 +20,6 @@ exports/reseaux/cartes/
 private/
 *_private.txt
 manuscrit_complet_*.txt
+
+# Sauvegardes locales de manuscrits (privées)
+backups/
