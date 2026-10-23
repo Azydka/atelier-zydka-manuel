@@ -59,6 +59,8 @@ Préparer le moteur pour une future version PC Windows installable (pywebview + 
 
 ## Prochaine étape : 6 (polices embarquées)
 
+Prompt prêt à copier pour reprendre (Claude ou ChatGPT) : `docs/prompt-reprise-etape6.md`. Outil d'avant/après : `tools/pack_demo_compare.py`, procédure dans `.claude/skills/pack-demo-compare/SKILL.md`.
+
 1. Télécharger les fichiers .ttf officiels sous licence OFL : Inter (Regular, Bold, Black), IBM Plex Mono (Regular) et Source Serif 4 (Italic), avec leurs fichiers de licence (`OFL.txt`), dans `studio_core/fonts/`. Les noms attendus par `setup_fonts()` dans `studio_core/pdf_book.py` sont `Inter-Regular.ttf`, `Inter-Bold.ttf`, `Inter-Black.ttf`, `IBMPlexMono-Regular.ttf` et `SourceSerif4-Italic.ttf`. Les visuels (`studio_core/visuals.py`) cherchent aussi `Inter-Regular.ttf` / `Inter-Bold.ttf` dans ce dossier.
 2. Supprimer le fallback Helvetica/Courier/Times et son avertissement. Une police manquante doit devenir une erreur claire.
 3. Le changement de polices modifie les métriques, donc éventuellement le nombre de pages. Faire un avant/après PNG de plusieurs pages (couverture, sommaire, une page de chapitre), **le montrer au propriétaire et attendre son accord**, puis commit du code et commit dédié de la référence.
@@ -66,7 +68,6 @@ Préparer le moteur pour une future version PC Windows installable (pywebview + 
 ## Questions en attente de décision
 
 - Les images de la démo (6,5 Mo, inutilisées par le manuscrit démo) sont copiées dans chaque projet démo : faut-il les garder dans le modèle ?
-- Faut-il créer un skill de projet `.claude/skills/pack-demo-compare/` (régénérer la démo, comparer à la référence, PNG avant/après) ? À ne créer qu'avec l'accord du propriétaire.
 - L'historique Git public contient le manuscrit privé (`backups/`) et des citations du livre : réécriture d'historique ou passage du dépôt en privé, décision du propriétaire.
 
 ## Pièges

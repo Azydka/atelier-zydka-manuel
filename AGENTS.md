@@ -39,6 +39,7 @@ Ce dépôt est modifié par plusieurs assistants à tour de rôle. Ces règles �
   python -m tests.snapshot --update
   ```
 - Ne jamais régénérer la référence pour « faire passer » un test sans avoir compris et fait valider le changement.
+- Pour tout changement de rendu, suivre la procédure de `.claude/skills/pack-demo-compare/SKILL.md` (outil `tools/pack_demo_compare.py` : PNG avant/après, montage, écarts avec la référence). Elle vaut aussi pour Codex/ChatGPT : il suffit de lancer le script.
 
 ## Validation avant chaque commit
 
