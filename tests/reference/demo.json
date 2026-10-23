@@ -9,7 +9,7 @@
   "book_pdf": {
     "pages": 9,
     "text": [
-      "VERSION GÉNÉRÉE\\NPDF ÉDITORIAL\nCONFIGURABLE\\NATELIER ZYDKA\n Z\nSTUDIO · PRÉSENCE · SYSTÈME · DÉCISION\nLE MANUEL\nDE PRÉSENCE\nATELIER ZYDKA\nTransformer un manuscrit brut en pack\néditorial complet\nDOCUMENT DE PILOTAGE\nRÉFÉRENCE STUDIO\nZ",
+      "ATELIER ZYDKA\n2026\n Z\nCULTURE · MÉTHODE · INDÉPENDANCE\nMANUSCRIT DE\nDÉMONSTRATION\nATELIER ZYDKA\nTransformer un manuscrit brut en pack\néditorial complet\nZ",
       "002\n02 / NAVIGATION\nTABLE DES\nMATIÈRES\nRepères rapides pour circuler dans le manuel.\n01\nMANUSCRIT DE DÉMONSTRATION — MANUSCRIPT…\n02\nINTRODUCTION\n03\nPARTIE 1 — PRÉPARER SON MANUSCRIT\n04\nPARTIE 2 — GÉNÉRER LES LIVRABLES\n05\nPARTIE 3 — TESTER LE RÉSULTAT\n06\nCONCLUSION",
       "004\nCHAPITRE 01 / TEXTE COURANT\nMANUSCRIT DE\nDÉMONSTRATION\n— MANUSCRIPT\nSTUDIO BY\nATELIER ZYDKA\nTransformer un manuscrit brut en\npack éditorial complet\nCeci est un manuscrit de démonstration destiné à tester\nManuscript Studio by Atelier Zydka.\nIl ne contient pas le livre complet, ni les contenus\npropriétaires destinés à la vente.",
       "005\nZ\nCHAPITRE 02 / TEXTE COURANT\nINTRODUCTION\nManuscript Studio by Atelier Zydka\nest un système éditorial local qui\ntransforme un manuscrit source en\nplusieurs livrables :\n PDF principal ;\n teaser PDF ;\n rapport éditorial ;\n citations marketing ;\n visuels réseaux sociaux ;\n dossier de release ;\n archive ZIP.\nL’objectif est de montrer le fonctionnement du moteur\nsans exposer de contenu privé.",
@@ -17,7 +17,7 @@
       "007\nZ\nCHAPITRE 04 / TEXTE COURANT\nPARTIE 2 —\nGÉNÉRER LES\nLIVRABLES\nLa commande principale est :\npython3 make.py archive\nElle permet de générer le PDF, le teaser, les citations, les\nvisuels, la release et le ZIP final.\nUn bon système éditorial ne se contente pas de produire\nun fichier. Il prépare un pack complet.",
       "008\nCHAPITRE 05 / TEXTE COURANT\nPARTIE 3 —\nTESTER LE\nRÉSULTAT\nAprès génération, il faut vérifier :\n le PDF principal ;\n le teaser ;\n les visuels ;\n le rapport ;\n le contenu du ZIP.\nUn produit éditorial n’est prêt que lorsqu’il peut être\ncompris par quelqu’un d’autre que son créateur.",
       "009\nZ\nCHAPITRE 06 / TEXTE COURANT\nCONCLUSION\nCe manuscrit de démonstration sert\nuniquement à tester le moteur\nManuscript Studio by Atelier Zydka.\nLe vrai contenu éditorial doit rester dans un dossier privé,\nnon versionné et non publié.\nFin du document.",
-      "MANUSCRIT DE DÉMONSTRATION\\NATELIER ZYDKA\nZ\nCONSTRUIRE\nMOINS.\nCONSTRUIRE\nPLUS JUSTE.\nAtelier Zydka — Transformer un\nmanuscrit brut en pack éditorial\ncomplet\nDOCUMENT DE PILOTAGE\nACCENT CLAIR · FINITION PREMIUM"
+      "MANUSCRIT DE DÉMONSTRATION\nATELIER ZYDKA\n Z\nTRANSFORMER UN\nMANUSCRIT BRUT\nEN PACK ÉDITORIAL\nCOMPLET\nAtelier Zydka"
     ]
   },
   "teaser_pdf": {
