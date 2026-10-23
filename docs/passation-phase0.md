@@ -6,8 +6,8 @@ Document de reprise : à lire en premier par tout assistant (Claude, Codex/ChatG
 
 - Branche de travail : `phase0/socle-moteur`, créée depuis `main` (`323ea87`), poussée sur `origin`.
 - `main` n'a pas été modifiée. Aucun tag créé.
-- Dernier commit de code : `94c6045 test: référence release/ZIP du modèle projet` (ce document est commité juste après).
-- Tests : `python -m pytest -q` donne **36 tests verts** sous Linux (Python 3.13).
+- Dernier commit de code : `836070b test: référence PDF après refonte de la couverture` (ce document est commité juste après).
+- Tests : `python -m pytest -q` donne **42 tests verts** sous Linux (Python 3.13).
 - `make.py archive` sur la démo : environ 1,5 s.
 
 ## Objectif de la phase 0
@@ -23,7 +23,7 @@ Préparer le moteur pour une future version PC Windows installable (pywebview + 
 | 2 | Parser unique (rapport qualité, teaser) | ✅ | `079d324`, `30cbfaa`, `18d4a50` |
 | 3 | Package `studio_core` + make.py en CLI mince | ✅ | `073d384`, `22d1d3e` |
 | 4 | Projet = dossier, plus d'écriture dans le code, Streamlit adapté | ✅ | `28d13b3`, `94c6045` |
-| 5 | Couverture pilotée par la config | ⏳ à faire | — |
+| 5 | Couverture pilotée par la config | ✅ | `0227b5f`, `836070b` |
 | 6 | Polices embarquées (Inter, IBM Plex Mono, Source Serif 4) | ⏳ | — |
 | 7 | Nettoyage du code mort (liste à valider avant suppression) | ⏳ | — |
 | 8 | CI GitHub Actions (pytest sous Windows et Linux) | ⏳ | — |
@@ -41,20 +41,27 @@ Préparer le moteur pour une future version PC Windows installable (pywebview + 
 - **Supprimés** : `restore_demo.py`, le bouton « Restaurer la démo », le garde-fou `SENSITIVE_RELEASE_PATTERNS`, `project_manager.py`.
 - **Migration** : `make.py import-legacy` copie les anciens `private/projets/*` vers la racine des projets, sans rien supprimer.
 - **Charte** : ne pas toucher aux couleurs de `config.json` (#090909 / #C79A3B). La décision charte V5 contre charte actuelle n'est pas prise.
+- **Couverture (étape 5, rendu validé)** :
+  - en haut à gauche : marque + année ;
+  - titre = `book_title`, taille ajustée automatiquement (`fit_font_size`) ;
+  - filet au-dessus du titre ;
+  - clés optionnelles de config.json : `cover_kicker` (défaut `baseline`), `cover_footer_left/right` (défaut vide), `back_cover_tagline` (défaut `book_subtitle`), `back_cover_footer_left/right` (défaut vide). Clé absente = défaut ; chaîne vide = rien affiché ;
+  - 4e de couverture signée par `author_name` ;
+  - Streamlit n'écrit pas ces clés quand elles restent à leur valeur par défaut.
 
 ## Constats de l'audit (vérifiés dans le code)
 
 - L'écart 7/6 chapitres venait de `rapport_qualite.py` (son propre découpage), pas du PDF. C'est corrigé.
-- Couverture (étape 5, toujours à faire) : titre « Le Manuel de Présence » en dur dans `cover()` ; `\n` affiché littéralement en haut à gauche ; le filet (`signature_line`) coupe le titre ; le bloc « Z » du bas recouvre « DOCUMENT DE PILOTAGE ». **Même bug de `\n` littéral sur la quatrième de couverture** (`back_cover`), dont la correction est proposée au propriétaire.
+- Couverture : titre en dur, `\n` littéraux, filet sur le titre et chevauchement du bloc Z sont corrigés à l'étape 5.
 - `studio_core/text.py::clean_text` contient des expressions régulières aux antislashs doublés (`r"[ \\t…]"`), héritées de l'ancien code, qui ne font pas ce qu'elles semblent faire. Comportement conservé pour l'instant : à signaler à l'étape 7.
 - `studio_core/parser.py::filter_manuscript_content` contient des marqueurs propres au livre privé (« Avertissement légal », « TOOLKIT BONUS… »). À signaler à l'étape 7.
 - `check.py` avertit quand il y a moins de 10 chapitres : ce seuil est propre au livre privé.
 
-## Prochaine étape : 5 (couverture)
+## Prochaine étape : 6 (polices embarquées)
 
-1. Dans `studio_core/pdf_book.py::cover()` : prendre le titre depuis `BOOK_TITLE` (`book_title` de la config), remplacer les `\\n` littéraux par de vrais retours à la ligne (`cover` et `back_cover`), placer le filet au-dessus du titre sans le chevaucher, et éviter que le bloc Z ne recouvre le micro-texte.
-2. Générer la page 1 avant/après en PNG (`pdftoppm -r 80 -f 1 -l 1 -png …`) et **la montrer au propriétaire. Attendre son accord.**
-3. Commit du code, puis commit dédié de la référence (`python -m tests.snapshot --update`).
+1. Télécharger les fichiers .ttf officiels sous licence OFL : Inter (Regular, Bold, Black), IBM Plex Mono (Regular) et Source Serif 4 (Italic), avec leurs fichiers de licence (`OFL.txt`), dans `studio_core/fonts/`. Les noms attendus par `setup_fonts()` dans `studio_core/pdf_book.py` sont `Inter-Regular.ttf`, `Inter-Bold.ttf`, `Inter-Black.ttf`, `IBMPlexMono-Regular.ttf` et `SourceSerif4-Italic.ttf`. Les visuels (`studio_core/visuals.py`) cherchent aussi `Inter-Regular.ttf` / `Inter-Bold.ttf` dans ce dossier.
+2. Supprimer le fallback Helvetica/Courier/Times et son avertissement. Une police manquante doit devenir une erreur claire.
+3. Le changement de polices modifie les métriques, donc éventuellement le nombre de pages. Faire un avant/après PNG de plusieurs pages (couverture, sommaire, une page de chapitre), **le montrer au propriétaire et attendre son accord**, puis commit du code et commit dédié de la référence.
 
 ## Questions en attente de décision
 
