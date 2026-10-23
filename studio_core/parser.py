@@ -14,7 +14,7 @@ Transformer un manuscrit Markdown / texte enrichi en structure propre :
 - citations ;
 - callouts.
 
-Ce parser remplace la logique trop rigide intégrée dans generer_livre_manuel_presence.py.
+Seule source de découpage du manuscrit : PDF, teaser, rapports et vérification l'utilisent.
 """
 
 from __future__ import annotations
@@ -22,6 +22,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from typing import List, Literal, Optional
+
+from .text import clean_line
 
 
 BlockType = Literal[
@@ -58,17 +60,6 @@ class Chapter:
 # ============================================================
 # NETTOYAGE
 # ============================================================
-
-def clean_line(line: str) -> str:
-    """Nettoyage léger sans détruire le Markdown utile."""
-    return (
-        line.replace("\u00a0", " ")
-        .replace("“", '"')
-        .replace("”", '"')
-        .replace("…", "...")
-        .rstrip()
-    )
-
 
 def clean_markdown_noise(text: str) -> str:
     """Nettoie les artefacts fréquents sans casser les balises utiles."""

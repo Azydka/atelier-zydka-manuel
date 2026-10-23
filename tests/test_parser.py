@@ -1,5 +1,5 @@
-from parser_manuscrit import parse_manuscript
-from rapport_qualite import split_chapters
+from studio_core.parser import parse_manuscript
+from studio_core.report_quality import split_chapters
 
 MANUSCRIPT = """# Titre du livre
 

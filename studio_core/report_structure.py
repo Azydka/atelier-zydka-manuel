@@ -16,13 +16,10 @@ from collections import Counter
 from pathlib import Path
 
 
-from parser_manuscrit import parse_manuscript
+from .parser import parse_manuscript
 
 
-ROOT = Path(__file__).resolve().parent
-INPUT = ROOT / "manuscrit_beatmakers.txt"
-OUTPUT_DIR = ROOT / "exports" / "rapports"
-OUTPUT = OUTPUT_DIR / "rapport_structure.md"
+REPORT_NAME = "rapport_structure.md"
 
 
 def clean_excerpt(text: str, limit: int = 90) -> str:
@@ -196,15 +193,13 @@ def action_plan(rows: list[dict]) -> list[str]:
 
     return actions
 
-def main() -> int:
-    if not INPUT.exists():
-        print(f"ERREUR : fichier introuvable : {INPUT}")
-        return 1
+def build_structure_report(manuscript_text: str, reports_dir: Path) -> Path:
+    """Écrit rapport_structure.md dans reports_dir et renvoie son chemin."""
+    chapters = parse_manuscript(manuscript_text)
 
-    raw = INPUT.read_text(encoding="utf-8")
-    chapters = parse_manuscript(raw)
-
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    reports_dir = Path(reports_dir)
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    output = reports_dir / REPORT_NAME
 
     global_counter = Counter()
     alerts = []
@@ -363,15 +358,6 @@ def main() -> int:
 
         lines.append("")
 
-    OUTPUT.write_text("\n".join(lines), encoding="utf-8")
+    output.write_text("\n".join(lines), encoding="utf-8")
 
-    print(f"Rapport généré : {OUTPUT}")
-    print(f"Chapitres détectés : {len(chapters)}")
-    print(f"Blocs détectés : {total_blocks}")
-    print(f"Score éditorial moyen : {average_score}/100")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    return output

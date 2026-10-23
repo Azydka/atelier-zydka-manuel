@@ -5,22 +5,18 @@ Vérificateur de manuscrit — Manuscript Studio by Atelier Zydka
 Objectif :
 Détecter les erreurs éditoriales courantes avant génération PDF.
 
-Usage :
-python3 verifier_manuscrit.py
-python3 verifier_manuscrit.py manuscrit_beatmakers.txt
+Points d'entrée : check_manuscript(texte, dossier_images) et format_report(...).
+(ou : python make.py check)
 """
 
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
 from dataclasses import dataclass
 from typing import List
 
-
-DEFAULT_MANUSCRIPT = "manuscrit_beatmakers.txt"
-IMAGES_DIR = Path("images")
+from .parser import parse_manuscript
 
 KNOWN_TAGS = [
     "[IMAGE:",
@@ -37,12 +33,6 @@ class Issue:
     line: int
     message: str
     content: str = ""
-
-
-def read_file(path: Path) -> str:
-    if not path.exists():
-        raise FileNotFoundError(f"Fichier introuvable : {path}")
-    return path.read_text(encoding="utf-8")
 
 
 def is_markdown_table_line(line: str) -> bool:
@@ -71,14 +61,10 @@ def extract_image_name(tag_line: str) -> str | None:
 
 
 def detect_chapters(raw: str) -> List[str]:
-    try:
-        from parser_manuscrit import parse_manuscript
-        return [chapter.title for chapter in parse_manuscript(raw)]
-    except Exception:
-        return []
+    return [chapter.title for chapter in parse_manuscript(raw)]
 
 
-def check_manuscript(raw: str) -> List[Issue]:
+def check_manuscript(raw: str, images_dir: Path) -> List[Issue]:
     issues: List[Issue] = []
     lines = raw.splitlines()
 
@@ -113,7 +99,7 @@ def check_manuscript(raw: str) -> List[Issue]:
             if not image_name:
                 issues.append(Issue("ERROR", idx, "Balise image illisible.", line))
             else:
-                image_path = IMAGES_DIR / image_name
+                image_path = Path(images_dir) / image_name
                 if not image_path.exists():
                     issues.append(Issue("ERROR", idx, f"Image introuvable : {image_path}", line))
 
@@ -145,55 +131,44 @@ def check_manuscript(raw: str) -> List[Issue]:
     return issues
 
 
-def print_report(path: Path, issues: List[Issue], raw: str) -> int:
-    chapters = detect_chapters(raw)
+def has_errors(issues: List[Issue]) -> bool:
+    return any(issue.level == "ERROR" for issue in issues)
 
-    print("")
-    print("=== Vérification manuscrit — Atelier Zydka ===")
-    print(f"Fichier : {path}")
-    print(f"Chapitres détectés : {len(chapters)}")
+
+def format_report(path: Path, issues: List[Issue], raw: str) -> str:
+    """Rapport de vérification lisible (texte brut)."""
+    chapters = detect_chapters(raw)
+    lines: List[str] = [
+        "",
+        "=== Vérification manuscrit — Atelier Zydka ===",
+        f"Fichier : {path}",
+        f"Chapitres détectés : {len(chapters)}",
+    ]
 
     if chapters:
-        print("")
-        print("Chapitres :")
-        for i, title in enumerate(chapters, start=1):
-            print(f"  {i:02d}. {title}")
+        lines += ["", "Chapitres :"]
+        lines += [f"  {i:02d}. {title}" for i, title in enumerate(chapters, start=1)]
 
-    print("")
+    lines.append("")
     if not issues:
-        print("OK — Aucun problème bloquant détecté.")
-        return 0
+        lines.append("OK — Aucun problème bloquant détecté.")
+        return "\n".join(lines)
 
     errors = [i for i in issues if i.level == "ERROR"]
     warnings = [i for i in issues if i.level == "WARN"]
 
-    print(f"Problèmes détectés : {len(issues)}")
-    print(f"Erreurs : {len(errors)}")
-    print(f"Avertissements : {len(warnings)}")
-    print("")
+    lines += [
+        f"Problèmes détectés : {len(issues)}",
+        f"Erreurs : {len(errors)}",
+        f"Avertissements : {len(warnings)}",
+        "",
+    ]
 
     for issue in issues:
         location = f"ligne {issue.line}" if issue.line else "global"
-        print(f"[{issue.level}] {location} — {issue.message}")
+        lines.append(f"[{issue.level}] {location} — {issue.message}")
         if issue.content:
-            print(f"  > {issue.content[:160]}")
-        print("")
+            lines.append(f"  > {issue.content[:160]}")
+        lines.append("")
 
-    return 1 if errors else 0
-
-
-def main() -> int:
-    manuscript_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(DEFAULT_MANUSCRIPT)
-
-    try:
-        raw = read_file(manuscript_path)
-    except Exception as exc:
-        print(f"ERREUR : {exc}")
-        return 1
-
-    issues = check_manuscript(raw)
-    return print_report(manuscript_path, issues, raw)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    return "\n".join(lines)

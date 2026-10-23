@@ -23,15 +23,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from parser_manuscrit import parse_manuscript
+from .parser import parse_manuscript
+from .text import squash_spaces
 
 
-ROOT = Path(__file__).resolve().parent
-
-MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
-OUTPUT_DIR = ROOT / "exports" / "rapports"
-OUTPUT_PATH = OUTPUT_DIR / "rapport_qualite.md"
-SCORE_PATH = OUTPUT_DIR / "score_qualite.json"
+REPORT_NAME = "rapport_qualite.md"
+SCORE_NAME = "score_qualite.json"
 
 
 INTERNAL_NOTE_PATTERNS = [
@@ -80,17 +77,6 @@ class Chapter:
         return extract_status(self.text)
 
 
-def read_manuscript() -> str:
-    if not MANUSCRIPT_PATH.exists():
-        raise FileNotFoundError(f"Manuscrit introuvable : {MANUSCRIPT_PATH}")
-
-    return MANUSCRIPT_PATH.read_text(encoding="utf-8")
-
-
-def clean_line(line: str) -> str:
-    return re.sub(r"\s+", " ", line.strip())
-
-
 def count_words(text: str) -> int:
     words = re.findall(r"\b[\wÀ-ÿ'-]+\b", text, flags=re.UNICODE)
     return len(words)
@@ -105,7 +91,7 @@ def extract_status(text: str) -> str:
     for pattern in STATUS_PATTERNS:
         match = re.search(pattern, text, flags=re.IGNORECASE | re.DOTALL)
         if match:
-            return clean_line(match.group(1))
+            return squash_spaces(match.group(1))
 
     return "non renseigné"
 
@@ -120,7 +106,7 @@ def detect_internal_notes(text: str) -> list[str]:
             if isinstance(match, tuple):
                 match = " ".join(match)
 
-            note = clean_line(str(match))
+            note = squash_spaces(str(match))
             if note:
                 notes.append(note[:180])
 
@@ -141,7 +127,7 @@ def split_chapters(text: str) -> list[Chapter]:
         ]
 
     return [
-        Chapter(title=clean_line(chapter.title), level=1, content=chapter.source_lines)
+        Chapter(title=squash_spaces(chapter.title), level=1, content=chapter.source_lines)
         for chapter in parsed
     ]
 
@@ -251,8 +237,7 @@ def build_recommendations(
     return recommendations
 
 
-def build_quality_data() -> dict:
-    text = read_manuscript()
+def build_quality_data(text: str) -> dict:
     chapters = split_chapters(text)
 
     total_words = count_words(text)
@@ -316,8 +301,7 @@ def build_quality_data() -> dict:
     }
 
 
-def generate_report() -> str:
-    text = read_manuscript()
+def generate_report(text: str) -> str:
     chapters = split_chapters(text)
 
     total_words = count_words(text)
@@ -449,23 +433,18 @@ def generate_report() -> str:
     return "\n".join(lines) + "\n"
 
 
-def main() -> int:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def build_quality_report(manuscript_text: str, reports_dir: Path) -> tuple[Path, Path]:
+    """Écrit rapport_qualite.md et score_qualite.json, renvoie leurs chemins."""
+    reports_dir = Path(reports_dir)
+    reports_dir.mkdir(parents=True, exist_ok=True)
 
-    report = generate_report()
-    OUTPUT_PATH.write_text(report, encoding="utf-8")
+    report_path = reports_dir / REPORT_NAME
+    score_path = reports_dir / SCORE_NAME
 
-    quality_data = build_quality_data()
-    SCORE_PATH.write_text(
-        json.dumps(quality_data, indent=2, ensure_ascii=False),
+    report_path.write_text(generate_report(manuscript_text), encoding="utf-8")
+    score_path.write_text(
+        json.dumps(build_quality_data(manuscript_text), indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
-    print(f"Rapport qualité généré : {OUTPUT_PATH}")
-    print(f"Score qualité généré : {SCORE_PATH}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    return report_path, score_path

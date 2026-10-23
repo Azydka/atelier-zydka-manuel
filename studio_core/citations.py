@@ -15,8 +15,6 @@ from __future__ import annotations
 from pathlib import Path
 
 
-OUTPUT_DIR = Path("exports/reseaux/citations")
-OUTPUT_FILE = OUTPUT_DIR / "citations_extraites.md"
 
 
 CITATIONS = [
@@ -43,8 +41,10 @@ CITATIONS = [
 ]
 
 
-def write_output() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def build_citations(output_file: Path) -> Path:
+    """Écrit le fichier Markdown des citations marketing et renvoie son chemin."""
+    output_file = Path(output_file)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     lines = [
         "# Citations extraites — Manuscript Studio by Atelier Zydka",
@@ -63,17 +63,6 @@ def write_output() -> None:
         lines.append(f"> {citation}")
         lines.append("")
 
-    OUTPUT_FILE.write_text("\n".join(lines), encoding="utf-8")
+    output_file.write_text("\n".join(lines), encoding="utf-8")
 
-
-def main() -> int:
-    write_output()
-
-    print(f"Exports marketing générés : {OUTPUT_FILE}")
-    print(f"Citations extraites : {len(CITATIONS)}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    return output_file

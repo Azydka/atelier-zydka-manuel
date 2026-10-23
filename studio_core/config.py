@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Utilitaires de configuration — Manuscript Studio by Atelier Zydka
+Configuration d'un projet — Manuscript Studio by Atelier Zydka
 
-Ce module centralise la lecture de config.json pour éviter de dupliquer
-la logique dans chaque script.
+Une seule fonction de lecture : load_config(path). Les valeurs absentes
+de config.json sont complétées par DEFAULT_CONFIG (fusion récursive).
 """
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 from typing import Any
 
-
-ROOT = Path(__file__).resolve().parent
-CONFIG_PATH = ROOT / "config.json"
+from .errors import ConfigError
 
 
 DEFAULT_CONFIG: dict[str, Any] = {
@@ -35,12 +34,23 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "text": "#F4F1EB",
         "accent": "#C79A3B",
         "muted": "#96928A"
-    }
+    },
+    # Pages optionnelles du PDF principal.
+    "features": {
+        "include_cover": True,
+        "include_back_cover": True,
+        "include_annex_page": False,
+        "include_demo_pages": False,
+        "include_fixed_intro_pages": False,
+        "include_visual_opening_pages": False,
+        "include_table_of_contents": True,
+        "strict_missing_images": False,
+    },
 }
 
 
 def deep_merge(default: dict[str, Any], custom: dict[str, Any]) -> dict[str, Any]:
-    result = default.copy()
+    result = copy.deepcopy(default)
 
     for key, value in custom.items():
         if (
@@ -55,21 +65,19 @@ def deep_merge(default: dict[str, Any], custom: dict[str, Any]) -> dict[str, Any
     return result
 
 
-def load_config() -> dict[str, Any]:
-    if not CONFIG_PATH.exists():
-        return DEFAULT_CONFIG.copy()
+def load_config(path: Path | str | None) -> dict[str, Any]:
+    """Lit config.json et le complète avec les valeurs par défaut."""
+    if path is None or not Path(path).exists():
+        return copy.deepcopy(DEFAULT_CONFIG)
+
+    path = Path(path)
 
     try:
-        custom_config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        custom_config = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as error:
-        raise SystemExit(f"Erreur dans config.json : {error}") from error
+        raise ConfigError(f"Erreur dans {path.name} : {error}") from error
 
     if not isinstance(custom_config, dict):
-        raise SystemExit("Erreur : config.json doit contenir un objet JSON.")
+        raise ConfigError(f"Erreur : {path.name} doit contenir un objet JSON.")
 
     return deep_merge(DEFAULT_CONFIG, custom_config)
-
-
-def get_config_value(key: str, default: Any = None) -> Any:
-    config = load_config()
-    return config.get(key, default)

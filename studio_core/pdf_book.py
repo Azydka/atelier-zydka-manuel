@@ -18,22 +18,14 @@ Installation
 ------------
 pip install reportlab
 
-Utilisation recommandée
------------------------
-1. Place ce script dans un dossier.
-2. Crée un fichier texte : manuscrit_beatmakers.txt
-3. Colle dedans le texte complet du livre.
-4. Lance :
-
-python generer_livre_manuel_presence.py
-
-Sortie
-------
-manuelsortie/manuel-de-presence-atelier-zydka.pdf
+Utilisation
+-----------
+build_book_pdf(texte_du_manuscrit, config, chemin_pdf, dossier_images)
+(ou : python make.py pdf)
 
 Polices
 -------
-Place les fichiers suivants dans ./fonts si tu les as :
+Fichiers attendus dans studio_core/fonts :
 - Inter-Regular.ttf
 - Inter-Bold.ttf
 - Inter-Black.ttf
@@ -56,84 +48,43 @@ ce script est la source propre.
 from __future__ import annotations
 
 import os
-import json
 import re
-import textwrap
 from dataclasses import dataclass
-from typing import List, Dict, Tuple, Optional
+from typing import List, Optional
 
-from reportlab.lib import colors
 from reportlab.lib.colors import HexColor, Color
 from reportlab.lib.units import mm
 from reportlab.lib.utils import simpleSplit
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
-from config_utils import load_config as load_project_config
+import logging
+from pathlib import Path
 
-# ============================================================
-# CONFIGURATION JSON
-# ============================================================
+from .config import DEFAULT_CONFIG
+from .parser import parse_manuscript, blocks_to_legacy_paragraphs
+from .text import clean_text
+from .workspace import FONTS_DIR
 
-CONFIG_PATH = "config.json"
-
-
-def load_config(path: str = CONFIG_PATH) -> dict:
-    default = {
-        "features": {
-            "include_cover": True,
-            "include_back_cover": True,
-            "include_annex_page": False,
-            "include_demo_pages": False,
-            "include_fixed_intro_pages": False,
-            "include_visual_opening_pages": False,
-            "include_table_of_contents": True,
-            "strict_missing_images": False,
-        }
-    }
-
-    if not os.path.exists(path):
-        return default
-
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        data.setdefault("features", {})
-        for key, value in default["features"].items():
-            data["features"].setdefault(key, value)
-
-        return data
-
-    except Exception as exc:
-        print(f"[WARN] config.json illisible, configuration par défaut utilisée : {exc}")
-        return default
-
-
-CONFIG = load_config()
-FEATURES = CONFIG.get("features", {})
-
-PROJECT_CONFIG = load_project_config()
-PROJECT_TITLE = PROJECT_CONFIG.get("project_title", "Manuscript Studio by Atelier Zydka")
-BOOK_TITLE = PROJECT_CONFIG.get("book_title", "Manuscrit de démonstration")
-BOOK_SUBTITLE = PROJECT_CONFIG.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet")
-AUTHOR_NAME = PROJECT_CONFIG.get("author_name", "Atelier Zydka")
-BRAND_NAME = PROJECT_CONFIG.get("brand_name", "Atelier Zydka")
-BASELINE = PROJECT_CONFIG.get("baseline", "Culture · méthode · indépendance")
-YEAR = PROJECT_CONFIG.get("year", "2026")
-THEME = PROJECT_CONFIG.get("theme", {})
-OUTPUT_PDF_NAME = PROJECT_CONFIG.get("output_pdf_name", "manuel-de-presence-atelier-zydka.pdf")
-
-
+log = logging.getLogger(__name__)
 
 
 # ============================================================
-# PARAMÈTRES FICHIERS
+# CONFIGURATION DU RENDU
 # ============================================================
+# Ces valeurs sont redéfinies par _apply_config() au début de chaque
+# build_book_pdf() : rien n'est lu sur disque à l'import du module.
+# Conséquence : deux PDF ne peuvent pas être générés en parallèle dans
+# le même processus.
 
-INPUT_MANUSCRIPT = "manuscrit_beatmakers.txt"
-OUTPUT_DIR = "manuelsortie"
-OUTPUT_PDF = os.path.join(OUTPUT_DIR, OUTPUT_PDF_NAME)
+FEATURES: dict = dict(DEFAULT_CONFIG["features"])
+PROJECT_TITLE = DEFAULT_CONFIG["project_title"]
+BOOK_TITLE = DEFAULT_CONFIG["book_title"]
+BOOK_SUBTITLE = DEFAULT_CONFIG["book_subtitle"]
+AUTHOR_NAME = DEFAULT_CONFIG["author_name"]
+BRAND_NAME = DEFAULT_CONFIG["brand_name"]
+BASELINE = DEFAULT_CONFIG["baseline"]
+YEAR = DEFAULT_CONFIG["year"]
 IMAGES_DIR = "images"
 
 
@@ -158,14 +109,39 @@ NOTE_X = M_LEFT + MAIN_COL + COL_GAP
 CONTENT_TOP = 18 * mm
 CONTENT_BOTTOM = 194 * mm
 
-CARBON = HexColor(THEME.get("background", "#0B0B0A"))
-PAPER = HexColor(THEME.get("text", "#F6F6F4"))
+# Couleurs pilotées par config.json (theme) : voir _apply_config().
+CARBON = HexColor("#0B0B0A")
+PAPER = HexColor("#F6F6F4")
+SIGNATURE = HexColor("#D8C9AE")
+SOFT = HexColor("#8A8A88")
+
+# Couleurs fixes du gabarit.
 GRAPHITE = HexColor("#3A3A38")
 STEEL = HexColor("#2A353F")
-SIGNATURE = HexColor(THEME.get("accent", "#D8C9AE"))
-SOFT = HexColor(THEME.get("muted", "#8A8A88"))
 LINE = HexColor("#B9B9B5")
 TABLE_ALT = HexColor("#EFEFEB")
+
+
+def _apply_config(config: dict, images_dir: Path) -> None:
+    """Applique la configuration du projet aux valeurs de rendu du module."""
+    global FEATURES, PROJECT_TITLE, BOOK_TITLE, BOOK_SUBTITLE, AUTHOR_NAME, BRAND_NAME
+    global BASELINE, YEAR, IMAGES_DIR, CARBON, PAPER, SIGNATURE, SOFT
+
+    FEATURES = {**DEFAULT_CONFIG["features"], **config.get("features", {})}
+    PROJECT_TITLE = config.get("project_title", DEFAULT_CONFIG["project_title"])
+    BOOK_TITLE = config.get("book_title", DEFAULT_CONFIG["book_title"])
+    BOOK_SUBTITLE = config.get("book_subtitle", DEFAULT_CONFIG["book_subtitle"])
+    AUTHOR_NAME = config.get("author_name", DEFAULT_CONFIG["author_name"])
+    BRAND_NAME = config.get("brand_name", DEFAULT_CONFIG["brand_name"])
+    BASELINE = config.get("baseline", DEFAULT_CONFIG["baseline"])
+    YEAR = config.get("year", DEFAULT_CONFIG["year"])
+    IMAGES_DIR = str(images_dir)
+
+    theme = config.get("theme", {})
+    CARBON = HexColor(theme.get("background", "#0B0B0A"))
+    PAPER = HexColor(theme.get("text", "#F6F6F4"))
+    SIGNATURE = HexColor(theme.get("accent", "#D8C9AE"))
+    SOFT = HexColor(theme.get("muted", "#8A8A88"))
 
 
 # ============================================================
@@ -189,8 +165,7 @@ def register_font(name: str, path: str) -> bool:
     return False
 
 
-def setup_fonts() -> FontSet:
-    font_dir = "fonts"
+def setup_fonts(font_dir: Path = FONTS_DIR) -> FontSet:
     ok = {
         "inter": register_font("Inter", os.path.join(font_dir, "Inter-Regular.ttf")),
         "inter_bold": register_font("Inter-Bold", os.path.join(font_dir, "Inter-Bold.ttf")),
@@ -208,7 +183,7 @@ def setup_fonts() -> FontSet:
     )
 
 
-FONTS = setup_fonts()
+FONTS = setup_fonts()  # redéfini par build_book_pdf()
 
 
 # ============================================================
@@ -220,36 +195,8 @@ def ty(y_from_top: float) -> float:
     return PAGE_H - y_from_top
 
 
-def clean_text(s: str) -> str:
-    """
-    Nettoyage éditorial centralisé avant rendu PDF.
-    Supprime les artefacts Markdown et corrige les petites coquilles
-    qui ne doivent jamais apparaître dans le PDF final.
-    """
-    if s is None:
-        return ""
-
-    s = str(s)
-
-    # Nettoyage Markdown courant
-    s = s.replace("**", "")
-    s = s.replace("__", "")
-    s = s.replace("[[TABLE_BLOCK]]", "")
-
-    # Coquille Annexe D
-    s = s.replace("positions juridiques ont évolu", "positions juridiques ont évolué")
-
-    # Sécurité : lignes parasites composées uniquement de #
-    if re.fullmatch(r"[ \\t\\u00a0]*#+[ \\t\\u00a0]*", s):
-        return ""
-
-    # Sécurité : # collé après la phrase finale
-    s = re.sub(r"(Commencez par là\\.)\\s*#+\\s*", r"\\1", s)
-
-    return s.strip()
-
-def draw_bg(c: canvas.Canvas, color=PAPER):
-    c.setFillColor(color)
+def draw_bg(c: canvas.Canvas, color=None):
+    c.setFillColor(PAPER if color is None else color)
     c.rect(0, 0, PAGE_W, PAGE_H, stroke=0, fill=1)
 
 
@@ -292,15 +239,18 @@ def draw_text(
     return y_top + len(lines) * leading
 
 
-def draw_h1(c, text, x, y_top, w, color=PAPER, size=43):
+def draw_h1(c, text, x, y_top, w, color=None, size=43):
+    color = PAPER if color is None else color
     return draw_text(c, text, x, y_top, w, FONTS.inter_black, size, size * 0.88, color, uppercase=True)
 
 
-def draw_h2(c, text, x, y_top, w, color=CARBON, size=32):
+def draw_h2(c, text, x, y_top, w, color=None, size=32):
+    color = CARBON if color is None else color
     return draw_text(c, text, x, y_top, w, FONTS.inter_black, size, size * 0.94, color, uppercase=True)
 
 
-def draw_h3(c, text, x, y_top, w, color=CARBON, size=13):
+def draw_h3(c, text, x, y_top, w, color=None, size=13):
+    color = CARBON if color is None else color
     return draw_text(c, text, x, y_top, w, FONTS.inter_black, size, size * 1.0, color, uppercase=True)
 
 
@@ -398,14 +348,6 @@ Le beatmaking est une discipline riche qui demande créativité, méthode et rig
 """.strip()
 
 
-def load_manuscript() -> str:
-    if os.path.exists(INPUT_MANUSCRIPT):
-        with open(INPUT_MANUSCRIPT, "r", encoding="utf-8") as f:
-            return f.read()
-    return default_manuscript()
-
-
-
 def is_markdown_table_line(line: str) -> bool:
     """Détecte une ligne de tableau Markdown."""
     stripped = line.strip()
@@ -428,33 +370,15 @@ def parse_markdown_table_row(line: str) -> List[str]:
 
 
 def parse_chapters(raw: str) -> List[Chapter]:
-    """
-    Parser intelligent externalisé.
-
-    Accepte :
-    - # Chapitre
-    - ## Section
-    - 1. Introduction
-    - 1.1 Sous-section
-    - Chapitre 1 : Titre
-    - ANNEXE 1
-    - Conclusion
-    - tableaux Markdown
-    - [IMAGE: fichier | légende]
-    - [QUOTE: texte]
-    - [CALLOUT: titre | texte]
-    """
-    from parser_manuscrit import parse_manuscript, blocks_to_legacy_paragraphs
-
-    parsed = parse_manuscript(raw)
-
+    """Découpage par le parser commun (studio_core.parser), converti au format du rendu."""
     return [
         Chapter(
             title=chapter.title,
             paragraphs=blocks_to_legacy_paragraphs(chapter),
         )
-        for chapter in parsed
+        for chapter in parse_manuscript(raw)
     ]
+
 
 def table_rows_from_block(block: str) -> List[List[str]]:
     """
@@ -1435,12 +1359,31 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
 # GÉNÉRATION PRINCIPALE
 # ============================================================
 
-def generate():
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    raw = load_manuscript()
-    chapters = parse_chapters(raw)
+def build_book_pdf(
+    manuscript_text: Optional[str],
+    config: dict,
+    output_path: Path,
+    images_dir: Path,
+    fonts_dir: Path = FONTS_DIR,
+) -> Path:
+    """
+    Génère le PDF principal et renvoie son chemin.
+    manuscript_text=None : utilise l'extrait de démonstration intégré.
+    """
+    global FONTS
 
-    c = canvas.Canvas(OUTPUT_PDF, pagesize=PAGE_SIZE, pageCompression=0)
+    _apply_config(config, images_dir)
+    FONTS = setup_fonts(fonts_dir)
+
+    if manuscript_text is None:
+        log.warning("Aucun manuscrit trouvé. Le PDF utilise un extrait de démonstration intégré.")
+        manuscript_text = default_manuscript()
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    chapters = parse_chapters(manuscript_text)
+
+    c = canvas.Canvas(str(output_path), pagesize=PAGE_SIZE, pageCompression=0)
     c.setTitle(f"{BOOK_TITLE} — {BRAND_NAME}")
     c.setAuthor(AUTHOR_NAME)
     c.setSubject(BOOK_SUBTITLE)
@@ -1497,14 +1440,7 @@ def generate():
 
     c.save()
 
-    print("PDF généré :", OUTPUT_PDF)
-    print("Nombre de chapitres détectés :", len(chapters))
     if FONTS.using_fallbacks:
-        print("Attention : polices fallback utilisées. Ajoute les .ttf dans ./fonts pour le rendu final fidèle.")
-    if not os.path.exists(INPUT_MANUSCRIPT):
-        print("Attention : aucun manuscrit_beatmakers.txt trouvé. Le PDF utilise un extrait de démonstration intégré.")
+        log.warning("Polices fallback utilisées. Ajoute les .ttf dans studio_core/fonts pour le rendu final fidèle.")
 
-
-if __name__ == "__main__":
-    generate()
-
+    return output_path

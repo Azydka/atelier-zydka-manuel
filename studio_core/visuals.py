@@ -2,7 +2,7 @@
 """
 Générateur de visuels réseaux — Manuscript Studio by Atelier Zydka
 
-Version V2.2 :
+Point d'entrée : build_visuals(fichier_citations, dossier_sortie, config).
 - lit la marque depuis config.json ;
 - lit la baseline depuis config.json ;
 - lit les couleurs depuis config.json ;
@@ -11,24 +11,16 @@ Version V2.2 :
 
 from __future__ import annotations
 
-import re
+from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
-from config_utils import load_config
+from .errors import StudioError
+from .text import clean_quote
+from .workspace import FONTS_DIR
 
-
-CONFIG = load_config()
-
-INPUT_FILE = Path("exports/reseaux/citations/citations_extraites.md")
-OUTPUT_DIR = Path("exports/reseaux/cartes")
 
 MAX_CITATIONS = 12
-
-BRAND_NAME = CONFIG.get("brand_name", "Atelier Zydka").upper()
-BASELINE = CONFIG.get("baseline", "Culture · méthode · indépendance")
-BOOK_TITLE = CONFIG.get("book_title", "Manuscrit de démonstration").upper()
-THEME = CONFIG.get("theme", {})
 
 
 def hex_to_rgb(value: str, fallback: tuple[int, int, int]) -> tuple[int, int, int]:
@@ -46,13 +38,28 @@ def hex_to_rgb(value: str, fallback: tuple[int, int, int]) -> tuple[int, int, in
         return fallback
 
 
-COLORS = {
-    "background": hex_to_rgb(THEME.get("background", "#090909"), (9, 9, 9)),
-    "text": hex_to_rgb(THEME.get("text", "#F4F1EB"), (244, 241, 235)),
-    "muted": hex_to_rgb(THEME.get("muted", "#96928A"), (150, 146, 138)),
-    "accent": hex_to_rgb(THEME.get("accent", "#C79A3B"), (199, 154, 59)),
-    "line": (55, 55, 55),
-}
+@dataclass(frozen=True)
+class VisualStyle:
+    brand_name: str
+    baseline: str
+    book_title: str
+    colors: dict
+
+    @classmethod
+    def from_config(cls, config: dict) -> "VisualStyle":
+        theme = config.get("theme", {})
+        return cls(
+            brand_name=config.get("brand_name", "Atelier Zydka").upper(),
+            baseline=config.get("baseline", "Culture · méthode · indépendance"),
+            book_title=config.get("book_title", "Manuscrit de démonstration").upper(),
+            colors={
+                "background": hex_to_rgb(theme.get("background", "#090909"), (9, 9, 9)),
+                "text": hex_to_rgb(theme.get("text", "#F4F1EB"), (244, 241, 235)),
+                "muted": hex_to_rgb(theme.get("muted", "#96928A"), (150, 146, 138)),
+                "accent": hex_to_rgb(theme.get("accent", "#C79A3B"), (199, 154, 59)),
+                "line": (55, 55, 55),
+            },
+        )
 
 
 FORMATS = {
@@ -90,16 +97,16 @@ def find_font(candidates: list[str], size: int):
 
 def get_fonts(size_quote: int, size_meta: int, size_brand: int):
     regular_candidates = [
-        "fonts/Inter-Regular.ttf",
-        "fonts/Helvetica.ttf",
+        str(FONTS_DIR / "Inter-Regular.ttf"),
+        str(FONTS_DIR / "Helvetica.ttf"),
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/System/Library/Fonts/Supplemental/Helvetica.ttf",
         "/Library/Fonts/Arial.ttf",
     ]
 
     bold_candidates = [
-        "fonts/Inter-Bold.ttf",
-        "fonts/Helvetica-Bold.ttf",
+        str(FONTS_DIR / "Inter-Bold.ttf"),
+        str(FONTS_DIR / "Helvetica-Bold.ttf"),
         "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
         "/System/Library/Fonts/Supplemental/Helvetica Bold.ttf",
         "/Library/Fonts/Arial Bold.ttf",
@@ -112,13 +119,6 @@ def get_fonts(size_quote: int, size_meta: int, size_brand: int):
     return quote_font, meta_font, brand_font
 
 
-def clean_text(text: str) -> str:
-    text = text.replace("“", "«")
-    text = text.replace("”", "»")
-    text = text.strip()
-    return re.sub(r"\s+", " ", text)
-
-
 def extract_citations(markdown: str) -> list[str]:
     citations: list[str] = []
 
@@ -128,7 +128,7 @@ def extract_citations(markdown: str) -> list[str]:
         if not line.startswith(">"):
             continue
 
-        citation = clean_text(line.lstrip(">").strip())
+        citation = clean_quote(line.lstrip(">").strip())
 
         if citation:
             citations.append(citation)
@@ -183,34 +183,34 @@ def fit_quote(draw, quote: str, max_width: int, max_height: int, base_size: int,
     return quote_font, lines, line_gap
 
 
-def draw_background(draw: ImageDraw.ImageDraw, width: int, height: int) -> None:
-    draw.rectangle((0, 0, width, height), fill=COLORS["background"])
+def draw_background(draw: ImageDraw.ImageDraw, style: VisualStyle, width: int, height: int) -> None:
+    draw.rectangle((0, 0, width, height), fill=style.colors["background"])
 
     draw.rectangle(
         (54, 54, width - 54, height - 54),
-        outline=COLORS["line"],
+        outline=style.colors["line"],
         width=2,
     )
 
     draw.rectangle(
         (84, 84, 220, 91),
-        fill=COLORS["accent"],
+        fill=style.colors["accent"],
     )
 
-    z_color = tuple(min(255, c + 15) for c in COLORS["background"])
+    z_color = tuple(min(255, c + 15) for c in style.colors["background"])
 
     draw.line((width - 260, 120, width - 120, 120), fill=z_color, width=18)
     draw.line((width - 120, 120, width - 260, 260), fill=z_color, width=18)
     draw.line((width - 260, 260, width - 120, 260), fill=z_color, width=18)
 
 
-def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Image:
+def draw_card(quote: str, index: int, variant: str, settings: dict, style: VisualStyle) -> Image.Image:
     width, height = settings["size"]
 
-    image = Image.new("RGB", (width, height), COLORS["background"])
+    image = Image.new("RGB", (width, height), style.colors["background"])
     draw = ImageDraw.Draw(image)
 
-    draw_background(draw, width, height)
+    draw_background(draw, style, width, height)
 
     _, meta_font, brand_font = get_fonts(
         settings["font_quote"],
@@ -241,7 +241,7 @@ def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Ima
 
     mark_font = find_font(
         [
-            "fonts/Inter-Bold.ttf",
+            str(FONTS_DIR / "Inter-Bold.ttf"),
             "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
             "/Library/Fonts/Arial Bold.ttf",
         ],
@@ -251,7 +251,7 @@ def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Ima
     draw.text(
         (quote_x, quote_y - 105),
         "“",
-        fill=COLORS["accent"],
+        fill=style.colors["accent"],
         font=mark_font,
     )
 
@@ -261,7 +261,7 @@ def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Ima
         draw.text(
             (quote_x, y),
             line,
-            fill=COLORS["text"],
+            fill=style.colors["text"],
             font=quote_font,
         )
         y += text_height(draw, line, quote_font) + line_gap
@@ -270,13 +270,13 @@ def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Ima
 
     draw.rectangle(
         (quote_x, line_y, quote_x + 120, line_y + 4),
-        fill=COLORS["accent"],
+        fill=style.colors["accent"],
     )
 
     draw.text(
         (quote_x, line_y + 30),
-        BOOK_TITLE,
-        fill=COLORS["muted"],
+        style.book_title,
+        fill=style.colors["muted"],
         font=meta_font,
     )
 
@@ -286,36 +286,38 @@ def draw_card(quote: str, index: int, variant: str, settings: dict) -> Image.Ima
     draw.text(
         (width - settings["margin_x"] - number_width, line_y + 30),
         number,
-        fill=COLORS["muted"],
+        fill=style.colors["muted"],
         font=meta_font,
     )
 
-    brand_width = text_width(draw, BRAND_NAME, brand_font)
+    brand_width = text_width(draw, style.brand_name, brand_font)
 
     draw.text(
         ((width - brand_width) / 2, height - 125),
-        BRAND_NAME,
-        fill=COLORS["text"],
+        style.brand_name,
+        fill=style.colors["text"],
         font=brand_font,
     )
 
-    baseline_width = text_width(draw, BASELINE, meta_font)
+    baseline_width = text_width(draw, style.baseline, meta_font)
 
     draw.text(
         ((width - baseline_width) / 2, height - 78),
-        BASELINE,
-        fill=COLORS["muted"],
+        style.baseline,
+        fill=style.colors["muted"],
         font=meta_font,
     )
 
     return image
 
 
-def generate_visuals(citations: list[str]) -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def generate_visuals(citations: list[str], output_dir: Path, style: VisualStyle) -> list[Path]:
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    produced: list[Path] = []
 
     for variant, settings in FORMATS.items():
-        folder = OUTPUT_DIR / settings["folder"]
+        folder = output_dir / settings["folder"]
 
         if folder.exists():
             for old_file in folder.glob("*.png"):
@@ -324,33 +326,22 @@ def generate_visuals(citations: list[str]) -> None:
         folder.mkdir(parents=True, exist_ok=True)
 
         for index, quote in enumerate(citations, start=1):
-            image = draw_card(quote, index, variant, settings)
+            image = draw_card(quote, index, variant, settings, style)
             output = folder / f"citation_{index:02d}_{variant}.png"
             image.save(output, quality=95)
+            produced.append(output)
+
+    return produced
 
 
-def main() -> int:
-    if not INPUT_FILE.exists():
-        print(f"Fichier introuvable : {INPUT_FILE}")
-        return 1
+def build_visuals(citations_file: Path, output_dir: Path, config: dict) -> list[Path]:
+    """Génère les cartes carrées et story à partir du fichier de citations."""
+    citations_file = Path(citations_file)
+    if not citations_file.exists():
+        raise StudioError(f"Fichier de citations introuvable : {citations_file}")
 
-    markdown = INPUT_FILE.read_text(encoding="utf-8")
-    citations = extract_citations(markdown)
-
+    citations = extract_citations(citations_file.read_text(encoding="utf-8"))
     if not citations:
-        print("Aucune citation trouvée.")
-        return 1
+        raise StudioError("Aucune citation trouvée.")
 
-    generate_visuals(citations)
-
-    print(f"Visuels générés dans : {OUTPUT_DIR}")
-    print(f"Citations utilisées : {min(len(citations), MAX_CITATIONS)}")
-    print("Formats : carré + story")
-    print(f"Marque : {BRAND_NAME}")
-    print(f"Baseline : {BASELINE}")
-
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+    return generate_visuals(citations, output_dir, VisualStyle.from_config(config))

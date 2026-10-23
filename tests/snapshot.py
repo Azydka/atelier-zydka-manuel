@@ -87,7 +87,7 @@ def toc_entries(toc_text: str) -> list[str]:
 def parser_chapter_count(workdir: Path) -> int:
     code = (
         "import sys; sys.path.insert(0, '.');"
-        "from parser_manuscrit import parse_manuscript;"
+        "from studio_core.parser import parse_manuscript;"
         "print(len(parse_manuscript(open('manuscrit_beatmakers.txt', encoding='utf-8').read())))"
     )
     out = subprocess.run([sys.executable, "-c", code], cwd=workdir, check=True, capture_output=True, text=True)
