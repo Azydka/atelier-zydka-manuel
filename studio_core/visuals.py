@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
+from .config import normalize_config
 from .errors import StudioError
 from .text import clean_quote
 from .workspace import FONTS_DIR
@@ -47,16 +48,17 @@ class VisualStyle:
 
     @classmethod
     def from_config(cls, config: dict) -> "VisualStyle":
-        theme = config.get("theme", {})
+        config = normalize_config(config)
+        theme = config["theme"]
         return cls(
-            brand_name=config.get("brand_name", "Atelier Zydka").upper(),
-            baseline=config.get("baseline", "Culture · méthode · indépendance"),
-            book_title=config.get("book_title", "Manuscrit de démonstration").upper(),
+            brand_name=config["brand_name"].upper(),
+            baseline=config["baseline"],
+            book_title=config["book_title"].upper(),
             colors={
-                "background": hex_to_rgb(theme.get("background", "#090909"), (9, 9, 9)),
-                "text": hex_to_rgb(theme.get("text", "#F4F1EB"), (244, 241, 235)),
-                "muted": hex_to_rgb(theme.get("muted", "#96928A"), (150, 146, 138)),
-                "accent": hex_to_rgb(theme.get("accent", "#C79A3B"), (199, 154, 59)),
+                "background": hex_to_rgb(theme["background"], (9, 9, 9)),
+                "text": hex_to_rgb(theme["text"], (244, 241, 235)),
+                "muted": hex_to_rgb(theme["muted"], (150, 146, 138)),
+                "accent": hex_to_rgb(theme["accent"], (199, 154, 59)),
                 "line": (55, 55, 55),
             },
         )

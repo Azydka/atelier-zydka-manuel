@@ -23,6 +23,9 @@ log = logging.getLogger(__name__)
 # Racine de l'application (documentation, lanceurs) : en lecture seule.
 APP_ROOT = PACKAGE_DIR.parent
 
+# Fichiers système jamais copiés ni archivés.
+IGNORED_NAMES = (".DS_Store", "__pycache__")
+
 DOCUMENTATION_FILES = [
     "README.md",
     "RELEASE_NOTES.md",
@@ -70,7 +73,7 @@ def assert_no_sensitive_content(path: Path) -> None:
         if not file_path.is_file():
             continue
 
-        if "__pycache__" in file_path.parts:
+        if any(name in file_path.parts for name in IGNORED_NAMES):
             continue
 
         # On évite de lire les binaires lourds, mais on contrôle les noms.
@@ -125,7 +128,7 @@ def copy_dir(src: Path, dest: Path) -> None:
     shutil.copytree(
         src,
         dest,
-        ignore=shutil.ignore_patterns(".DS_Store", "__pycache__"),
+        ignore=shutil.ignore_patterns(*IGNORED_NAMES),
     )
 
     log.debug("Copié : %s → %s", src, dest)
@@ -182,10 +185,7 @@ def build_zip(workspace: Workspace, config: dict) -> Path:
 
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zipf:
         for path in source.rglob("*"):
-            if ".DS_Store" in path.parts:
-                continue
-
-            if "__pycache__" in path.parts:
+            if any(name in path.parts for name in IGNORED_NAMES):
                 continue
 
             if path.is_file():

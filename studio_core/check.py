@@ -16,7 +16,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List
 
-from .parser import parse_manuscript
+from .parser import is_table_line as is_markdown_table_line, parse_manuscript
 
 KNOWN_TAGS = [
     "[IMAGE:",
@@ -33,11 +33,6 @@ class Issue:
     line: int
     message: str
     content: str = ""
-
-
-def is_markdown_table_line(line: str) -> bool:
-    stripped = line.strip()
-    return stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 2
 
 
 def is_table_separator(line: str) -> bool:

@@ -65,6 +65,11 @@ def deep_merge(default: dict[str, Any], custom: dict[str, Any]) -> dict[str, Any
     return result
 
 
+def normalize_config(config: dict[str, Any]) -> dict[str, Any]:
+    """Complète une configuration (éventuellement partielle) avec DEFAULT_CONFIG."""
+    return deep_merge(DEFAULT_CONFIG, config)
+
+
 def load_config(path: Path | str | None) -> dict[str, Any]:
     """Lit config.json et le complète avec les valeurs par défaut."""
     if path is None or not Path(path).exists():
@@ -80,4 +85,4 @@ def load_config(path: Path | str | None) -> dict[str, Any]:
     if not isinstance(custom_config, dict):
         raise ConfigError(f"Erreur : {path.name} doit contenir un objet JSON.")
 
-    return deep_merge(DEFAULT_CONFIG, custom_config)
+    return normalize_config(custom_config)

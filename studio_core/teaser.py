@@ -24,6 +24,7 @@ from reportlab.lib.pagesizes import A5
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
+from .config import normalize_config
 from .parser import parse_manuscript
 from .text import squash_spaces
 
@@ -46,18 +47,19 @@ class TeaserStyle:
 
     @classmethod
     def from_config(cls, config: dict) -> "TeaserStyle":
-        theme = config.get("theme", {})
+        config = normalize_config(config)
+        theme = config["theme"]
         return cls(
-            project_title=config.get("project_title", "Manuscript Studio by Atelier Zydka"),
-            book_title=config.get("book_title", "Manuscrit de démonstration"),
-            book_subtitle=config.get("book_subtitle", "Transformer un manuscrit brut en pack éditorial complet"),
-            author_name=config.get("author_name", "Atelier Zydka"),
-            brand_name=config.get("brand_name", "Atelier Zydka"),
-            year=config.get("year", "2026"),
-            background=HexColor(theme.get("background", "#090909")),
-            text=HexColor(theme.get("text", "#F4F1EB")),
-            accent=HexColor(theme.get("accent", "#C79A3B")),
-            muted=HexColor(theme.get("muted", "#96928A")),
+            project_title=config["project_title"],
+            book_title=config["book_title"],
+            book_subtitle=config["book_subtitle"],
+            author_name=config["author_name"],
+            brand_name=config["brand_name"],
+            year=config["year"],
+            background=HexColor(theme["background"]),
+            text=HexColor(theme["text"]),
+            accent=HexColor(theme["accent"]),
+            muted=HexColor(theme["muted"]),
         )
 
 

@@ -49,6 +49,7 @@ from __future__ import annotations
 
 import os
 import re
+import threading
 from dataclasses import dataclass
 from typing import List, Optional
 
@@ -61,8 +62,8 @@ from reportlab.pdfgen import canvas
 import logging
 from pathlib import Path
 
-from .config import DEFAULT_CONFIG
-from .parser import parse_manuscript, blocks_to_legacy_paragraphs
+from .config import DEFAULT_CONFIG, normalize_config
+from .parser import blocks_to_legacy_paragraphs, is_table_line as is_markdown_table_line, parse_manuscript
 from .text import clean_text
 from .workspace import FONTS_DIR
 
@@ -74,8 +75,8 @@ log = logging.getLogger(__name__)
 # ============================================================
 # Ces valeurs sont redéfinies par _apply_config() au début de chaque
 # build_book_pdf() : rien n'est lu sur disque à l'import du module.
-# Conséquence : deux PDF ne peuvent pas être générés en parallèle dans
-# le même processus.
+# Le rendu reste un état de module : build_book_pdf() est protégé par un
+# verrou pour que deux générations simultanées ne se mélangent pas.
 
 FEATURES: dict = dict(DEFAULT_CONFIG["features"])
 PROJECT_TITLE = DEFAULT_CONFIG["project_title"]
@@ -110,10 +111,10 @@ CONTENT_TOP = 18 * mm
 CONTENT_BOTTOM = 194 * mm
 
 # Couleurs pilotées par config.json (theme) : voir _apply_config().
-CARBON = HexColor("#0B0B0A")
-PAPER = HexColor("#F6F6F4")
-SIGNATURE = HexColor("#D8C9AE")
-SOFT = HexColor("#8A8A88")
+CARBON = HexColor(DEFAULT_CONFIG["theme"]["background"])
+PAPER = HexColor(DEFAULT_CONFIG["theme"]["text"])
+SIGNATURE = HexColor(DEFAULT_CONFIG["theme"]["accent"])
+SOFT = HexColor(DEFAULT_CONFIG["theme"]["muted"])
 
 # Couleurs fixes du gabarit.
 GRAPHITE = HexColor("#3A3A38")
@@ -123,25 +124,25 @@ TABLE_ALT = HexColor("#EFEFEB")
 
 
 def _apply_config(config: dict, images_dir: Path) -> None:
-    """Applique la configuration du projet aux valeurs de rendu du module."""
+    """Applique une configuration normalisée (voir normalize_config) aux valeurs de rendu du module."""
     global FEATURES, PROJECT_TITLE, BOOK_TITLE, BOOK_SUBTITLE, AUTHOR_NAME, BRAND_NAME
     global BASELINE, YEAR, IMAGES_DIR, CARBON, PAPER, SIGNATURE, SOFT
 
-    FEATURES = {**DEFAULT_CONFIG["features"], **config.get("features", {})}
-    PROJECT_TITLE = config.get("project_title", DEFAULT_CONFIG["project_title"])
-    BOOK_TITLE = config.get("book_title", DEFAULT_CONFIG["book_title"])
-    BOOK_SUBTITLE = config.get("book_subtitle", DEFAULT_CONFIG["book_subtitle"])
-    AUTHOR_NAME = config.get("author_name", DEFAULT_CONFIG["author_name"])
-    BRAND_NAME = config.get("brand_name", DEFAULT_CONFIG["brand_name"])
-    BASELINE = config.get("baseline", DEFAULT_CONFIG["baseline"])
-    YEAR = config.get("year", DEFAULT_CONFIG["year"])
+    FEATURES = config["features"]
+    PROJECT_TITLE = config["project_title"]
+    BOOK_TITLE = config["book_title"]
+    BOOK_SUBTITLE = config["book_subtitle"]
+    AUTHOR_NAME = config["author_name"]
+    BRAND_NAME = config["brand_name"]
+    BASELINE = config["baseline"]
+    YEAR = config["year"]
     IMAGES_DIR = str(images_dir)
 
-    theme = config.get("theme", {})
-    CARBON = HexColor(theme.get("background", "#0B0B0A"))
-    PAPER = HexColor(theme.get("text", "#F6F6F4"))
-    SIGNATURE = HexColor(theme.get("accent", "#D8C9AE"))
-    SOFT = HexColor(theme.get("muted", "#8A8A88"))
+    theme = config["theme"]
+    CARBON = HexColor(theme["background"])
+    PAPER = HexColor(theme["text"])
+    SIGNATURE = HexColor(theme["accent"])
+    SOFT = HexColor(theme["muted"])
 
 
 # ============================================================
@@ -183,7 +184,8 @@ def setup_fonts(font_dir: Path = FONTS_DIR) -> FontSet:
     )
 
 
-FONTS = setup_fonts()  # redéfini par build_book_pdf()
+FONTS: Optional[FontSet] = None  # défini par build_book_pdf()
+_RENDER_LOCK = threading.Lock()
 
 
 # ============================================================
@@ -346,12 +348,6 @@ La structure, le sampling, la programmation des rythmes, la mélodie, l’harmon
 Conclusion
 Le beatmaking est une discipline riche qui demande créativité, méthode et rigueur. Le système présenté dans ce livre aide à clarifier, produire, protéger et développer une carrière indépendante.
 """.strip()
-
-
-def is_markdown_table_line(line: str) -> bool:
-    """Détecte une ligne de tableau Markdown."""
-    stripped = line.strip()
-    return stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 2
 
 
 def is_markdown_separator_line(line: str) -> bool:
@@ -1370,6 +1366,11 @@ def build_book_pdf(
     Génère le PDF principal et renvoie son chemin.
     manuscript_text=None : utilise l'extrait de démonstration intégré.
     """
+    with _RENDER_LOCK:
+        return _render_book_pdf(manuscript_text, normalize_config(config), Path(output_path), images_dir, fonts_dir)
+
+
+def _render_book_pdf(manuscript_text, config, output_path, images_dir, fonts_dir) -> Path:
     global FONTS
 
     _apply_config(config, images_dir)
@@ -1379,7 +1380,6 @@ def build_book_pdf(
         log.warning("Aucun manuscrit trouvé. Le PDF utilise un extrait de démonstration intégré.")
         manuscript_text = default_manuscript()
 
-    output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     chapters = parse_chapters(manuscript_text)
 
