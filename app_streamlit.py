@@ -2,14 +2,10 @@
 """
 Interface locale Streamlit — Manuscript Studio by Atelier Zydka
 
-V3.2 :
-- tableau de bord ;
-- édition de config.json ;
-- édition / import de manuscrit ;
-- génération de l'archive ZIP ;
-- téléchargement du ZIP ;
-- consultation des exports ;
-- gestion de projets privés dans private/projets/.
+Interface au-dessus du moteur studio_core. Chaque livre est un projet
+(un dossier) dans la racine des projets (Documents/Manuscript Studio par
+défaut, ou la variable d'environnement MANUSCRIPT_STUDIO_HOME). Le moteur
+lit et écrit uniquement dans le dossier du projet sélectionné.
 
 Lancement :
 python3 -m streamlit run app_streamlit.py
@@ -18,41 +14,42 @@ python3 -m streamlit run app_streamlit.py
 from __future__ import annotations
 
 import json
-import subprocess
-import sys
 from pathlib import Path
 
 import streamlit as st
 
-from project_manager import (
-    create_project,
-    get_project_summary,
-    list_projects,
-    project_path,
-    load_project_to_active_files,
-    read_project_config,
-    read_project_manuscript,
-    save_active_files_to_project,
-    save_project,
-)
-
-from restore_demo import main as restore_public_demo
+import studio_core
+from studio_core.config import OUTPUT_NAME_KEYS, normalize_config
+from studio_core.project import DEMO_SLUG
+from studio_core.report_quality import REPORT_NAME as QUALITY_REPORT_NAME, SCORE_NAME
+from studio_core.report_structure import REPORT_NAME as STRUCTURE_REPORT_NAME
 
 
-ROOT = Path(__file__).resolve().parent
+PROJECTS_ROOT = studio_core.default_projects_root()
 
-CONFIG_PATH = ROOT / "config.json"
-MANUSCRIPT_PATH = ROOT / "manuscrit_beatmakers.txt"
+CONFIG_FIELDS = [
+    ("project_title", "Titre du projet"),
+    ("book_title", "Titre du livre"),
+    ("book_subtitle", "Sous-titre"),
+    ("author_name", "Auteur"),
+    ("brand_name", "Marque"),
+    ("baseline", "Baseline"),
+    ("year", "Année"),
+]
 
-ZIP_PATH = ROOT / "dist" / "atelier-zydka-manuel-release.zip"
-REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_structure.md"
-QUALITY_REPORT_PATH = ROOT / "exports" / "rapports" / "rapport_qualite.md"
-QUALITY_SCORE_PATH = ROOT / "exports" / "rapports" / "score_qualite.json"
-CITATIONS_PATH = ROOT / "exports" / "reseaux" / "citations" / "citations_extraites.md"
+OUTPUT_FIELDS = [
+    ("output_pdf_name", "Nom du PDF principal"),
+    ("teaser_pdf_name", "Nom du teaser PDF"),
+    ("release_name", "Nom du dossier de release"),
+    ("zip_name", "Nom du ZIP"),
+]
 
-PDF_DIR = ROOT / "manuelsortie"
-TEASER_DIR = ROOT / "exports" / "pdf"
-VISUALS_DIR = ROOT / "exports" / "reseaux" / "cartes"
+THEME_FIELDS = [
+    ("background", "Couleur de fond"),
+    ("text", "Couleur du texte"),
+    ("accent", "Couleur accent"),
+    ("muted", "Couleur secondaire"),
+]
 
 
 st.set_page_config(
@@ -63,14 +60,11 @@ st.set_page_config(
 
 
 # ============================================================
-# OUTILS FICHIERS
+# OUTILS
 # ============================================================
 
 def read_text(path: Path, default: str = "") -> str:
-    if not path.exists():
-        return default
-
-    return path.read_text(encoding="utf-8")
+    return path.read_text(encoding="utf-8") if path.exists() else default
 
 
 def write_text(path: Path, content: str) -> None:
@@ -78,149 +72,96 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def load_active_config() -> dict:
-    path = current_config_path()
-
-    if not path.exists():
-        return {}
-
+def read_raw_config(project: studio_core.Project) -> dict:
+    """config.json tel qu'écrit par l'utilisateur (sans les valeurs par défaut)."""
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(read_text(project.config_file, "{}"))
     except json.JSONDecodeError:
         return {}
 
 
-def save_active_config(config: dict) -> None:
-    path = current_config_path()
-    path.write_text(
-        json.dumps(config, indent=2, ensure_ascii=False),
-        encoding="utf-8",
-    )
+def save_config(project: studio_core.Project, config: dict) -> None:
+    write_text(project.config_file, json.dumps(config, indent=2, ensure_ascii=False) + "\n")
 
 
-def run_command(command: list[str]) -> tuple[int, str]:
-    result = subprocess.run(
-        command,
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-    )
-
-    output = ""
-
-    if result.stdout:
-        output += result.stdout
-
-    if result.stderr:
-        output += "\n--- STDERR ---\n"
-        output += result.stderr
-
-    return result.returncode, output
-
-
-def load_quality_score() -> dict | None:
-    if not QUALITY_SCORE_PATH.exists():
+def get_active_project() -> studio_core.Project | None:
+    slug = st.session_state.get("active_project")
+    if not slug:
         return None
+    project = studio_core.Project(PROJECTS_ROOT / slug)
+    return project if project.exists() else None
 
+
+def load_config_or_default(project: studio_core.Project) -> dict:
+    """Config du projet ; si config.json est invalide, affiche l'erreur et utilise les valeurs par défaut."""
     try:
-        return json.loads(QUALITY_SCORE_PATH.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return None
+        return project.load_config()
+    except studio_core.ConfigError as error:
+        st.error(f"config.json invalide ({error}). Corrigez-le dans l’onglet Configuration.")
+        return normalize_config({})
+
+
+def set_active_project(project: studio_core.Project | None) -> None:
+    st.session_state["active_project"] = project.slug if project else None
 
 
 def render_status_card(label: str, path: Path) -> None:
-    exists = path.exists()
-    icon = "✅" if exists else "❌"
+    icon = "✅" if path.exists() else "❌"
     st.write(f"{icon} **{label}**")
-    st.caption(str(path.relative_to(ROOT)))
+    st.caption(str(path))
 
 
-def get_active_project() -> str | None:
-    return st.session_state.get("active_private_project")
+def load_quality_score(project: studio_core.Project) -> dict | None:
+    try:
+        return json.loads(read_text(project.reports_dir / SCORE_NAME, "null"))
+    except json.JSONDecodeError:
+        return None
 
 
-def set_active_project(project_slug: str | None) -> None:
-    st.session_state["active_private_project"] = project_slug
+def run_with_progress(build, project: studio_core.Project) -> dict | None:
+    """Lance une génération studio_core avec une barre de progression."""
+    bar = st.progress(0.0, text="Préparation…")
 
-
-def current_config_path() -> Path:
-    active = get_active_project()
-
-    if active:
-        return project_path(active) / "config.json"
-
-    return CONFIG_PATH
-
-
-def current_manuscript_path() -> Path:
-    active = get_active_project()
-
-    if active:
-        return project_path(active) / "manuscrit.txt"
-
-    return MANUSCRIPT_PATH
-
-
-def read_current_manuscript() -> str:
-    return read_text(current_manuscript_path())
-
-
-def write_current_manuscript(content: str) -> None:
-    write_text(current_manuscript_path(), content)
-
-
-def restore_path(path: Path, original_content: str | None) -> None:
-    if original_content is None:
-        if path.exists():
-            path.unlink()
-        return
-
-    write_text(path, original_content)
-
-
-def run_command_for_current_project(command: list[str]) -> tuple[int, str]:
-    active = get_active_project()
-
-    if not active:
-        return run_command(command)
-
-    original_config = CONFIG_PATH.read_text(encoding="utf-8") if CONFIG_PATH.exists() else None
-    original_manuscript = MANUSCRIPT_PATH.read_text(encoding="utf-8") if MANUSCRIPT_PATH.exists() else None
+    def on_progress(message: str, step: int, total: int) -> None:
+        bar.progress(step / total, text=f"{step}/{total} — {message}")
 
     try:
-        write_text(CONFIG_PATH, read_text(current_config_path()))
-        write_text(MANUSCRIPT_PATH, read_text(current_manuscript_path()))
+        results = build(project, on_progress=on_progress)
+    except studio_core.CheckFailedError as error:
+        st.error("Le check a détecté une erreur bloquante.")
+        st.code(str(error), language="text")
+        return None
+    except studio_core.StudioError as error:
+        st.error(f"Erreur pendant la génération : {error}")
+        return None
 
-        return run_command(command)
-    finally:
-        restore_path(CONFIG_PATH, original_config)
-        restore_path(MANUSCRIPT_PATH, original_manuscript)
+    bar.progress(1.0, text="Terminé")
+    return results
 
 
 # ============================================================
-# HEADER
+# EN-TÊTE
 # ============================================================
 
 st.title("Manuscript Studio by Atelier Zydka")
-st.caption("Interface locale V3.2 — générateur éditorial avec projets privés")
+st.caption(f"Racine des projets : {PROJECTS_ROOT}")
 
-active_project = get_active_project()
+project = get_active_project()
 
-if active_project:
-    st.success(f"Projet privé actif : {active_project}")
+if project:
+    st.success(f"Projet actif : {project.slug} — {project.root}")
 else:
-    st.info("Aucun projet privé chargé. Le moteur utilise les fichiers actifs du dépôt.")
+    st.info("Aucun projet chargé. Créez ou ouvrez un projet dans l’onglet Projets.")
 
 
 tabs = st.tabs(
     [
         "Tableau de bord",
-        "Projets privés",
+        "Projets",
         "Configuration",
         "Manuscrit",
         "Génération",
         "Exports",
-        "Sécurité",
         "Aide",
     ]
 )
@@ -233,163 +174,132 @@ tabs = st.tabs(
 with tabs[0]:
     st.header("Tableau de bord")
 
-    col1, col2, col3 = st.columns(3)
+    if not project:
+        st.info("Chargez un projet pour voir son état.")
+    else:
+        config = load_config_or_default(project)
 
-    with col1:
-        render_status_card("Configuration active", CONFIG_PATH)
-        render_status_card("Manuscrit courant", current_manuscript_path())
+        col1, col2, col3 = st.columns(3)
 
-    with col2:
-        render_status_card("PDF principal", PDF_DIR)
-        render_status_card("Teaser PDF", TEASER_DIR)
+        with col1:
+            render_status_card("Configuration", project.config_file)
+            render_status_card("Manuscrit", project.manuscript)
 
-    with col3:
-        render_status_card("Visuels réseaux", VISUALS_DIR)
-        render_status_card("Archive ZIP", ZIP_PATH)
+        with col2:
+            render_status_card("PDF principal", project.pdf_dir / config["output_pdf_name"])
+            render_status_card("Teaser PDF", project.pdf_dir / config["teaser_pdf_name"])
 
-    st.divider()
+        with col3:
+            render_status_card("Visuels réseaux", project.cards_dir)
+            render_status_card("Archive ZIP", project.exports_dir / config["zip_name"])
 
-    config = load_active_config()
+        st.divider()
 
-    st.subheader("Projet actif")
+        st.subheader("Projet actif")
+        st.write("**Titre du livre :**", config["book_title"])
+        st.write("**Auteur :**", config["author_name"])
+        st.write("**Marque :**", config["brand_name"])
+        st.write("**ZIP :**", config["zip_name"])
 
-    st.write("**Projet privé chargé :**", active_project or "Aucun")
-    st.write("**Titre du livre :**", config.get("book_title", "Non défini"))
-    st.write("**Auteur :**", config.get("author_name", "Non défini"))
-    st.write("**Marque :**", config.get("brand_name", "Non défini"))
-    st.write("**ZIP :**", config.get("zip_name", "atelier-zydka-manuel-release.zip"))
+        st.divider()
 
-    st.divider()
+        st.subheader("Score qualité éditorial")
 
-    st.subheader("Score qualité éditorial")
+        col_score, col_action = st.columns([2, 1])
 
-    col_score, col_action = st.columns([2, 1])
+        with col_action:
+            if st.button("Rafraîchir le diagnostic qualité"):
+                try:
+                    with st.spinner("Diagnostic qualité en cours..."):
+                        studio_core.build_quality(project)
+                    st.success("Diagnostic qualité mis à jour.")
+                    st.rerun()
+                except studio_core.StudioError as error:
+                    st.error(f"Erreur pendant le diagnostic qualité : {error}")
 
-    with col_action:
-        if st.button("Rafraîchir le diagnostic qualité"):
-            with st.spinner("Diagnostic qualité en cours..."):
-                code, output = run_command_for_current_project([sys.executable, "make.py", "quality"])
+        with col_score:
+            quality_score = load_quality_score(project)
 
-            if code == 0:
-                st.success("Diagnostic qualité mis à jour.")
-                st.rerun()
+            if quality_score:
+                score = int(quality_score.get("score", 0))
+                label = quality_score.get("label", "statut inconnu")
+
+                st.metric("Score qualité", f"{score}/100", label)
+
+                if score < 60:
+                    st.error("Score bas. Consultez l’onglet Exports pour corriger le manuscrit.")
+                elif score < 80:
+                    st.warning("Score moyen. Des améliorations sont recommandées.")
+                else:
+                    st.success("Bon score. Le manuscrit semble exploitable pour une génération.")
             else:
-                st.error(f"Erreur pendant le diagnostic qualité. Code : {code}")
-                st.code(output, language="text")
-
-    with col_score:
-        quality_score = load_quality_score()
-
-        if quality_score:
-            score = int(quality_score.get("score", 0))
-            label = quality_score.get("label", "statut inconnu")
-
-            st.metric("Score qualité", f"{score}/100", label)
-
-            if score < 60:
-                st.error("Score bas. Consultez l’onglet Exports pour corriger le manuscrit.")
-            elif score < 80:
-                st.warning("Score moyen. Des améliorations sont recommandées.")
-            else:
-                st.success("Bon score. Le manuscrit semble exploitable pour une génération.")
-        else:
-            st.info("Aucun score qualité généré. Cliquez sur Rafraîchir le diagnostic qualité ou générez une archive.")
-
-    st.divider()
-
-    st.subheader("Règle de sécurité")
-
-    st.warning(
-        "Les vrais manuscrits commerciaux doivent être stockés dans private/projets/. "
-        "Le dépôt public doit conserver uniquement un manuscrit de démonstration."
-    )
+                st.info("Aucun score qualité généré. Cliquez sur Rafraîchir le diagnostic qualité ou générez une archive.")
 
 
 # ============================================================
-# PROJETS PRIVÉS
+# PROJETS
 # ============================================================
 
 with tabs[1]:
-    st.header("Projets privés")
+    st.header("Projets")
 
     st.write(
-        "Les projets privés permettent de travailler sur plusieurs livres sans publier "
-        "les manuscrits commerciaux dans le dépôt GitHub."
+        "Chaque livre est un dossier indépendant : manuscrit, configuration, images "
+        "et exports. Rien n’est écrit dans le dossier de l’application."
     )
 
     st.code(
-        "private/projets/nom-du-projet/config.json\n"
-        "private/projets/nom-du-projet/manuscrit.txt",
+        "<projet>/config.json\n"
+        "<projet>/manuscrit.txt\n"
+        "<projet>/citations.txt   (facultatif)\n"
+        "<projet>/images/\n"
+        "<projet>/exports/",
         language="text",
     )
 
     st.divider()
 
-    st.subheader("Créer un nouveau projet privé")
+    st.subheader("Ouvrir un projet")
 
-    with st.form("create_private_project_form"):
-        new_project_name = st.text_input(
-            "Nom du projet",
-            placeholder="Exemple : Beatmaker Indépendant 2027",
+    projects = studio_core.list_projects(PROJECTS_ROOT)
+
+    if not projects:
+        st.info("Aucun projet pour le moment.")
+    else:
+        slugs = [p.slug for p in projects]
+        selected = st.selectbox(
+            "Projet disponible",
+            slugs,
+            index=slugs.index(project.slug) if project and project.slug in slugs else 0,
         )
 
-        create_submitted = st.form_submit_button("Créer le projet privé")
-
-    if create_submitted:
-        if not new_project_name.strip():
-            st.error("Merci d’indiquer un nom de projet.")
-        else:
-            path = create_project(new_project_name)
-            set_active_project(path.name)
-            st.success(f"Projet créé et chargé : {path.name}")
+        if st.button("Ouvrir ce projet"):
+            set_active_project(studio_core.Project(PROJECTS_ROOT / selected))
             st.rerun()
 
     st.divider()
 
-    st.subheader("Charger un projet privé existant")
+    st.subheader("Créer un projet")
 
-    projects = list_projects()
+    with st.form("create_project_form"):
+        new_project_name = st.text_input("Titre du livre", placeholder="Exemple : Mon premier livre")
+        create_submitted = st.form_submit_button("Créer le projet")
 
-    if not projects:
-        st.info("Aucun projet privé pour le moment.")
-    else:
-        selected_project = st.selectbox(
-            "Projet disponible",
-            projects,
-            index=projects.index(active_project) if active_project in projects else 0,
-        )
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            if st.button("Charger ce projet"):
-                set_active_project(selected_project)
-                st.success(f"Projet chargé : {selected_project}")
+    if create_submitted:
+        if not new_project_name.strip():
+            st.error("Merci d’indiquer un titre.")
+        else:
+            try:
+                created = studio_core.create_project(PROJECTS_ROOT, new_project_name.strip())
+                set_active_project(created)
                 st.rerun()
+            except studio_core.StudioError as error:
+                st.error(str(error))
 
-        with col2:
-            if st.button("Sauvegarder les fichiers actifs dans ce projet"):
-                save_active_files_to_project(selected_project)
-                set_active_project(selected_project)
-                st.success(f"Fichiers actifs sauvegardés dans : {selected_project}")
-
-        with col3:
-            if st.button("Afficher le résumé"):
-                summary = get_project_summary(selected_project)
-                st.json(summary)
-
-    st.divider()
-
-    st.subheader("Sauvegarde rapide")
-
-    if active_project:
-        if st.button("Sauvegarder config + manuscrit dans le projet actif"):
-            config = load_active_config()
-            manuscript = read_current_manuscript()
-            save_project(active_project, config, manuscript)
-            st.success(f"Projet sauvegardé : {active_project}")
-    else:
-        st.info("Chargez ou créez un projet privé pour activer la sauvegarde rapide.")
+    if not studio_core.Project(PROJECTS_ROOT / DEMO_SLUG).exists():
+        if st.button("Créer le projet de démonstration"):
+            set_active_project(studio_core.create_demo_project(PROJECTS_ROOT))
+            st.rerun()
 
 
 # ============================================================
@@ -399,126 +309,37 @@ with tabs[1]:
 with tabs[2]:
     st.header("Configuration du projet")
 
-    config = load_active_config()
+    if not project:
+        st.info("Chargez un projet pour modifier sa configuration.")
+    else:
+        raw_config = read_raw_config(project)
+        try:
+            config = normalize_config(raw_config)
+        except studio_core.ConfigError as error:
+            st.warning(f"{error} — valeurs par défaut proposées pour les noms de sortie.")
+            config = normalize_config({k: v for k, v in raw_config.items() if k not in OUTPUT_NAME_KEYS})
 
-    with st.form("config_form"):
-        project_title = st.text_input(
-            "Titre du projet",
-            value=config.get("project_title", "Manuscript Studio by Atelier Zydka"),
-        )
+        with st.form("config_form"):
+            values = {key: st.text_input(label, value=config[key]) for key, label in CONFIG_FIELDS}
 
-        book_title = st.text_input(
-            "Titre du livre",
-            value=config.get("book_title", "Manuscrit de démonstration"),
-        )
+            st.subheader("Fichiers de sortie")
+            values.update({key: st.text_input(label, value=config[key]) for key, label in OUTPUT_FIELDS})
 
-        book_subtitle = st.text_area(
-            "Sous-titre",
-            value=config.get(
-                "book_subtitle",
-                "Transformer un manuscrit brut en pack éditorial complet",
-            ),
-            height=80,
-        )
+            st.subheader("Thème")
+            theme = {key: st.color_picker(label, value=config["theme"][key]) for key, label in THEME_FIELDS}
 
-        author_name = st.text_input(
-            "Auteur",
-            value=config.get("author_name", "Atelier Zydka"),
-        )
+            submitted = st.form_submit_button("Enregistrer config.json")
 
-        brand_name = st.text_input(
-            "Marque",
-            value=config.get("brand_name", "Atelier Zydka"),
-        )
-
-        baseline = st.text_input(
-            "Baseline",
-            value=config.get("baseline", "Culture · méthode · indépendance"),
-        )
-
-        year = st.text_input(
-            "Année",
-            value=config.get("year", "2026"),
-        )
-
-        st.subheader("Fichiers de sortie")
-
-        output_pdf_name = st.text_input(
-            "Nom du PDF principal",
-            value=config.get("output_pdf_name", "manuel-de-presence-atelier-zydka.pdf"),
-        )
-
-        teaser_pdf_name = st.text_input(
-            "Nom du teaser PDF",
-            value=config.get("teaser_pdf_name", "teaser-manuel-presence.pdf"),
-        )
-
-        release_name = st.text_input(
-            "Nom du dossier de release",
-            value=config.get("release_name", "atelier-zydka-manuel-release"),
-        )
-
-        zip_name = st.text_input(
-            "Nom du ZIP",
-            value=config.get("zip_name", "atelier-zydka-manuel-release.zip"),
-        )
-
-        st.subheader("Thème")
-
-        theme = config.get("theme", {})
-
-        background = st.color_picker(
-            "Couleur de fond",
-            value=theme.get("background", "#090909"),
-        )
-
-        text_color = st.color_picker(
-            "Couleur du texte",
-            value=theme.get("text", "#F4F1EB"),
-        )
-
-        accent = st.color_picker(
-            "Couleur accent",
-            value=theme.get("accent", "#C79A3B"),
-        )
-
-        muted = st.color_picker(
-            "Couleur secondaire",
-            value=theme.get("muted", "#96928A"),
-        )
-
-        submitted = st.form_submit_button("Enregistrer config.json")
-
-    if submitted:
-        new_config = {
-            "project_title": project_title,
-            "book_title": book_title,
-            "book_subtitle": book_subtitle,
-            "author_name": author_name,
-            "brand_name": brand_name,
-            "baseline": baseline,
-            "year": year,
-            "language": config.get("language", "fr"),
-            "output_pdf_name": output_pdf_name,
-            "teaser_pdf_name": teaser_pdf_name,
-            "release_name": release_name,
-            "zip_name": zip_name,
-            "theme": {
-                "background": background,
-                "text": text_color,
-                "accent": accent,
-                "muted": muted,
-            },
-        }
-
-        save_active_config(new_config)
-
-        if active_project:
-            manuscript = read_current_manuscript()
-            save_project(active_project, new_config, manuscript)
-            st.success(f"config.json enregistré et projet privé sauvegardé : {active_project}")
-        else:
-            st.success("config.json enregistré.")
+        if submitted:
+            # Les clés non éditées ici (features, language…) sont conservées.
+            new_config = {**raw_config, **values, "theme": {**raw_config.get("theme", {}), **theme}}
+            try:
+                normalize_config(new_config)
+            except studio_core.ConfigError as error:
+                st.error(str(error))
+            else:
+                save_config(project, new_config)
+                st.success(f"config.json enregistré : {project.config_file}")
 
 
 # ============================================================
@@ -528,48 +349,30 @@ with tabs[2]:
 with tabs[3]:
     st.header("Manuscrit")
 
-    st.warning(
-        "Pour les livres commerciaux, utilisez un projet privé. "
-        "Ne poussez jamais un livre complet dans le dépôt public."
-    )
-
-    manuscript = read_current_manuscript()
-
-    edited_manuscript = st.text_area(
-        "Contenu du manuscrit actif",
-        value=manuscript,
-        height=520,
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        if st.button("Enregistrer le manuscrit"):
-            write_current_manuscript(edited_manuscript)
-
-            if active_project:
-                config = load_active_config()
-                save_project(active_project, config, edited_manuscript)
-                st.success(f"Manuscrit enregistré et projet privé sauvegardé : {active_project}")
-            else:
-                st.success("Manuscrit enregistré dans manuscrit_beatmakers.txt.")
-
-    with col2:
-        uploaded_file = st.file_uploader(
-            "Importer un fichier .txt ou .md",
-            type=["txt", "md"],
+    if not project:
+        st.info("Chargez un projet pour éditer son manuscrit.")
+    else:
+        edited_manuscript = st.text_area(
+            "Contenu du manuscrit",
+            value=read_text(project.manuscript),
+            height=520,
         )
 
-        if uploaded_file is not None:
-            content = uploaded_file.read().decode("utf-8")
-            write_current_manuscript(content)
+        col1, col2 = st.columns(2)
 
-            if active_project:
-                config = load_active_config()
-                save_project(active_project, config, content)
+        with col1:
+            if st.button("Enregistrer le manuscrit"):
+                write_text(project.manuscript, edited_manuscript)
+                st.success(f"Manuscrit enregistré : {project.manuscript}")
 
-            st.success("Fichier importé dans le manuscrit actif.")
-            st.rerun()
+        with col2:
+            uploaded_file = st.file_uploader("Importer un fichier .txt ou .md", type=["txt", "md"])
+
+            # Le fichier reste dans l'uploader entre deux exécutions : on ne l'importe qu'une fois.
+            if uploaded_file is not None and st.session_state.get("imported_upload") != uploaded_file.file_id:
+                write_text(project.manuscript, uploaded_file.read().decode("utf-8"))
+                st.session_state["imported_upload"] = uploaded_file.file_id
+                st.rerun()
 
 
 # ============================================================
@@ -579,60 +382,33 @@ with tabs[3]:
 with tabs[4]:
     st.header("Génération")
 
-    st.write("Commande utilisée :")
-    st.code("python3 make.py archive", language="bash")
-
-    if active_project:
-        st.info(
-            f"Projet privé actif : {active_project}. "
-            "La génération utilise temporairement ce projet privé sans modifier la démo publique."
-        )
-
-    if st.button("Générer l’archive ZIP", type="primary"):
-        if active_project:
-            config = load_active_config()
-            manuscript = read_current_manuscript()
-            save_project(active_project, config, manuscript)
-
-        with st.spinner("Génération en cours..."):
-            code, output = run_command_for_current_project([sys.executable, "make.py", "archive"])
-
-        if code == 0:
-            st.success("Archive générée avec succès.")
-        else:
-            st.error(f"Erreur pendant la génération. Code : {code}")
-
-        st.subheader("Logs")
-        st.code(output, language="text")
-
-    st.divider()
-
-    config = load_active_config()
-    zip_name = config.get("zip_name", "atelier-zydka-manuel-release.zip")
-    configured_zip_path = ROOT / "dist" / zip_name
-
-    if configured_zip_path.exists():
-        st.success(f"ZIP disponible : {configured_zip_path.name}")
-
-        with configured_zip_path.open("rb") as file:
-            st.download_button(
-                label="Télécharger le ZIP",
-                data=file,
-                file_name=configured_zip_path.name,
-                mime="application/zip",
-            )
-    elif ZIP_PATH.exists():
-        st.success("ZIP disponible")
-
-        with ZIP_PATH.open("rb") as file:
-            st.download_button(
-                label="Télécharger le ZIP",
-                data=file,
-                file_name=ZIP_PATH.name,
-                mime="application/zip",
-            )
+    if not project:
+        st.info("Chargez un projet pour lancer une génération.")
     else:
-        st.info("Aucune archive ZIP générée pour l’instant.")
+        st.write("Commande Terminal équivalente :")
+        st.code(f'python3 make.py --project "{project.root}" archive', language="bash")
+
+        if st.button("Générer l’archive ZIP", type="primary"):
+            results = run_with_progress(studio_core.build_archive, project)
+            if results:
+                st.success(f"Archive générée : {results['zip']}")
+
+        st.divider()
+
+        zip_path = project.exports_dir / load_config_or_default(project)["zip_name"]
+
+        if zip_path.exists():
+            st.success(f"ZIP disponible : {zip_path.name}")
+
+            with zip_path.open("rb") as file:
+                st.download_button(
+                    label="Télécharger le ZIP",
+                    data=file,
+                    file_name=zip_path.name,
+                    mime="application/zip",
+                )
+        else:
+            st.info("Aucune archive ZIP générée pour l’instant.")
 
 
 # ============================================================
@@ -642,131 +418,58 @@ with tabs[4]:
 with tabs[5]:
     st.header("Exports")
 
-    st.subheader("Rapport éditorial")
-
-    if REPORT_PATH.exists():
-        st.markdown(read_text(REPORT_PATH))
+    if not project:
+        st.info("Chargez un projet pour consulter ses exports.")
     else:
-        st.info("Rapport non généré.")
+        for title, path in [
+            ("Rapport éditorial", project.reports_dir / STRUCTURE_REPORT_NAME),
+            ("Rapport qualité éditorial", project.reports_dir / QUALITY_REPORT_NAME),
+            ("Citations marketing", project.citations_file),
+        ]:
+            st.subheader(title)
+            if path.exists():
+                st.markdown(read_text(path))
+            else:
+                st.info("Non généré.")
 
-    st.subheader("Rapport qualité éditorial")
-
-    if QUALITY_REPORT_PATH.exists():
-        st.markdown(read_text(QUALITY_REPORT_PATH))
-    else:
-        st.info("Rapport qualité non généré.")
-
-    st.subheader("Citations marketing")
-
-    if CITATIONS_PATH.exists():
-        st.markdown(read_text(CITATIONS_PATH))
-    else:
-        st.info("Citations non générées.")
-
-    st.subheader("Dossiers utiles")
-
-    st.code(
-        "\n".join(
-            [
-                "manuelsortie/",
-                "exports/pdf/",
-                "exports/reseaux/cartes/",
-                "dist/",
-                "private/projets/",
-            ]
-        ),
-        language="text",
-    )
-
-
-# ============================================================
-# SÉCURITÉ
-# ============================================================
-
-with tabs[6]:
-    st.header("Sécurité")
-
-    st.warning(
-        "Cette section permet de restaurer la démo publique avant un commit ou un push GitHub. "
-        "Elle remplace config.json et manuscrit_beatmakers.txt par les fichiers de démonstration."
-    )
-
-    st.subheader("Restaurer la démo publique")
-
-    st.write(
-        "À utiliser après avoir travaillé sur un projet privé, afin d’éviter de laisser "
-        "un vrai manuscrit commercial dans les fichiers actifs du dépôt."
-    )
-
-    st.code(
-        "demo/config.demo.json → config.json\n"
-        "demo/manuscrit_demo.txt → manuscrit_beatmakers.txt",
-        language="text",
-    )
-
-    confirm_restore = st.checkbox(
-        "Je confirme vouloir restaurer la démo publique dans les fichiers actifs."
-    )
-
-    if st.button("Restaurer la démo publique", type="primary"):
-        if not confirm_restore:
-            st.error("Cochez la confirmation avant de restaurer la démo.")
-        else:
-            try:
-                restore_public_demo()
-                set_active_project(None)
-                st.success("Démo publique restaurée. Aucun projet privé n’est désormais chargé.")
-                st.info("Avant de pousser sur GitHub, vérifiez quand même le Terminal avec : git status")
-            except Exception as error:
-                st.error(f"Erreur pendant la restauration : {error}")
-
-    st.divider()
-
-    st.subheader("Rappel important")
-
-    st.markdown(
-        """
-- `private/projets/` contient vos vrais projets.
-- `config.json` et `manuscrit_beatmakers.txt` sont les fichiers actifs du moteur.
-- Avant un `git add` ou un `git push`, restaurez la démo publique si vous avez chargé un projet privé.
-- Vérifiez toujours avec :
-
-        git status
-        """
-    )
+        st.subheader("Dossier des exports")
+        st.code(str(project.exports_dir), language="text")
 
 
 # ============================================================
 # AIDE
 # ============================================================
 
-with tabs[7]:
+with tabs[6]:
     st.header("Aide")
 
     st.markdown(
-        """
+        f"""
 ### Utilisation rapide
 
-1. Ouvrez l’onglet **Projets privés**.
-2. Créez ou chargez un projet privé.
-3. Ouvrez l’onglet **Configuration**.
-4. Modifiez le titre, l’auteur, la marque, les couleurs.
-5. Ouvrez l’onglet **Manuscrit**.
-6. Collez ou importez un manuscrit.
-7. Ouvrez l’onglet **Génération**.
-8. Cliquez sur **Générer l’archive ZIP**.
-9. Téléchargez le ZIP.
+1. Ouvrez l’onglet **Projets** et créez ou ouvrez un projet.
+2. Ouvrez l’onglet **Configuration** : titre, auteur, marque, couleurs.
+3. Ouvrez l’onglet **Manuscrit** : collez ou importez le texte.
+4. Ouvrez l’onglet **Génération** et cliquez sur **Générer l’archive ZIP**.
+5. Téléchargez le ZIP.
 
-### Règle importante
+### Où sont mes fichiers ?
 
-Le dépôt public doit contenir une démo.
+Chaque projet est un dossier dans :
 
-Les vrais livres ou contenus commerciaux doivent rester dans :
+    {PROJECTS_ROOT}
 
-    private/projets/
+Pour changer cette racine, définissez la variable d’environnement
+`MANUSCRIPT_STUDIO_HOME` avant de lancer l’application.
+
+### Citations marketing
+
+Ajoutez un fichier `citations.txt` (une citation par ligne) dans le dossier
+du projet. Sans ce fichier, les citations viennent des blocs `[QUOTE: …]`
+et des lignes « À retenir : … » du manuscrit.
 
 ### Commande Terminal équivalente
 
-    python3 make.py archive
+    python3 make.py --project <projet> archive
         """
     )

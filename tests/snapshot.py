@@ -2,8 +2,10 @@
 """
 Instantané du pack démo — Manuscript Studio by Atelier Zydka
 
-Génère le pack démo dans une copie isolée du dépôt et résume ce qui est
-produit (chapitres, pages et texte des PDF, fichiers de la release, ZIP).
+Génère le pack démo (make.py archive) depuis une copie isolée du dépôt,
+avec une racine de projets temporaire, et résume ce qui est produit
+(chapitres, pages et texte des PDF, fichiers de la release, ZIP).
+Vérifie aussi que rien n'est écrit dans le dossier du code.
 
 Les tests comparent cet instantané à tests/reference/demo.json.
 Pour régénérer la référence après un changement de rendu VOLONTAIRE :
@@ -14,6 +16,7 @@ Pour régénérer la référence après un changement de rendu VOLONTAIRE :
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -40,13 +43,14 @@ def copy_repo(dest: Path) -> Path:
     return dest
 
 
-def run_archive(workdir: Path) -> float:
-    """Restaure la démo publique puis lance make.py archive. Renvoie la durée."""
-    subprocess.run([sys.executable, "restore_demo.py"], cwd=workdir, check=True, capture_output=True)
+def run_archive(workdir: Path, projects_root: Path) -> float:
+    """Lance make.py archive (projet démo créé à la volée). Renvoie la durée."""
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
     start = time.perf_counter()
     result = subprocess.run(
-        [sys.executable, "make.py", "archive"],
+        [sys.executable, "make.py", "--projects-root", str(projects_root), "archive"],
         cwd=workdir,
+        env=env,
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -84,36 +88,32 @@ def toc_entries(toc_text: str) -> list[str]:
     return [lines[i + 1] for i, line in enumerate(lines[:-1]) if re.fullmatch(r"\d{2}", line.strip())]
 
 
-def parser_chapter_count(workdir: Path) -> int:
-    code = (
-        "import sys; sys.path.insert(0, '.');"
-        "from studio_core.parser import parse_manuscript;"
-        "print(len(parse_manuscript(open('manuscrit_beatmakers.txt', encoding='utf-8').read())))"
-    )
-    out = subprocess.run([sys.executable, "-c", code], cwd=workdir, check=True, capture_output=True, text=True)
-    return int(out.stdout.strip())
+def parser_chapter_count(project_dir: Path) -> int:
+    from studio_core.parser import parse_manuscript
+
+    return len(parse_manuscript((project_dir / "manuscrit.txt").read_text(encoding="utf-8")))
 
 
 def files_under(root: Path) -> list[str]:
     return sorted(p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file())
 
 
-def collect(workdir: Path) -> dict:
-    config = json.loads((workdir / "config.json").read_text(encoding="utf-8"))
-    dist = workdir / "dist"
-    release_dir = dist / config["release_name"]
-    zip_path = dist / config["zip_name"]
+def collect(project_dir: Path) -> dict:
+    config = json.loads((project_dir / "config.json").read_text(encoding="utf-8"))
+    exports = project_dir / "exports"
+    release_dir = exports / "release" / config["release_name"]
+    zip_path = exports / config["zip_name"]
 
-    book = pdf_summary(workdir / "manuelsortie" / config["output_pdf_name"])
-    teaser = pdf_summary(workdir / "exports" / "pdf" / config["teaser_pdf_name"])
-    reports = workdir / "exports" / "rapports"
+    book = pdf_summary(exports / "pdf" / config["output_pdf_name"])
+    teaser = pdf_summary(exports / "pdf" / config["teaser_pdf_name"])
+    reports = exports / "rapports"
 
     with zipfile.ZipFile(zip_path) as zf:
         zip_names = sorted(name.replace("\\", "/") for name in zf.namelist())
 
     return {
         "chapters": {
-            "parser_manuscrit": parser_chapter_count(workdir),
+            "parser_manuscrit": parser_chapter_count(project_dir),
             "rapport_structure": report_count(reports / "rapport_structure.md", "Chapitres détectés"),
             "rapport_qualite": report_count(reports / "rapport_qualite.md", "Nombre de chapitres / sections détectés"),
             "sommaire_pdf": len(toc_entries(book["text"][1])),
@@ -126,10 +126,14 @@ def collect(workdir: Path) -> dict:
     }
 
 
-def build_snapshot(tmp_dir: Path) -> tuple[dict, float]:
+def build_snapshot(tmp_dir: Path) -> tuple[dict, float, list[str]]:
+    """Renvoie (instantané, durée, fichiers créés ou modifiés dans le dossier du code)."""
     workdir = copy_repo(tmp_dir / "repo")
-    duration = run_archive(workdir)
-    return collect(workdir), duration
+    before = {p: p.stat().st_mtime_ns for p in workdir.rglob("*") if p.is_file()}
+    duration = run_archive(workdir, tmp_dir / "projects")
+    after = {p: p.stat().st_mtime_ns for p in workdir.rglob("*") if p.is_file()}
+    written = sorted(str(p.relative_to(workdir)) for p in after if before.get(p) != after[p])
+    return collect(tmp_dir / "projects" / "demo"), duration, written
 
 
 def main() -> int:
@@ -140,7 +144,7 @@ def main() -> int:
         return 1
 
     with tempfile.TemporaryDirectory() as tmp:
-        snapshot, duration = build_snapshot(Path(tmp))
+        snapshot, duration, _ = build_snapshot(Path(tmp))
 
     REFERENCE_PATH.parent.mkdir(parents=True, exist_ok=True)
     REFERENCE_PATH.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

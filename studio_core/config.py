@@ -65,9 +65,29 @@ def deep_merge(default: dict[str, Any], custom: dict[str, Any]) -> dict[str, Any
     return result
 
 
+# Clés utilisées comme noms de fichier ou de dossier dans exports/ du projet.
+OUTPUT_NAME_KEYS = ("output_pdf_name", "teaser_pdf_name", "release_name", "zip_name")
+
+
+def validate_output_names(config: dict[str, Any]) -> None:
+    """Les noms de sortie doivent être de simples noms (pas de chemin) : le moteur n'écrit que dans exports/."""
+    for key in OUTPUT_NAME_KEYS:
+        value = config.get(key)
+        if (
+            not isinstance(value, str)
+            or not value.strip()
+            or value in {".", ".."}
+            or Path(value).name != value
+            or "\\" in value
+        ):
+            raise ConfigError(f"{key} doit être un simple nom de fichier, sans dossier : {value!r}")
+
+
 def normalize_config(config: dict[str, Any]) -> dict[str, Any]:
-    """Complète une configuration (éventuellement partielle) avec DEFAULT_CONFIG."""
-    return deep_merge(DEFAULT_CONFIG, config)
+    """Complète une configuration (éventuellement partielle) avec DEFAULT_CONFIG et la valide."""
+    merged = deep_merge(DEFAULT_CONFIG, config)
+    validate_output_names(merged)
+    return merged
 
 
 def load_config(path: Path | str | None) -> dict[str, Any]:

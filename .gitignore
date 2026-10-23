@@ -23,3 +23,7 @@ manuscrit_complet_*.txt
 
 # Sauvegardes locales de manuscrits (privées)
 backups/
+
+# Anciens fichiers actifs à la racine (remplacés par les projets) : jamais versionnés
+/config.json
+/manuscrit_beatmakers.txt

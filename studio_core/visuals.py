@@ -11,6 +11,7 @@ Point d'entrée : build_visuals(fichier_citations, dossier_sortie, config).
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -18,10 +19,12 @@ from PIL import Image, ImageDraw, ImageFont
 from .config import normalize_config
 from .errors import StudioError
 from .text import clean_quote
-from .workspace import FONTS_DIR
+from .resources import FONTS_DIR
 
 
 MAX_CITATIONS = 12
+
+log = logging.getLogger(__name__)
 
 
 def hex_to_rgb(value: str, fallback: tuple[int, int, int]) -> tuple[int, int, int]:
@@ -337,13 +340,13 @@ def generate_visuals(citations: list[str], output_dir: Path, style: VisualStyle)
 
 
 def build_visuals(citations_file: Path, output_dir: Path, config: dict) -> list[Path]:
-    """Génère les cartes carrées et story à partir du fichier de citations."""
+    """Génère les cartes carrées et story à partir du fichier de citations (aucune carte s'il est vide)."""
     citations_file = Path(citations_file)
     if not citations_file.exists():
         raise StudioError(f"Fichier de citations introuvable : {citations_file}")
 
     citations = extract_citations(citations_file.read_text(encoding="utf-8"))
     if not citations:
-        raise StudioError("Aucune citation trouvée.")
+        log.warning("Aucune citation trouvée : pas de visuels réseaux (ajoutez citations.txt au projet).")
 
     return generate_visuals(citations, output_dir, VisualStyle.from_config(config))

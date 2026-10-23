@@ -9,8 +9,8 @@ from tests.snapshot import REFERENCE_PATH, build_snapshot
 
 @pytest.fixture(scope="session")
 def demo_build(tmp_path_factory):
-    snapshot, duration = build_snapshot(tmp_path_factory.mktemp("demo"))
-    return {"snapshot": snapshot, "duration": duration}
+    snapshot, duration, written = build_snapshot(tmp_path_factory.mktemp("demo"))
+    return {"snapshot": snapshot, "duration": duration, "written_in_code_dir": written}
 
 
 @pytest.fixture(scope="session")

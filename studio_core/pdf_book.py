@@ -65,7 +65,7 @@ from pathlib import Path
 from .config import DEFAULT_CONFIG, normalize_config
 from .parser import blocks_to_legacy_paragraphs, is_table_line as is_markdown_table_line, parse_manuscript
 from .text import clean_text
-from .workspace import FONTS_DIR
+from .resources import FONTS_DIR
 
 log = logging.getLogger(__name__)
 
@@ -315,39 +315,6 @@ def finish(c):
 class Chapter:
     title: str
     paragraphs: List[str]
-
-
-def default_manuscript() -> str:
-    return """
-Introduction
-Le beatmaking est une discipline fascinante et dynamique qui a pris son essor grâce à l’évolution des technologies de production musicale et à l’impact des réseaux sociaux. En France, cette pratique est devenue de plus en plus accessible, permettant à un grand nombre d’artistes de se lancer dans la création musicale.
-
-Cet ouvrage clarifie le métier de beatmaker, retrace son histoire et explique les différentes facettes de cette profession. Nous explorerons les outils nécessaires pour créer des beats, les techniques de production, ainsi que les stratégies pour monétiser son travail et protéger ses droits.
-
-Chapitre 1 : Les Fondements du Beatmaking
-Le beatmaking est une forme de production musicale qui repose sur l’utilisation d’outils numériques pour créer des rythmes et des compositions sans avoir recours à des instruments traditionnels.
-
-Le terme beatmaking est apparu aux États-Unis à la fin des années 1970, en même temps que l’essor du rap. Le beatmaker crée une boucle rythmique à partir d’un sample et le transforme en une nouvelle composition instrumentale.
-
-1.1 Qu’est-ce que le Beatmaking ?
-Le beatmaking repose sur la relation entre les beatmakers et les artistes. Le beatmaker s’efforce de comprendre une vision pour produire des morceaux authentiques et percutants.
-
-1.2 Les outils essentiels
-Pour se lancer, il faut maîtriser son ordinateur, son DAW, ses plugins, ses samples, ses contrôleurs MIDI, son casque et ses moniteurs.
-
-Chapitre 2 : Les Outils du Beatmaker
-Le DAW est le cœur de toute configuration de production musicale. Il permet d’enregistrer, d’éditer, de mixer et de produire des pistes audio.
-
-FL Studio, Ableton Live, Logic Pro X et Pro Tools offrent chacun une approche différente de la production. Le bon choix dépend du niveau, du budget et du flux de travail.
-
-Chapitre 3 : Les Techniques de Production
-Maîtriser les techniques de production permet de transformer des idées brutes en compositions polies et prêtes pour la diffusion.
-
-La structure, le sampling, la programmation des rythmes, la mélodie, l’harmonie, l’arrangement, le mixage et le mastering forment la base d’un beat professionnel.
-
-Conclusion
-Le beatmaking est une discipline riche qui demande créativité, méthode et rigueur. Le système présenté dans ce livre aide à clarifier, produire, protéger et développer une carrière indépendante.
-""".strip()
 
 
 def is_markdown_separator_line(line: str) -> bool:
@@ -1356,16 +1323,13 @@ def draw_chapter_pages(c, start_page: int, chapter: Chapter, index: int) -> int:
 # ============================================================
 
 def build_book_pdf(
-    manuscript_text: Optional[str],
+    manuscript_text: str,
     config: dict,
     output_path: Path,
     images_dir: Path,
     fonts_dir: Path = FONTS_DIR,
 ) -> Path:
-    """
-    Génère le PDF principal et renvoie son chemin.
-    manuscript_text=None : utilise l'extrait de démonstration intégré.
-    """
+    """Génère le PDF principal et renvoie son chemin."""
     with _RENDER_LOCK:
         return _render_book_pdf(manuscript_text, normalize_config(config), Path(output_path), images_dir, fonts_dir)
 
@@ -1375,10 +1339,6 @@ def _render_book_pdf(manuscript_text, config, output_path, images_dir, fonts_dir
 
     _apply_config(config, images_dir)
     FONTS = setup_fonts(fonts_dir)
-
-    if manuscript_text is None:
-        log.warning("Aucun manuscrit trouvé. Le PDF utilise un extrait de démonstration intégré.")
-        manuscript_text = default_manuscript()
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     chapters = parse_chapters(manuscript_text)

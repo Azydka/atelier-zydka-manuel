@@ -1,0 +1,11 @@
+# Citations marketing du projet — une citation par ligne.
+# Les lignes qui commencent par # sont ignorées.
+# Sans ce fichier, les citations viennent du manuscrit : blocs [QUOTE: …] et lignes « À retenir : … ».
+Un manuscrit propre produit de meilleurs exports.
+Un seul fichier source, un pack éditorial complet.
+Le texte d'abord, la mise en page suit.
+Chaque livre a son dossier, chaque dossier a ses exports.
+Relire la structure avant de soigner la forme.
+Un rapport qualité ne juge pas le style : il éclaire la structure.
+Publier, c'est livrer un fichier, un teaser et une histoire cohérente.
+Moins de copier-coller, plus de temps pour écrire.

@@ -12,6 +12,10 @@ import pytest
 MAX_ARCHIVE_SECONDS = 15
 
 
+def test_aucune_ecriture_dans_le_dossier_du_code(demo_build):
+    assert demo_build["written_in_code_dir"] == []
+
+
 def test_archive_reste_rapide(demo_build):
     assert demo_build["duration"] < MAX_ARCHIVE_SECONDS
 

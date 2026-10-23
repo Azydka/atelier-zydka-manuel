@@ -1,63 +1,79 @@
 # -*- coding: utf-8 -*-
 """
-Exports marketing — Manuscript Studio by Atelier Zydka
+Citations marketing — Manuscript Studio by Atelier Zydka
 
-Version propre V2.1 :
-génère une sélection contrôlée de citations marketing premium.
+Sources, par ordre de priorité :
+1. citations.txt du projet (une citation par ligne, # = commentaire) ;
+2. sinon (fichier absent ou sans citation) le manuscrit : blocs [QUOTE: …],
+   blocs [CALLOUT: …] titrés « À retenir » et lignes « À retenir : … ».
 
-Objectif :
-éviter les citations cassées, titres d'annexes, emojis mal rendus,
-fragments Markdown ou textes trop longs dans les visuels réseaux.
+Le résultat est écrit en Markdown (une citation par bloc « > »), lu ensuite
+par le générateur de visuels.
 """
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
+from typing import Optional
+
+from .parser import parse_manuscript
+from .text import squash_spaces
+
+KEY_TAKEAWAY_TITLE = "à retenir"
+KEY_TAKEAWAY = re.compile(r"^À retenir\s*:\s*(.+)$", re.IGNORECASE)
 
 
+def citations_from_file(path: Path) -> list[str]:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    return [squash_spaces(line) for line in lines if line.strip() and not line.lstrip().startswith("#")]
 
 
-CITATIONS = [
-    "Un beat prêt à vendre est un beat prêt à livrer.",
-    "Votre catalogue doit devenir consultable en moins de deux minutes.",
-    "Un beat mal nommé est un beat presque mort.",
-    "Un beatmaker organisé ne produit pas plus. Il vend mieux.",
-    "Vous ne vendez pas juste des fichiers WAV. Vous vendez des droits, de la clarté et de la confiance.",
-    "Le cadre ne tue pas la vibe. Il protège la vibe.",
-    "Un contrat simple vaut mieux qu’une promesse floue.",
-    "La protection commence par la traçabilité.",
-    "L’IA augmente les beatmakers organisés et noie les beatmakers dispersés.",
-    "L’international commence par un catalogue propre.",
-    "Avant de chercher plus de visibilité, rendez votre catalogue exploitable.",
-    "Ne rangez pas tout votre disque dur aujourd’hui. Commencez par 10 beats.",
-    "Un paiement ne remplace pas une licence.",
-    "Une split sheet simple évite des mois de tension.",
-    "Votre force ne vient pas du ton. Elle vient de la clarté du dossier.",
-    "Un vrai professionnel accepte la vérification. Un arnaqueur insiste sur l’urgence.",
-    "Un beatmaker sérieux ne vend pas au hasard. Il sait ce qu’il autorise.",
-    "Les revenus passifs commencent par un catalogue actif bien organisé.",
-    "Une preview doit donner envie. Un WAV doit laisser de la marge.",
-    "Un disque dur plein ne prouve rien. Un beat terminé, nommé, livré et utilisé vaut plus que 50 brouillons oubliés.",
-]
+def citations_from_manuscript(manuscript_text: str) -> list[str]:
+    citations: list[str] = []
+
+    for chapter in parse_manuscript(manuscript_text):
+        for block in chapter.blocks:
+            if block.type == "quote":
+                citations.append(squash_spaces(block.text))
+            elif block.type == "callout" and block.meta.get("title", "").strip().lower() == KEY_TAKEAWAY_TITLE:
+                citations.append(squash_spaces(block.text))
+            elif block.type == "paragraph":
+                match = KEY_TAKEAWAY.match(block.text.strip())
+                if match:
+                    citations.append(squash_spaces(match.group(1)))
+
+    return citations
 
 
-def build_citations(output_file: Path) -> Path:
+def collect_citations(manuscript_text: str, citations_source: Optional[Path] = None) -> tuple[list[str], str]:
+    """Renvoie (citations sans doublon, description de la source)."""
+    citations: list[str] = []
+    if citations_source is not None and citations_source.exists():
+        citations, source = citations_from_file(citations_source), citations_source.name
+    if not citations:
+        citations, source = citations_from_manuscript(manuscript_text), "le manuscrit"
+
+    return list(dict.fromkeys(c for c in citations if c)), source
+
+
+def build_citations(manuscript_text: str, output_file: Path, citations_source: Optional[Path] = None) -> Path:
     """Écrit le fichier Markdown des citations marketing et renvoie son chemin."""
-    output_file = Path(output_file)
+    citations, source = collect_citations(manuscript_text, citations_source)
     output_file.parent.mkdir(parents=True, exist_ok=True)
 
     lines = [
         "# Citations extraites — Manuscript Studio by Atelier Zydka",
         "",
-        "Fichier généré automatiquement depuis une sélection éditoriale contrôlée.",
+        f"Fichier généré automatiquement depuis {source}.",
         "",
-        f"Nombre de citations : {len(CITATIONS)}",
+        f"Nombre de citations : {len(citations)}",
         "",
         "---",
         "",
     ]
 
-    for index, citation in enumerate(CITATIONS, start=1):
+    for index, citation in enumerate(citations, start=1):
         lines.append(f"## Citation {index:02d}")
         lines.append("")
         lines.append(f"> {citation}")

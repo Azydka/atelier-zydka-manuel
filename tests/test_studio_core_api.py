@@ -1,6 +1,5 @@
 """Contrat de l'API studio_core pour une future coque (pywebview) : appel direct, chemins renvoyés, aucune sortie console."""
 
-import shutil
 from pathlib import Path
 
 import pytest
@@ -8,20 +7,15 @@ import pytest
 import studio_core
 from studio_core.errors import CheckFailedError, ManuscriptNotFoundError
 
-DEMO_DIR = Path(__file__).resolve().parent.parent / "demo"
-
 
 @pytest.fixture
-def workspace(tmp_path):
-    shutil.copy(DEMO_DIR / "manuscrit_demo.txt", tmp_path / "manuscrit_beatmakers.txt")
-    shutil.copy(DEMO_DIR / "config.demo.json", tmp_path / "config.json")
-    (tmp_path / "images").mkdir()
-    return studio_core.Workspace.legacy(tmp_path)
+def project(tmp_path):
+    return studio_core.create_demo_project(tmp_path / "projets")
 
 
-def test_build_archive_renvoie_les_chemins_produits(workspace, capsys):
+def test_build_archive_renvoie_les_chemins_produits(project, capsys):
     events = []
-    results = studio_core.build_archive(workspace, on_progress=lambda message, step, total: events.append((step, total)))
+    results = studio_core.build_archive(project, on_progress=lambda message, step, total: events.append((step, total)))
 
     assert results["book_pdf"].is_file()
     assert results["teaser_pdf"].is_file()
@@ -31,21 +25,28 @@ def test_build_archive_renvoie_les_chemins_produits(workspace, capsys):
     assert results["release"].is_dir()
     assert results["zip"].is_file()
 
+    produced = [results["book_pdf"], results["zip"], results["release"], *results["visuals"]]
+    assert all(project.exports_dir in path.parents for path in produced)
+
     assert events == [(i, 9) for i in range(1, 10)]
     captured = capsys.readouterr()
     assert captured.out == "" and captured.err == ""
 
 
-def test_manuscrit_absent_leve_une_erreur(workspace):
-    workspace.manuscript.unlink()
+def test_manuscrit_absent_leve_une_erreur(project):
+    project.manuscript.unlink()
     with pytest.raises(ManuscriptNotFoundError):
-        studio_core.build_all(workspace)
+        studio_core.build_all(project)
 
 
-def test_check_bloquant_leve_une_erreur(workspace):
-    workspace.manuscript.write_text("# Titre\n\n[IMAGE: absente.png | légende]\n", encoding="utf-8")
+def test_check_bloquant(project):
+    project.manuscript.write_text("# Titre\n\n[IMAGE: absente.png | légende]\n", encoding="utf-8")
+
+    result = studio_core.run_check(project)
+    assert result.has_errors and "absente.png" in result.report
+
     with pytest.raises(CheckFailedError) as error:
-        studio_core.run_check(workspace)
+        studio_core.build_all(project)
     assert error.value.issues
 
 

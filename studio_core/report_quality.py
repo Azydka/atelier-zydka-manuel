@@ -8,11 +8,8 @@ V3.4 :
 - produit un rapport qualité lisible ;
 - calcule un score global de publication.
 
-Entrée :
-manuscrit_beatmakers.txt
-
-Sortie :
-exports/rapports/rapport_qualite.md
+Point d'entrée : build_quality_report(texte, dossier_rapports)
+Sorties : rapport_qualite.md et score_qualite.json
 """
 
 from __future__ import annotations
