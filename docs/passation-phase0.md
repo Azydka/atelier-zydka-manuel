@@ -1,0 +1,70 @@
+# Passation — Phase 0 « socle moteur »
+
+Document de reprise : à lire en premier par tout assistant (Claude, Codex/ChatGPT) qui reprend le travail. À mettre à jour à la fin de chaque étape (voir `AGENTS.md`).
+
+## État du dépôt
+
+- Branche de travail : `phase0/socle-moteur`, créée depuis `main` (`323ea87`), poussée sur `origin`.
+- `main` n'a pas été modifiée. Aucun tag créé.
+- Dernier commit de code : `94c6045 test: référence release/ZIP du modèle projet` (ce document est commité juste après).
+- Tests : `python -m pytest -q` donne **36 tests verts** sous Linux (Python 3.13).
+- `make.py archive` sur la démo : environ 1,5 s.
+
+## Objectif de la phase 0
+
+Préparer le moteur pour une future version PC Windows installable (pywebview + PyInstaller + Inno Setup) : moteur testé, importable, sans écriture à côté du code. **Hors périmètre** : la coque PC, EPUB/HTML, SaaS, éditeur visuel.
+
+## Étapes
+
+| # | Étape | État | Commits |
+|---|-------|------|---------|
+| 0 | Sécurité : exports/ et backups/ hors du suivi Git | ✅ | `c4f0aa0` |
+| 1 | Filet de caractérisation (pytest + référence) | ✅ | `873e28f` |
+| 2 | Parser unique (rapport qualité, teaser) | ✅ | `079d324`, `30cbfaa`, `18d4a50` |
+| 3 | Package `studio_core` + make.py en CLI mince | ✅ | `073d384`, `22d1d3e` |
+| 4 | Projet = dossier, plus d'écriture dans le code, Streamlit adapté | ✅ | `28d13b3`, `94c6045` |
+| 5 | Couverture pilotée par la config | ⏳ à faire | — |
+| 6 | Polices embarquées (Inter, IBM Plex Mono, Source Serif 4) | ⏳ | — |
+| 7 | Nettoyage du code mort (liste à valider avant suppression) | ⏳ | — |
+| 8 | CI GitHub Actions (pytest sous Windows et Linux) | ⏳ | — |
+| 9 | Documentation (README, RELEASE_NOTES, docs/ARCHITECTURE.md) + note V4.0 et tag local `v4.0.0` | ⏳ | — |
+
+## Décisions du propriétaire (ne pas remettre en cause)
+
+- **Version** : la note de release s'appellera « V4.0 — socle moteur », avec un tag local `v4.0.0`. Les tags v3.7-beta à v3.9-beta existent déjà, et le README affiche encore V2.1.
+- **Push** : uniquement sur `phase0/socle-moteur`. Ni `main` ni les tags.
+- **Fichiers privés** : `backups/` et les anciens exports sont sortis du suivi avec `git rm --cached` (les fichiers sont conservés). Ils restent dans l'historique public : décision d'historique et de visibilité du dépôt laissée au propriétaire.
+- **Chapitres** : on garde 6 chapitres sur la démo (le titre H1 du document compte comme chapitre 01). La règle « titre de document = page de titre » viendra plus tard.
+- **Teaser** : il utilise le parser commun (6 entrées).
+- **Release / ZIP d'un livre** : livrables seuls (PDF, teaser, rapports, citations, cartes), sans code ni lanceurs.
+- **Citations** : `citations.txt` du projet, sinon `[QUOTE:]`, `[CALLOUT:]` « À retenir » et lignes « À retenir : » du manuscrit. La démo fournit un `citations.txt` générique.
+- **Supprimés** : `restore_demo.py`, le bouton « Restaurer la démo », le garde-fou `SENSITIVE_RELEASE_PATTERNS`, `project_manager.py`.
+- **Migration** : `make.py import-legacy` copie les anciens `private/projets/*` vers la racine des projets, sans rien supprimer.
+- **Charte** : ne pas toucher aux couleurs de `config.json` (#090909 / #C79A3B). La décision charte V5 contre charte actuelle n'est pas prise.
+
+## Constats de l'audit (vérifiés dans le code)
+
+- L'écart 7/6 chapitres venait de `rapport_qualite.py` (son propre découpage), pas du PDF. C'est corrigé.
+- Couverture (étape 5, toujours à faire) : titre « Le Manuel de Présence » en dur dans `cover()` ; `\n` affiché littéralement en haut à gauche ; le filet (`signature_line`) coupe le titre ; le bloc « Z » du bas recouvre « DOCUMENT DE PILOTAGE ». **Même bug de `\n` littéral sur la quatrième de couverture** (`back_cover`), dont la correction est proposée au propriétaire.
+- `studio_core/text.py::clean_text` contient des expressions régulières aux antislashs doublés (`r"[ \\t…]"`), héritées de l'ancien code, qui ne font pas ce qu'elles semblent faire. Comportement conservé pour l'instant : à signaler à l'étape 7.
+- `studio_core/parser.py::filter_manuscript_content` contient des marqueurs propres au livre privé (« Avertissement légal », « TOOLKIT BONUS… »). À signaler à l'étape 7.
+- `check.py` avertit quand il y a moins de 10 chapitres : ce seuil est propre au livre privé.
+
+## Prochaine étape : 5 (couverture)
+
+1. Dans `studio_core/pdf_book.py::cover()` : prendre le titre depuis `BOOK_TITLE` (`book_title` de la config), remplacer les `\\n` littéraux par de vrais retours à la ligne (`cover` et `back_cover`), placer le filet au-dessus du titre sans le chevaucher, et éviter que le bloc Z ne recouvre le micro-texte.
+2. Générer la page 1 avant/après en PNG (`pdftoppm -r 80 -f 1 -l 1 -png …`) et **la montrer au propriétaire. Attendre son accord.**
+3. Commit du code, puis commit dédié de la référence (`python -m tests.snapshot --update`).
+
+## Questions en attente de décision
+
+- Les images de la démo (6,5 Mo, inutilisées par le manuscrit démo) sont copiées dans chaque projet démo : faut-il les garder dans le modèle ?
+- Faut-il créer un skill de projet `.claude/skills/pack-demo-compare/` (régénérer la démo, comparer à la référence, PNG avant/après) ? À ne créer qu'avec l'accord du propriétaire.
+- L'historique Git public contient le manuscrit privé (`backups/`) et des citations du livre : réécriture d'historique ou passage du dépôt en privé, décision du propriétaire.
+
+## Pièges
+
+- La documentation utilisateur (README, `docs/GUIDE_UTILISATEUR.md`, `docs/FAQ.md`, `INSTALLATION.md`) décrit encore l'ancien fonctionnement (`restore_demo.py`, `manuelsortie/`, `dist/`). C'est normal jusqu'à l'étape 9.
+- `interface_web_manuel_presence.py` est du code mort, qui pointe vers un script renommé. Il sera supprimé à l'étape 7.
+- Les tests de génération passent par `make.py` dans une copie du dépôt, avec `PYTHONDONTWRITEBYTECODE=1`, pour vérifier qu'aucun fichier n'est écrit dans le dossier du code.
+- Les visuels utilisent des polices système (absentes sous Linux, donc police bitmap par défaut). Seuls les noms de fichiers des cartes sont comparés, pas leur contenu.
