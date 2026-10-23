@@ -42,3 +42,8 @@ def test_fichiers_de_la_release(demo_build, reference):
 def test_contenu_du_zip(demo_build, reference):
     assert demo_build["snapshot"]["zip_entries"] == reference["zip_entries"]
     assert demo_build["snapshot"]["zip_entries"], "le ZIP ne doit pas être vide"
+
+
+def test_meme_nombre_de_chapitres_partout(demo_build):
+    counts = demo_build["snapshot"]["chapters"]
+    assert len(set(counts.values())) == 1, counts

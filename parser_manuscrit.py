@@ -50,6 +50,9 @@ class Chapter:
     blocks: List[Block] = field(default_factory=list)
     number: Optional[str] = None
     kind: str = "chapter"
+    # Lignes du manuscrit (nettoyées) qui composent le chapitre, titre exclu.
+    # Utilisées par les rapports qui mesurent le texte brut (mots, paragraphes).
+    source_lines: List[str] = field(default_factory=list)
 
 
 # ============================================================
@@ -396,6 +399,8 @@ def parse_manuscript(raw: str) -> List[Chapter]:
     current = Chapter(title="Introduction", kind="introduction")
     paragraph_buffer: List[str] = []
     table_buffer: List[str] = []
+    # Ligne en attente d'être rattachée au chapitre courant (None si c'était un titre de chapitre).
+    pending_source_line: Optional[str] = None
 
     def flush_paragraph():
         nonlocal paragraph_buffer
@@ -417,7 +422,8 @@ def parse_manuscript(raw: str) -> List[Chapter]:
             table_buffer = []
 
     def start_new_chapter(title: str, number: Optional[str] = None, kind: str = "chapter"):
-        nonlocal current
+        nonlocal current, pending_source_line
+        pending_source_line = None
         flush_paragraph()
         flush_table()
 
@@ -427,6 +433,10 @@ def parse_manuscript(raw: str) -> List[Chapter]:
         current = Chapter(title=title.strip(), number=number, kind=kind)
 
     for line in lines:
+        if pending_source_line is not None:
+            current.source_lines.append(pending_source_line)
+        pending_source_line = line
+
         stripped = line.strip()
 
         if not stripped:
@@ -536,6 +546,9 @@ def parse_manuscript(raw: str) -> List[Chapter]:
             continue
 
         paragraph_buffer.append(stripped)
+
+    if pending_source_line is not None:
+        current.source_lines.append(pending_source_line)
 
     flush_paragraph()
     flush_table()

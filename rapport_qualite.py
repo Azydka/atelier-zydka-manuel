@@ -23,6 +23,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
+from parser_manuscrit import parse_manuscript
+
 
 ROOT = Path(__file__).resolve().parent
 
@@ -55,7 +57,6 @@ STATUS_PATTERNS = [
 class Chapter:
     title: str
     level: int
-    start_line: int
     content: list[str]
 
     @property
@@ -126,61 +127,23 @@ def detect_internal_notes(text: str) -> list[str]:
     return notes
 
 
-def detect_headings(text: str) -> list[tuple[int, str, int]]:
-    headings: list[tuple[int, str, int]] = []
-
-    for index, line in enumerate(text.splitlines(), start=1):
-        stripped = line.strip()
-
-        if not stripped.startswith("#"):
-            continue
-
-        match = re.match(r"^(#{1,6})\s+(.+)$", stripped)
-
-        if not match:
-            continue
-
-        level = len(match.group(1))
-        title = clean_line(match.group(2))
-
-        if title:
-            headings.append((level, title, index))
-
-    return headings
-
-
 def split_chapters(text: str) -> list[Chapter]:
-    lines = text.splitlines()
-    headings = detect_headings(text)
+    """Découpe le manuscrit avec le parser commun (même découpage que le PDF et le rapport de structure)."""
+    parsed = parse_manuscript(text)
 
-    if not headings:
+    if not parsed:
         return [
             Chapter(
                 title="Manuscrit complet",
                 level=1,
-                start_line=1,
-                content=lines,
+                content=text.splitlines(),
             )
         ]
 
-    chapters: list[Chapter] = []
-
-    for pos, (level, title, start_line) in enumerate(headings):
-        start_index = start_line - 1
-        end_index = headings[pos + 1][2] - 1 if pos + 1 < len(headings) else len(lines)
-
-        content = lines[start_index + 1:end_index]
-
-        chapters.append(
-            Chapter(
-                title=title,
-                level=level,
-                start_line=start_line,
-                content=content,
-            )
-        )
-
-    return chapters
+    return [
+        Chapter(title=clean_line(chapter.title), level=1, content=chapter.source_lines)
+        for chapter in parsed
+    ]
 
 
 def classify_density(word_count: int) -> tuple[str, str]:
