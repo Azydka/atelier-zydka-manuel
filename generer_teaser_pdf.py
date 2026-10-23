@@ -26,6 +26,7 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
 from config_utils import load_config
+from parser_manuscrit import parse_manuscript
 
 
 ROOT = Path(__file__).resolve().parent
@@ -58,29 +59,16 @@ def clean_line(text: str) -> str:
 
 
 def extract_headings_and_paragraphs(text: str) -> tuple[list[str], list[str]]:
-    headings: list[str] = []
-    paragraphs: list[str] = []
+    """Chapitres et paragraphes d'extrait, issus du parser commun (comme le PDF principal)."""
+    chapters = parse_manuscript(text)
 
-    for raw_line in text.splitlines():
-        line = clean_line(raw_line)
-
-        if not line:
-            continue
-
-        if line.startswith("#"):
-            heading = line.lstrip("#").strip()
-            if heading:
-                headings.append(heading)
-            continue
-
-        if line.startswith("- "):
-            continue
-
-        if line.startswith("```"):
-            continue
-
-        if len(line) >= 60:
-            paragraphs.append(line)
+    headings = [clean_line(chapter.title) for chapter in chapters if chapter.title.strip()]
+    paragraphs = [
+        clean_line(block.text)
+        for chapter in chapters
+        for block in chapter.blocks
+        if block.type == "paragraph" and len(clean_line(block.text)) >= 60
+    ]
 
     return headings, paragraphs
 
