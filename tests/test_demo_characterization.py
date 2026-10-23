@@ -16,7 +16,7 @@ def test_archive_reste_rapide(demo_build):
     assert demo_build["duration"] < MAX_ARCHIVE_SECONDS
 
 
-@pytest.mark.parametrize("source", ["parser_manuscrit", "rapport_structure", "rapport_qualite", "sommaire_pdf"])
+@pytest.mark.parametrize("source", ["parser_manuscrit", "rapport_structure", "rapport_qualite", "sommaire_pdf", "teaser"])
 def test_nombre_de_chapitres(demo_build, reference, source):
     assert demo_build["snapshot"]["chapters"][source] == reference["chapters"][source]
 

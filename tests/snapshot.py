@@ -117,6 +117,7 @@ def collect(workdir: Path) -> dict:
             "rapport_structure": report_count(reports / "rapport_structure.md", "Chapitres détectés"),
             "rapport_qualite": report_count(reports / "rapport_qualite.md", "Nombre de chapitres / sections détectés"),
             "sommaire_pdf": len(toc_entries(book["text"][1])),
+            "teaser": len(toc_entries(teaser["text"][1])),
         },
         "book_pdf": book,
         "teaser_pdf": teaser,

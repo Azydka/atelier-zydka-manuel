@@ -3,7 +3,8 @@
     "parser_manuscrit": 6,
     "rapport_structure": 6,
     "rapport_qualite": 6,
-    "sommaire_pdf": 6
+    "sommaire_pdf": 6,
+    "teaser": 6
   },
   "book_pdf": {
     "pages": 9,
@@ -23,7 +24,7 @@
     "pages": 3,
     "text": [
       "MANUSCRIPT STUDIO BY ATELIER ZYDKA\nManuscrit de démonstration\nTransformer un manuscrit brut en pack éditorial complet\nAuteur : Atelier Zydka\nMarque : Atelier Zydka\nAnnée : 2026\nTeaser PDF\nAtelier Zydka\n1",
-      "Ce que contient cette démo\nAperçu de la structure détectée dans le manuscrit.\n01\nMANUSCRIT DE DÉMONSTRATION — MANUSCRIPT STUDIO BY ATELIER\n ZYDKA\n02\nTransformer un manuscrit brut en pack éditorial complet\n03\nIntroduction\n04\nPartie 1 — Préparer son manuscrit\n05\nPartie 2 — Générer les livrables\n06\nPartie 3 — Tester le résultat\n07\nConclusion\nAtelier Zydka\n2",
+      "Ce que contient cette démo\nAperçu de la structure détectée dans le manuscrit.\n01\nMANUSCRIT DE DÉMONSTRATION — MANUSCRIPT STUDIO BY ATELIER\n ZYDKA\n02\nIntroduction\n03\nPartie 1 — Préparer son manuscrit\n04\nPartie 2 — Générer les livrables\n05\nPartie 3 — Tester le résultat\n06\nConclusion\nAtelier Zydka\n2",
       "Extrait\nQuelques paragraphes issus du manuscrit de démonstration.\nCeci est un manuscrit de démonstration destiné à tester Manuscript Studio by Atelier\nZydka.\nIl ne contient pas le livre complet, ni les contenus propriétaires destinés à la vente.\nManuscript Studio by Atelier Zydka est un système éditorial local qui transforme un\nmanuscrit source en plusieurs livrables :\nAtelier Zydka\n3"
     ]
   },
