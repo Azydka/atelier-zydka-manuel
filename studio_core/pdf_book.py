@@ -57,6 +57,7 @@ from reportlab.lib.colors import HexColor, Color
 from reportlab.lib.units import mm
 from reportlab.lib.utils import simpleSplit
 from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 import logging
@@ -87,6 +88,21 @@ BRAND_NAME = DEFAULT_CONFIG["brand_name"]
 BASELINE = DEFAULT_CONFIG["baseline"]
 YEAR = DEFAULT_CONFIG["year"]
 IMAGES_DIR = "images"
+
+# Textes de couverture : clés optionnelles de config.json. Clé absente =
+# valeur par défaut ci-dessous ; chaîne vide = rien n'est affiché.
+COVER_TEXTS: dict = {}
+
+
+def cover_text_defaults(config: dict) -> dict:
+    return {
+        "cover_kicker": config["baseline"],
+        "cover_footer_left": "",
+        "cover_footer_right": "",
+        "back_cover_tagline": config["book_subtitle"],
+        "back_cover_footer_left": "",
+        "back_cover_footer_right": "",
+    }
 
 
 # ============================================================
@@ -126,7 +142,7 @@ TABLE_ALT = HexColor("#EFEFEB")
 def _apply_config(config: dict, images_dir: Path) -> None:
     """Applique une configuration normalisée (voir normalize_config) aux valeurs de rendu du module."""
     global FEATURES, PROJECT_TITLE, BOOK_TITLE, BOOK_SUBTITLE, AUTHOR_NAME, BRAND_NAME
-    global BASELINE, YEAR, IMAGES_DIR, CARBON, PAPER, SIGNATURE, SOFT
+    global BASELINE, YEAR, IMAGES_DIR, CARBON, PAPER, SIGNATURE, SOFT, COVER_TEXTS
 
     FEATURES = config["features"]
     PROJECT_TITLE = config["project_title"]
@@ -137,6 +153,7 @@ def _apply_config(config: dict, images_dir: Path) -> None:
     BASELINE = config["baseline"]
     YEAR = config["year"]
     IMAGES_DIR = str(images_dir)
+    COVER_TEXTS = {key: str(config.get(key, default)) for key, default in cover_text_defaults(config).items()}
 
     theme = config["theme"]
     CARBON = HexColor(theme["background"])
@@ -274,6 +291,27 @@ def draw_micro(c, text, x, y_top, w, dark=False, color=None):
 
 def draw_serif(c, text, x, y_top, w, dark=True, size=14):
     return draw_text(c, text, x, y_top, w, FONTS.serif_italic, size, size * 1.18, PAPER if dark else CARBON)
+
+
+def fit_font_size(text: str, font: str, max_size: float, min_size: float, width: float, max_lines: int) -> float:
+    """
+    Plus grande taille (de max_size à min_size, par pas de 1 pt) pour laquelle
+    chaque mot tient dans la largeur et le texte tient en max_lines lignes.
+    """
+    words = text.split()
+    size = max_size
+    while size > min_size:
+        fits_width = all(stringWidth(word, font, size) <= width for word in words)
+        lines = sum(len(simpleSplit(part, font, size, width)) for part in text.split("\n"))
+        if fits_width and lines <= max_lines:
+            return size
+        size -= 1
+    return min_size
+
+
+def cap_height(size: float) -> float:
+    """Hauteur approximative des capitales (Helvetica / Inter) pour une taille donnée."""
+    return size * 0.72
 
 
 def signature_line(c, x=M_LEFT, y_top=18 * mm, dark=False):
@@ -905,9 +943,17 @@ def draw_opening_image_page(c, image_name: str, title: str, page_num: int):
 # PAGES FIXES
 # ============================================================
 
+def cover_footer(c, left: str, right: str, left_x: float, right_x: float, right_w: float) -> None:
+    """Pied de page de couverture (rien n'est affiché pour un texte vide)."""
+    if left:
+        draw_micro(c, left, left_x, 190 * mm, right_x - left_x - 4 * mm, color=SOFT)
+    if right:
+        draw_micro(c, right, right_x, 190 * mm, right_w, color=SOFT)
+
+
 def cover(c, page_num):
     draw_bg(c, CARBON)
-    draw_micro(c, f"Version générée\\nPDF éditorial configurable\\n{BRAND_NAME}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
+    draw_micro(c, f"{BRAND_NAME}\n{YEAR}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
 
     # Marque haut droite
     c.setFillColor(SIGNATURE)
@@ -916,14 +962,22 @@ def cover(c, page_num):
     c.setFont(FONTS.inter_black, 8)
     c.drawCentredString(127 * mm, ty(18 * mm) - 6.8 * mm, "Z")
 
-    draw_mono(c, "Studio · Présence · Système · Décision", M_LEFT, 91 * mm, 94 * mm, dark=True)
-    signature_line(c, M_LEFT, 102 * mm, dark=True)
-    draw_h1(c, "Le Manuel\nde Présence", M_LEFT, 110 * mm, 112 * mm, color=PAPER, size=43)
-    draw_text(c, AUTHOR_NAME, M_LEFT, 153 * mm, 92 * mm, FONTS.inter_bold, 10, 12, SIGNATURE, uppercase=True)
-    draw_serif(c, BOOK_SUBTITLE, M_LEFT, 165 * mm, 90 * mm, dark=True, size=14)
+    # Accroche, filet, puis titre : le filet reste au-dessus du titre.
+    if COVER_TEXTS["cover_kicker"]:
+        draw_mono(c, COVER_TEXTS["cover_kicker"], M_LEFT, 88 * mm, 94 * mm, dark=True)
+    signature_line(c, M_LEFT, 94 * mm, dark=True)
 
-    draw_micro(c, "Document de pilotage", M_LEFT, 190 * mm, 50 * mm, color=SOFT)
-    draw_micro(c, "Référence studio", 100 * mm, 190 * mm, 36 * mm, color=SOFT)
+    title = clean_text(BOOK_TITLE).upper()
+    title_size = fit_font_size(title, FONTS.inter_black, 43, 24, 112 * mm, max_lines=3)
+    title_end = draw_h1(c, title, M_LEFT, 99 * mm + cap_height(title_size), 112 * mm, color=PAPER, size=title_size)
+
+    # Auteur et sous-titre à leur place habituelle, décalés seulement si le titre descend plus bas.
+    author_y = max(153 * mm, title_end + 8 * mm)
+    draw_text(c, AUTHOR_NAME, M_LEFT, author_y, 92 * mm, FONTS.inter_bold, 10, 12, SIGNATURE, uppercase=True)
+    draw_serif(c, BOOK_SUBTITLE, M_LEFT, author_y + 12 * mm, 90 * mm, dark=True, size=14)
+
+    # Le texte de gauche est placé à droite du bloc Z du bas, pour ne pas être recouvert.
+    cover_footer(c, COVER_TEXTS["cover_footer_left"], COVER_TEXTS["cover_footer_right"], M_LEFT + 14 * mm, 100 * mm, 36 * mm)
     z_block(c, page_num, force=True)
     finish(c)
 
@@ -1183,17 +1237,22 @@ def annex_page(c, page_num):
 
 def back_cover(c, page_num):
     draw_bg(c, CARBON)
-    draw_micro(c, f"{BOOK_TITLE}\\n{BRAND_NAME}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
+    draw_micro(c, f"{BOOK_TITLE}\n{BRAND_NAME}", M_LEFT, 18 * mm, 55 * mm, color=SOFT)
     c.setFillColor(SIGNATURE)
     c.rect(122 * mm, ty(18 * mm) - 10 * mm, 10 * mm, 10 * mm, stroke=0, fill=1)
     c.setFillColor(CARBON)
     c.setFont(FONTS.inter_black, 8)
     c.drawCentredString(127 * mm, ty(18 * mm) - 6.8 * mm, "Z")
     signature_line(c, M_LEFT, 98 * mm, dark=True)
-    draw_h2(c, "Construire moins.\nConstruire plus juste.", M_LEFT, 108 * mm, 98 * mm, color=PAPER, size=32)
-    draw_serif(c, f"{BRAND_NAME} — {BOOK_SUBTITLE}", M_LEFT, 151 * mm, 82 * mm, dark=True, size=15)
-    draw_micro(c, "Document de pilotage", M_LEFT, 190 * mm, 50 * mm, color=SOFT)
-    draw_micro(c, "Accent clair · finition premium", 82 * mm, 190 * mm, 55 * mm, color=SOFT)
+
+    tagline = clean_text(COVER_TEXTS["back_cover_tagline"]).upper()
+    tagline_end = 108 * mm
+    if tagline:
+        tagline_size = fit_font_size(tagline, FONTS.inter_black, 32, 18, 98 * mm, max_lines=4)
+        tagline_end = draw_h2(c, tagline, M_LEFT, 104 * mm + cap_height(tagline_size), 98 * mm, color=PAPER, size=tagline_size)
+
+    draw_serif(c, AUTHOR_NAME, M_LEFT, max(151 * mm, tagline_end + 10 * mm), 82 * mm, dark=True, size=15)
+    cover_footer(c, COVER_TEXTS["back_cover_footer_left"], COVER_TEXTS["back_cover_footer_right"], M_LEFT, 82 * mm, 55 * mm)
     finish(c)
 
 

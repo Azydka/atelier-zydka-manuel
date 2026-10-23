@@ -20,6 +20,7 @@ import streamlit as st
 
 import studio_core
 from studio_core.config import OUTPUT_NAME_KEYS, normalize_config
+from studio_core.pdf_book import cover_text_defaults
 from studio_core.project import DEMO_SLUG
 from studio_core.report_quality import REPORT_NAME as QUALITY_REPORT_NAME, SCORE_NAME
 from studio_core.report_structure import REPORT_NAME as STRUCTURE_REPORT_NAME
@@ -42,6 +43,15 @@ OUTPUT_FIELDS = [
     ("teaser_pdf_name", "Nom du teaser PDF"),
     ("release_name", "Nom du dossier de release"),
     ("zip_name", "Nom du ZIP"),
+]
+
+COVER_FIELDS = [
+    ("cover_kicker", "Accroche au-dessus du titre"),
+    ("cover_footer_left", "Pied de couverture (gauche)"),
+    ("cover_footer_right", "Pied de couverture (droite)"),
+    ("back_cover_tagline", "Phrase de 4e de couverture"),
+    ("back_cover_footer_left", "Pied de 4e de couverture (gauche)"),
+    ("back_cover_footer_right", "Pied de 4e de couverture (droite)"),
 ]
 
 THEME_FIELDS = [
@@ -325,6 +335,13 @@ with tabs[2]:
             st.subheader("Fichiers de sortie")
             values.update({key: st.text_input(label, value=config[key]) for key, label in OUTPUT_FIELDS})
 
+            st.subheader("Couverture")
+            st.caption("Un champ vide n’affiche rien sur la couverture.")
+            cover_defaults = cover_text_defaults(config)
+            values.update(
+                {key: st.text_input(label, value=str(config.get(key, cover_defaults[key]))) for key, label in COVER_FIELDS}
+            )
+
             st.subheader("Thème")
             theme = {key: st.color_picker(label, value=config["theme"][key]) for key, label in THEME_FIELDS}
 
@@ -333,6 +350,11 @@ with tabs[2]:
         if submitted:
             # Les clés non éditées ici (features, language…) sont conservées.
             new_config = {**raw_config, **values, "theme": {**raw_config.get("theme", {}), **theme}}
+            # Un texte de couverture resté à sa valeur par défaut n'est pas figé dans config.json :
+            # il continue de suivre baseline / book_subtitle.
+            for key, _ in COVER_FIELDS:
+                if key not in raw_config and new_config[key] == cover_defaults[key]:
+                    del new_config[key]
             try:
                 normalize_config(new_config)
             except studio_core.ConfigError as error:
